@@ -36,7 +36,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFuI4IhEULviQ0="
 					},
-					"name": "UseCaseDiagram1",
+					"name": "Use Case Diagram",
 					"ownedViews": [
 						{
 							"_type": "UMLActorView",
