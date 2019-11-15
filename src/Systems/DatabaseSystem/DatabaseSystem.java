@@ -4,7 +4,7 @@ import java.sql.*;
 public class DatabaseSystem {
     Connection connection;
     Statement statement;
-    public DbController() {
+    public DatabaseSystem() {
         super();
         //  TODO: get the server to create the database, build methods to execute certain statements/queries, and eventually CLOSE THE CONNECTION/STATEMENT!
         try {
