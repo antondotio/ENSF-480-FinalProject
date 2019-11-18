@@ -6,25 +6,19 @@ public class LandlordAccount extends Account {
 
     ArrayList<Listing> myListings;
 
-    public LandlordAccount(Name name, int accountID, String email) {
-        super(name, accountID, email);
+    public LandlordAccount(Name name, String password, int accountID, String email) {
+        super(name, password, accountID, email);
         myListings = new ArrayList<Listing>();
     }
 
-    public void addListing(Listing newListing)
+    //send property to controller to request a listing to be made by a manager
+    public void addListing(Property property)
     {
-        myListings.add(newListing);
+        
     }
 
-    public void removeListing(int listingID)
+    public void suspendListing(int listingID)
     {
-        for(Listing l : myListings)
-        {
-            if(l.getListingIDnumber() == listingID)
-            {
-                myListings.remove(l);
-                break;
-            }
-        }
+        
     }
 }

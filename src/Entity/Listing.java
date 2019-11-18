@@ -1,31 +1,23 @@
 package Entity;
 
 public class Listing {
+	LandlordAccount landlord;
     Property property;
     Date listingStart;
     Date listingEnd;
     double paymentFee;
     String status;
-    String description;
-    int listingIDnumber;
+	int listingIDnumber;
 
-    public Listing(Property property, Date listingStart, Date listingEnd, double paymentFee, String status,
-            String description, int listingIDnumber) {
+    public Listing(LandlordAccount landlord, Property property, double paymentFee) {
+		this.landlord = landlord;
         this.property = property;
-        this.listingStart = listingStart;
-        this.listingEnd = listingEnd;
         this.paymentFee = paymentFee;
-        this.status = status;
-        this.description = description;
-        this.listingIDnumber = listingIDnumber;
+        this.status = "suspended";
     }
 
 	public Property getProperty() {
 		return property;
-	}
-
-	public void setProperty(Property property) {
-		this.property = property;
 	}
 
 	public Date getListingStart() {
@@ -58,14 +50,6 @@ public class Listing {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public int getListingIDnumber() {
