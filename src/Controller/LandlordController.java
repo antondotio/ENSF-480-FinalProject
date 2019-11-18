@@ -1,6 +1,6 @@
 package Controller;
 
-import Controller.Account.LandlordAccount;
+import Entity.LandlordAccount;
 
 public class LandlordController {
     private LandlordAccount acc;

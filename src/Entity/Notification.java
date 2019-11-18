@@ -4,9 +4,9 @@ public class Notification {
     Listing listing;
     RegisteredRenterAccount renter;
 
-    public Notification(RegisteredRenterAccount renter, Date date) {
+    public Notification(RegisteredRenterAccount renter, Listing listing) {
         this.renter = renter;
-        this.date = date;
+        this.listing = listing;
     }
 
     public Listing getListing() {
@@ -17,11 +17,11 @@ public class Notification {
         this.listing = listing;
     }
 
-    public Date getDate() {
-        return date;
+    public RegisteredRenterAccount getRenter() {
+        return renter;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setRenter(RegisteredRenterAccount renter) {
+        this.renter = renter;
     }
 }
