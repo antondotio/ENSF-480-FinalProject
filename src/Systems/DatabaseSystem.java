@@ -16,6 +16,6 @@ public class DatabaseSystem {
     }
 
     private void createDatabase() throws SQLException {
-        System.out.println("Datbase \"yuutancj\" has successfully been created");
+        System.out.println("Database  has successfully been created");
     }
 }
