@@ -2,10 +2,10 @@ package Entity;
 
 public class Notification {
     Listing listing;
-    Date date;
+    RegisteredRenterAccount renter;
 
-    public Notification(Listing listing, Date date) {
-        this.listing = listing;
+    public Notification(RegisteredRenterAccount renter, Date date) {
+        this.renter = renter;
         this.date = date;
     }
 

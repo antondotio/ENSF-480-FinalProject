@@ -6,13 +6,15 @@ public class SearchCriteria {
     double numOfBathrooms;
     boolean furnished;
     String quadrant;
+    RegisteredRenterAccount account;
 
-    public SearchCriteria(String type, int numOfBedrooms, double numOfBathrooms, boolean furnished, String quadrant) {
+    public SearchCriteria(String type, int numOfBedrooms, double numOfBathrooms, boolean furnished, String quadrant, RegisteredRenterAccount account) {
         this.type = type;
         this.numOfBedrooms = numOfBedrooms;
         this.numOfBathrooms = numOfBathrooms;
         this.furnished = furnished;
         this.quadrant = quadrant;
+        this.account = account;
     }
 
     public String getType() {
@@ -53,5 +55,13 @@ public class SearchCriteria {
 
     public void setQuadrant(String quadrant) {
         this.quadrant = quadrant;
+    }
+
+    public RegisteredRenterAccount getAccount() {
+        return account;
+    }
+
+    public void setAccount(RegisteredRenterAccount account) {
+        this.account = account;
     }
 }
