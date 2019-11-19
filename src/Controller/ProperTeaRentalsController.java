@@ -1,12 +1,18 @@
 package Controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class ProperTeaRentalsController {
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -27,8 +33,14 @@ public class ProperTeaRentalsController {
 
     // Handler for Button[fx:id="loginButton"] onAction
     @FXML
-    void login(ActionEvent event) {
+    void login(ActionEvent event) throws IOException {
         // handle the event here
+        Parent renterViewParent = FXMLLoader.load(getClass().getResource("RenterView.fxml"));
+        Scene renterViewScene = new Scene(renterViewParent);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(renterViewScene);
+        window.show();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
