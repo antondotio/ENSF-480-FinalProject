@@ -104,11 +104,11 @@ public class RenterViewController {
         typeColumn.setCellValueFactory(new PropertyValueFactory<Listing, String>("type"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<Listing, Double>("price"));
 
-        listingTable.setItems(getListing());
+        listingTable.setItems(getListings());
     }
 
-    public ObservableList<Listing> getListing() {
-        ArrayList<Listing> arrayListing = listener.getListener().performAction("GET/LISTINGS");
+    public ObservableList<Listing> getListings() {
+        ArrayList<Listing> arrayListing = listener.getListener().getListings();
         ObservableList<Listing> listings = FXCollections.observableArrayList(arrayListing);
         return listings;
     }
