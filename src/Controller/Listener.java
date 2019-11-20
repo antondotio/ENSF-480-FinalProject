@@ -24,7 +24,7 @@ public class Listener {
 
     public String actionPerformed(String s)
     {
-        String[] split = s.split("-", 2);
+        String[] split = s.split("/", 2);
         if(s.equals("basic input"))
         {
             //return client action function call
