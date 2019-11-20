@@ -24,128 +24,126 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
-import Entity.Listing;
-import Entity.Date;
-import Entity.Address;
 
 
 public class RenterViewController {
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
+    @FXML
     private ResourceBundle resources;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
+    @FXML
     private URL location;
 
-    @FXML // fx:id="RenterViewGUI"
-    private AnchorPane RenterViewGUI; // Value injected by FXMLLoader
+    @FXML
+    private AnchorPane RenterViewGUI;
 
-    @FXML // fx:id="listingTable"
-    private TableView<Listing> listingTable; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<String, String> addressColumn;
 
-    @FXML // fx:id="addressColumn"
-    private TableColumn<Listing, Address> addressColumn; // Value injected by FXMLLoader
+    @FXML
+    private CheckMenuItem apartmentType;
 
-    @FXML // fx:id="furnishedColumn"
-    private TableColumn<Listing, String> furnishedColumn; // Value injected by FXMLLoader
+    @FXML
+    private CheckMenuItem attachedType;
 
-    @FXML // fx:id="bathColumn"
-    private TableColumn<Listing, Integer> bathColumn; // Value injected by FXMLLoader
+    @FXML
+    private CheckMenuItem basementType;
 
-    @FXML // fx:id="bedColumn"
-    private TableColumn<Listing, Integer> bedColumn; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<String, String> bathColumn;
 
-    @FXML // fx:id="quadrantColumn"
-    private TableColumn<Listing, String> quadrantColumn; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<String, String> bedColumn;
 
-    @FXML // fx:id="typeColumn"
-    private TableColumn<Listing, String> typeColumn; // Value injected by FXMLLoader
+    @FXML
+    private CheckMenuItem condoType;
 
-    @FXML // fx: id="priceColumn
-    private TableColumn<Listing, Double> priceColumn;
+    @FXML
+    private CheckMenuItem detachedType;
 
-    @FXML // fx:id="searchButton"
-    private Button searchButton; // Value injected by FXMLLoader
+    @FXML
+    private Button emailButton;
 
-    @FXML // fx:id="updateButton"
-    private Button updateButton; // Value injected by FXMLLoader
+    @FXML
+    private ToggleGroup furnished;
 
-    @FXML // fx:id="idColumn"
-    private TableColumn<Listing, Integer> idColumn; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<String, String> furnishedColumn;
 
-    @FXML // fx:id="listingEndColumn"
-    private TableColumn<Listing, Date> listingEndColumn; // Value injected by FXMLLoader
+    @FXML
+    private MenuButton homeType;
 
-    @FXML // fx:id="listingStartColumn"
-    private TableColumn<Listing, Date> listingStartColumn; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<String, String> idColumn;
 
-    @FXML // fx:id="statusColumn"
-    private TableColumn<Listing, String> statusColumn; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<String, String> listingEndColumn;
 
-    @FXML // fx:id="apartmentType"
-    private CheckMenuItem apartmentType; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<String, String> listingStartColumn;
 
-    @FXML // fx:id="attachedType"
-    private CheckMenuItem attachedType; // Value injected by FXMLLoader
+    @FXML
+    private TableView<String> listingTable;
 
-    @FXML // fx:id="basementType"
-    private CheckMenuItem basementType; // Value injected by FXMLLoader
+    @FXML
+    private CheckBox northEast;
 
-    @FXML // fx:id="condoType"
-    private CheckMenuItem condoType; // Value injected by FXMLLoader
+    @FXML
+    private CheckBox northWest;
 
-    @FXML // fx:id="detachedType"
-    private CheckMenuItem detachedType; // Value injected by FXMLLoader
+    @FXML
+    private RadioButton notFurnished;
 
-    @FXML // fx:id="townhouseType"
-    private CheckMenuItem townhouseType; // Value injected by FXMLLoader
+    @FXML
+    private TextField numOfBath;
 
-    @FXML // fx:id="homeType"
-    private MenuButton homeType; // Value injected by FXMLLoader
+    @FXML
+    private TextField numOfBed;
 
-    @FXML // fx:id="northEast"
-    private CheckBox northEast; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<String, String> priceColumn;
 
-    @FXML // fx:id="northWest"
-    private CheckBox northWest; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<String, String> quadrantColumn;
 
-    @FXML // fx:id="southEast"
-    private CheckBox southEast; // Value injected by FXMLLoader
+    @FXML
+    private Button searchButton;
 
-    @FXML // fx:id="southWest"
-    private CheckBox southWest; // Value injected by FXMLLoader
+    @FXML
+    private CheckBox southEast;
 
-    @FXML // fx:id="furnished"
-    private ToggleGroup furnished; // Value injected by FXMLLoader
+    @FXML
+    private CheckBox southWest;
 
-    @FXML // fx:id="yesFurnished"
-    private RadioButton yesFurnished; // Value injected by FXMLLoader
+    @FXML
+    private CheckMenuItem townhouseType;
 
-    @FXML // fx:id="notFurnished"
-    private RadioButton notFurnished; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<String, String> typeColumn;
 
-    @FXML // fx:id="numOfBath"
-    private TextField numOfBath; // Value injected by FXMLLoader
+    @FXML
+    private Button updateButton;
 
-    @FXML // fx:id="numOfBed"
-    private TextField numOfBed; // Value injected by FXMLLoader
+    @FXML
+    private RadioButton yesFurnished;
 
     private Listener listener;
 
-    // Handler for Button[fx:id="searchButton"] onAction
+
+    @FXML
+    void emailLandlord(ActionEvent event) {
+    }
+
     @FXML
     void search(ActionEvent event) {
-        // handle the event here
     }
 
-    // Handler for Button[fx:id="updateButton"] onAction
     @FXML
     void update(ActionEvent event) {
-        // handle the event here
-        listingTable.setItems(getListing());
+        listingTable.setItems(getListings());
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
     void initialize() {
         assert RenterViewGUI != null : "fx:id=\"RenterViewGUI\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert addressColumn != null : "fx:id=\"addressColumn\" was not injected: check your FXML file 'RenterView.fxml'.";
@@ -156,6 +154,8 @@ public class RenterViewController {
         assert bedColumn != null : "fx:id=\"bedColumn\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert condoType != null : "fx:id=\"condoType\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert detachedType != null : "fx:id=\"detachedType\" was not injected: check your FXML file 'RenterView.fxml'.";
+        assert emailButton != null : "fx:id=\"emailButton\" was not injected: check your FXML file 'RenterView.fxml'.";
+        assert furnished != null : "fx:id=\"furnished\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert furnishedColumn != null : "fx:id=\"furnishedColumn\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert homeType != null : "fx:id=\"homeType\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert idColumn != null : "fx:id=\"idColumn\" was not injected: check your FXML file 'RenterView.fxml'.";
@@ -177,26 +177,26 @@ public class RenterViewController {
         assert updateButton != null : "fx:id=\"updateButton\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert yesFurnished != null : "fx:id=\"yesFurnished\" was not injected: check your FXML file 'RenterView.fxml'.";
 
+
         // Initialize your logic here: all @FXML variables will have been injected
 
-        addressColumn.setCellValueFactory(new PropertyValueFactory<Listing, Address>("address"));
-        bathColumn.setCellValueFactory(new PropertyValueFactory<Listing, Integer>("numOfBathrooms"));
-        bedColumn.setCellValueFactory(new PropertyValueFactory<Listing, Integer>("numOfBedrooms"));
-        furnishedColumn.setCellValueFactory(new PropertyValueFactory<Listing, String>("furnished"));
-        quadrantColumn.setCellValueFactory(new PropertyValueFactory<Listing, String>("quadrant"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<Listing, String>("type"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<Listing, Double>("price"));
-        listingEndColumn.setCellValueFactory(new PropertyValueFactory<Listing, Date>("listingStart"));
-        listingStartColumn.setCellValueFactory(new PropertyValueFactory<Listing, Date>("listingEnd"));
-        idColumn.setCellValueFactory(new PropertyValueFactory<Listing, Integer>("listingID"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<Listing, String>("status"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<String, String>("address"));
+        bathColumn.setCellValueFactory(new PropertyValueFactory<String, String>("numOfBathrooms"));
+        bedColumn.setCellValueFactory(new PropertyValueFactory<String, String>("numOfBedrooms"));
+        furnishedColumn.setCellValueFactory(new PropertyValueFactory<String, String>("furnished"));
+        quadrantColumn.setCellValueFactory(new PropertyValueFactory<String, String>("quadrant"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("type"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<String, String>("price"));
+        listingEndColumn.setCellValueFactory(new PropertyValueFactory<String, String>("listingStart"));
+        listingStartColumn.setCellValueFactory(new PropertyValueFactory<String, String>("listingEnd"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<String, String>("listingID"));
 
         listingTable.setItems(getListings());
     }
 
-    public ObservableList<Listing> getListings() {
-        ArrayList<Listing> arrayListing = listener.getListener().getListings();
-        ObservableList<Listing> listings = FXCollections.observableArrayList(arrayListing);
+    public ObservableList<String> getListings() {
+        ArrayList<String> arrayListing = listener.getListener().getListings();
+        ObservableList<String> listings = FXCollections.observableArrayList(arrayListing);
         return listings;
     }
 

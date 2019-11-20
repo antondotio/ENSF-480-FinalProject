@@ -21,6 +21,9 @@ public class ProperTeaRentalsController {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
+    @FXML // fx:id="guestButton"
+    private Button guestButton; // Value injected by FXMLLoader
+
     @FXML // fx:id="loginButton"
     private Button loginButton; // Value injected by FXMLLoader
 
@@ -30,10 +33,9 @@ public class ProperTeaRentalsController {
     @FXML // fx:id="usernameForm"
     private TextField usernameForm; // Value injected by FXMLLoader
 
-
-    // Handler for Button[fx:id="loginButton"] onAction
+    // Handler for Button[fx:id="guestButton"] onAction
     @FXML
-    void login(ActionEvent event) throws IOException {
+    void guestLogin(ActionEvent event) throws IOException {
         // handle the event here
         Parent renterViewParent = FXMLLoader.load(getClass().getResource("RenterView.fxml"));
         Scene renterViewScene = new Scene(renterViewParent);
@@ -43,8 +45,15 @@ public class ProperTeaRentalsController {
         window.show();
     }
 
+    // Handler for Button[fx:id="loginButton"] onAction
+    @FXML
+    void login(ActionEvent event) throws IOException {
+        // handle the event here
+    }
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        assert guestButton != null : "fx:id=\"guestButton\" was not injected: check your FXML file 'ProperTeaRentals.fxml'.";
         assert loginButton != null : "fx:id=\"loginButton\" was not injected: check your FXML file 'ProperTeaRentals.fxml'.";
         assert passwordForm != null : "fx:id=\"passwordForm\" was not injected: check your FXML file 'ProperTeaRentals.fxml'.";
         assert usernameForm != null : "fx:id=\"usernameForm\" was not injected: check your FXML file 'ProperTeaRentals.fxml'.";

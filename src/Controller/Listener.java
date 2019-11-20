@@ -1,5 +1,7 @@
 package Controller;
 
+import java.util.ArrayList;
+
 public class Listener {
     
     private Client client;
@@ -21,7 +23,8 @@ public class Listener {
         client = c;
     }
 
-    public String getListings() {
-        return "";
+    public ArrayList<String> getListings() {
+        ArrayList<String> listings = new ArrayList<>();
+        return listings;
     }
 }

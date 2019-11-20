@@ -29,8 +29,8 @@
       </columns>
     </TableView>
     <Button id="logoutHutton" fx:id="logoutButton" layoutX="962.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
-    <Text layoutX="14.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="House Type:" />
-    <TextField layoutX="136.0" layoutY="183.0" prefWidth="200.0" text="" />
+    <Text layoutX="14.0" layoutY="206.0" smooth="true" strokeType="OUTSIDE" strokeWidth="0.0" text="House Type:" visible="true" />
+    <TextField layoutX="136.0" layoutY="183.0" prefWidth="200.0" promptText="" text="" />
     <Text layoutX="14.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Bathrooms:" />
     <Text layoutX="14.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Bedrooms:" />
     <TextField layoutX="236.0" layoutY="235.0" prefWidth="100.0" />
@@ -51,8 +51,8 @@
     <Text layoutX="544.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country:" />
     <TextField layoutX="640.0" layoutY="235.0" prefWidth="113.78759765625" />
     <Text layoutX="775.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Postal Code:" />
-    <TextField layoutX="898.0" layoutY="235.0" prefWidth="113.78759765625" />
-    <Button layoutX="835.0" layoutY="284.0" mnemonicParsing="false" text="Register Listing" />
+    <TextField layoutX="899.0" layoutY="235.0" prefWidth="113.78759765625" />
+    <Button layoutX="835.0" layoutY="281.0" mnemonicParsing="false" text="Register Listing" />
     <Text layoutX="14.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register Listing:">
       <font>
         <Font size="30.0" />
