@@ -50,18 +50,23 @@ public class Server {
 //        readSuppliers(suppliers);
 //        Inventory theInventory = new Inventory(readItems(suppliers));
 //        Shop theShop = new Shop(theInventory, suppliers);
-        String input = "";
+        String input = "GET/LISTINGS-Calgary/NE/900/1200";
+        System.out.println(input);
         while(true) {
             try {
                 input = socketIn.readLine();
-                System.out.println(input);
-//                if(input.equals("GET/TOOLS")) {
-//                    getTools(theShop);
-//                }
-            } catch(IOException e) {
+                if(input.startsWith("GET/LISTINGS-")) {
+                    String[] params = parseParams(input);
+                }
+            } catch(Exception e) {
                 System.err.println(e.getMessage());
             }
         }
+    }
+
+    public String[] parseParams(String input) {
+        String[] splitQueryAndParams = input.split("-");
+        return splitQueryAndParams[1].split("/");
     }
 
     /**
