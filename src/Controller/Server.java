@@ -79,7 +79,7 @@ public class Server {
                 } else if (input.equals("GET/SUMMARYREPORT")) {
                     socketOut.println("NULL");
                 } else if (input.startsWith("POST/CHANGESTATE")) {
-                    String[] params = parseParams[input];
+                    String[] params = parseParams(input);
                     socketOut.println("NULL");
                 }
             } catch(Exception e) {
