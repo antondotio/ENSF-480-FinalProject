@@ -55,8 +55,32 @@ public class Server {
         while(true) {
             try {
                 input = socketIn.readLine();
+                //  NOTE: I chose to ignore email because since it's simulated we can handle it all on the front end
                 if(input.startsWith("GET/LISTINGS-")) {
                     String[] params = parseParams(input);
+                    socketOut.println("NULL");
+                } else if (input.startsWith("POST/PROPERTY-")) {
+                    String[] params = parseParams(input);
+                    socketOut.println("DONE");
+                } else if (input.startsWith("POST/FEE-")) {
+                    String[] params = parseParams(input);
+                    // create listing and make it visible for renters
+                    // and notify renters
+                    socketOut.println("DONE");
+                } else if (input.startsWith("LOGIN-")) {
+                    String[] params = parseParams(input);
+                    socketOut.println("NULL");
+                } else if (input.startsWith("POST/UPDATELISTING-")) {
+                    String[] params = parseParams(input);
+                    socketOut.println("DONE");
+                } else if (input.startsWith("GET/SINGLELISTING-")) {
+                    String[] params = parseParams(input);
+                    socketOut.println("NULL");
+                } else if (input.equals("GET/SUMMARYREPORT")) {
+                    socketOut.println("NULL");
+                } else if (input.startsWith("POST/CHANGESTATE")) {
+                    String[] params = parseParams[input];
+                    socketOut.println("NULL");
                 }
             } catch(Exception e) {
                 System.err.println(e.getMessage());
