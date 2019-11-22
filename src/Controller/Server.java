@@ -85,16 +85,7 @@ public class Server {
                     // and notify renters
                     socketOut.println("DONE");
                 } else if (input.startsWith("LOGIN-")) {
-                    String[] params = parseParams(input);
-                    String accInfo = login.authenticate(params[0], params[1]);
-                    String[] accInfoSplit = accInfo.split("-");
-                    addAccount(params[0], params[1], Integer.parseInt(accInfoSplit[0]), accInfoSplit[1]);
-
-                    if (accInfo != null) {
-                        socketOut.println(accInfo);
-                    } else {
-                        socketOut.println("ERROR");
-                    }
+                    handleLogin(input);
                 } else if (input.startsWith("POST/UPDATELISTING-")) {
                     String[] params = parseParams(input);
                     socketOut.println("DONE");
@@ -112,6 +103,19 @@ public class Server {
             } catch(Exception e) {
                 System.err.println(e.getMessage());
             }
+        }
+    }
+
+    public void handleLogin(String input) {
+        String[] params = parseParams(input);
+        String accInfo = login.authenticate(params[0], params[1]);
+        String[] accInfoSplit = accInfo.split("-");
+        addAccount(params[0], params[1], Integer.parseInt(accInfoSplit[0]), accInfoSplit[1]);
+
+        if (accInfo != null) {
+            socketOut.println(accInfo);
+        } else {
+            socketOut.println("ERROR");
         }
     }
 
