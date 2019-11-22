@@ -23,8 +23,8 @@ public class Listener {
         client = c;
     }
 
-    public ArrayList<String> getListings() {
-        ArrayList<String> listings = new ArrayList<>();
+    public String getListings() {
+        String listings = "hi";
         return listings;
     }
 }
