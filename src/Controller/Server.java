@@ -1,11 +1,15 @@
 package Controller;
 
+import Entity.LandlordAccount;
+import Entity.ManagerAccount;
+import Entity.RegisteredRenterAccount;
 import Systems.DatabaseSystem;
 
 import java.io.IOException;
 import java.net.*;
 import java.io.*;
 import java.util.*;
+import Entity.Account;
 
 public class Server {
     /**
@@ -25,12 +29,25 @@ public class Server {
      */
     private BufferedReader socketIn;
 
+    private static LoginController login;
+
+    private DatabaseSystem db;
+
+    //  map account ids to account objects
+    private Hashtable<Integer, LandlordAccount> loggedInLandlords;
+    private Hashtable<Integer, RegisteredRenterAccount> loggedInRenters;
+    private Hashtable<Integer, ManagerAccount> loggedInManagers;
 
     /**
      * Constructor for Server
      * @param portNumber port used for Socket
      */
     public Server(int portNumber) {
+        db = new DatabaseSystem();
+        login = LoginController.getInstance(db);
+        loggedInLandlords = new Hashtable<>();
+        loggedInRenters = new Hashtable<>();
+        loggedInManagers = new Hashtable<>();
         try {
             serverSocket = new ServerSocket(portNumber);
             clientSocket = serverSocket.accept();
@@ -68,8 +85,7 @@ public class Server {
                     // and notify renters
                     socketOut.println("DONE");
                 } else if (input.startsWith("LOGIN-")) {
-                    String[] params = parseParams(input);
-                    socketOut.println("NULL");
+                    handleLogin(input);
                 } else if (input.startsWith("POST/UPDATELISTING-")) {
                     String[] params = parseParams(input);
                     socketOut.println("DONE");
@@ -81,6 +97,8 @@ public class Server {
                 } else if (input.startsWith("POST/CHANGESTATE")) {
                     String[] params = parseParams(input);
                     socketOut.println("NULL");
+                } else if (input.startsWith("EMAIL")) {
+                    socketOut.println("DONE");
                 }
             } catch(Exception e) {
                 System.err.println(e.getMessage());
@@ -88,9 +106,32 @@ public class Server {
         }
     }
 
+    public void handleLogin(String input) {
+        String[] params = parseParams(input);
+        String accInfo = login.authenticate(params[0], params[1]);
+        String[] accInfoSplit = accInfo.split("-");
+        addAccount(params[0], params[1], Integer.parseInt(accInfoSplit[0]), accInfoSplit[1]);
+
+        if (accInfo != null) {
+            socketOut.println(accInfo);
+        } else {
+            socketOut.println("ERROR");
+        }
+    }
+
     public String[] parseParams(String input) {
         String[] splitQueryAndParams = input.split("-");
         return splitQueryAndParams[1].split("/");
+    }
+
+    private void addAccount(String email, String password, int id, String type) {
+        if (type == "LANDLORD") {
+            loggedInLandlords.put(id, db.getLandlordAccount(email, password));
+        } else if (type == "RENTER") {
+            loggedInRenters.put(id, db.getRenterAccount(email, password));
+        } else if (type == "MANAGER") {
+            loggedInManagers.put(id, db.getManagerAccount(email, password));
+        }
     }
 
     /**
@@ -112,7 +153,6 @@ public class Server {
      */
     public static void main(String[] args) {
         Server server = new Server(5050);
-        DatabaseSystem db = new DatabaseSystem();
         server.communicate();
     }
 
