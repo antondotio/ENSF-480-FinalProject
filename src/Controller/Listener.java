@@ -41,7 +41,8 @@ public class Listener {
     }
 
     public String payFee(String listingID) {
-        return client.payFee(listingID);
+//        return client.payFee(listingID);
+        return "?";
     }
 
     public String updateListing() {

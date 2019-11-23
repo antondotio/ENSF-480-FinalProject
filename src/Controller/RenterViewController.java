@@ -114,7 +114,6 @@ public class RenterViewController {
 
     @FXML
     void search(ActionEvent event) {
-        System.out.println(((RadioButton) type.getSelectedToggle()).getText());
         String listings = listener.getListener().getListings(
                 ((RadioButton) type.getSelectedToggle()).getText(),
                 numOfBed.getText(),
@@ -162,8 +161,8 @@ public class RenterViewController {
     public void getListings(String listings){
         listingTable.setEditable(true);
         String table =
-                ("Listing ID\t|\tAddress\t|\tQuadrant\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\n" +
-                        "-----------------------------------------------------------------------------------" +
+                ("Listing ID\t\t|\t\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                        "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
                         listings);
         listingTable.setText(table);
         listingTable.setEditable(false);

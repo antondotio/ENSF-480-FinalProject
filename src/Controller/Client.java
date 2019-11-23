@@ -80,7 +80,7 @@ public class Client {
     public String postListing(String type, String bedrooms, String baths, String furnished,
     String quad, String street, String city, String country, String postalCode) {
         try {
-            sockeyOut.println("POST/PROPERTY-" + type, + "-" + bedrooms + "-" + baths + 
+            socketOut.println("POST/PROPERTY-" + type + "-" + bedrooms + "-" + baths +
                 "-" + furnished + "-" + quad + "-" + street + "-" + city + "-" + country + "-" + postalCode);
             return socketIn.readLine();
         } catch(Exception e) {

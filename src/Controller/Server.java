@@ -149,9 +149,9 @@ public class Server {
         } else {
             for (Listing l : listings) {
                 if (l.getStatus().equals("Active")) {
-                    socketOut.println(l.getListingIDnumber() + "\t" + l.getProperty().getAddress().toString() + "\t" +
-                            l.getProperty().getQuadrant() + "\t" + l.getProperty().getType() + "\t" + l.getProperty().getNumOfBedrooms() +
-                            "\t" + l.getProperty().getNumOfBathrooms() + "\t" + l.getProperty().isFurnished());
+                    socketOut.println(l.getListingIDnumber() + "\t\t\t" + l.getProperty().getAddress().toString() + "\t\t\t" +
+                            l.getProperty().getQuadrant() + "\t\t\t" + l.getProperty().getType() + "\t\t\t" + l.getProperty().getNumOfBedrooms() +
+                            "\t\t\t\t" + l.getProperty().getNumOfBathrooms() + "\t\t\t\t" + l.getProperty().isFurnished());
                 }
             }
             socketOut.println("DONE");
