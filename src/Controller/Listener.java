@@ -23,13 +23,17 @@ public class Listener {
         client = c;
     }
 
-    public String getListings() {
-        String listings = "hi";
-        return listings;
+    public String getListings(boolean typeApart, boolean typeBase, 
+    boolean typeAttach, boolean typeDetach, boolean typeTown, 
+    boolean typeCondo, String beds, String baths, String furnished, 
+    boolean quadNE, boolean quadNW, boolean quadSE, boolean quadSW) {
+        
+        return client.getListings(typeApart, typeBase, typeAttach, 
+            typeDetach, typeTown, typeCondo, beds, baths, furnished, 
+            quadNE, quadNW, quadSE, quadSW);
     }
 
-    String loginCommand(String username, String password)
-    {
+    String loginCommand(String username, String password) {
         return client.login(username, password);
     }
 }
