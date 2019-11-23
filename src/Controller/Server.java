@@ -101,7 +101,7 @@ public class Server {
                 } else if (input.startsWith("POST/UPDATELISTING-")) {
                     //  expects listingId-newFee-newFeePeriod
                     //  e.g. POST/UPDATELISTING-1-35-30 will set listing 1's fee to $35 and it will last 35 days on next payment
-                    handleUpdateListing();
+                    handleUpdateListing(input);
                 } else if (input.equals("GET/SUMMARYREPORT")) {
                     socketOut.println("NULL");
                 } else if (input.startsWith("POST/CHANGESTATE-")) {
