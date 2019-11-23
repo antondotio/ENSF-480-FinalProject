@@ -54,10 +54,10 @@ public class Client {
         }
     }
 
-    public String getListings(boolean type, String beds, 
-        String baths, String furnished, boolean quad) {
+    public String getListings(String type, String beds,
+        String baths, String furnished, String quad) {
         try {
-            socketOut.println("GET/LISTING-" + checkNull(accountID) + 
+            socketOut.println("GET/LISTING-" + checkNull(accountID.toString()) +
                 "-" + type + "-" + checkNull(beds) + "-" + checkNull(baths) + 
                 "-" + checkNull(furnished) + "-" + quad);
             String response = socketIn.readLine();

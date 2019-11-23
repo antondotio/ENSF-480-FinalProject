@@ -112,7 +112,7 @@ public class Server {
         String accInfo = login.authenticate(params[0], params[1]);
         String[] accInfoSplit = accInfo.split("-");
         addAccount(params[0], params[1], Integer.parseInt(accInfoSplit[0]), accInfoSplit[1]);
-
+        System.out.println(accInfo);
         if (accInfo != null) {
             socketOut.println(accInfo);
         } else {
@@ -121,8 +121,8 @@ public class Server {
     }
 
     public String[] parseParams(String input) {
-        String[] splitQueryAndParams = input.split("-");
-        return splitQueryAndParams[1].split("/");
+        String[] split = input.split("-");
+        return Arrays.copyOfRange(split, 1, split.length);
     }
 
     private void addAccount(String email, String password, int id, String type) {

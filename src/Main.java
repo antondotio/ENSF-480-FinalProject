@@ -5,8 +5,8 @@ import javafx.stage.Stage;
 import javafx.scene.*;
 import javafx.fxml.FXMLLoader;
 import Controller.Client;
-import Controller.Listener;
 import Systems.DatabaseSystem;
+import static Controller.Listener.getListener;
 
 public class Main extends Application {
 
