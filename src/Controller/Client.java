@@ -79,6 +79,24 @@ public class Client {
         try {
             sockeyOut.println("POST/PROPERTY-" + type, + "-" + bedrooms + "-" + baths + 
                 "-" + furnished + "-" + quad + "-" + street + "-" + city + "-" + country + "-" + postalCode);
+            return socketIn.readLine();
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
+
+    public String getLandlordListings() {
+        try {
+            socketOut.println("GET/LANDLORDLISTINGS-" + checkNull(accountID.toString()));
+            String response = socketIn.readLine();
+            String listings = "";
+            while(!response.equals("DONE"))
+            {
+                listings += response;
+                listings += "\n";
+            }
+            return listings;
         } catch(Exception e) {
             System.err.println(e.getMessage());
             return "ERROR";

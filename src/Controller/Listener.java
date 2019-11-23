@@ -24,7 +24,6 @@ public class Listener {
     }
 
     public String getListings(String type, String beds, String baths, String furnished, String quad) {
-        
         return client.getListings(type, beds, baths, furnished, quad);
     }
 
@@ -37,8 +36,16 @@ public class Listener {
         return client.postListing(type, bedrooms, baths, furnished, quad, street, city, country, postalCode);
     }
 
+    public String getLandlordListings() {
+        return client.getLandlordListings();
+    }
+
+    public String payFee(String listingID) {
+        return client.payFee(listingID);
+    }
+
     public String updateListing() {
-        //  needs manager GUI
+        //  idk for who this is
         return null;
     }
 
