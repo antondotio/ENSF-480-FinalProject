@@ -1,7 +1,7 @@
 package Entity;
 
 public class Listing {
-	LandlordAccount landlord;
+	int landlordAccountId;
     Property property;
     Date listingStart;
     Date listingEnd;
@@ -9,11 +9,12 @@ public class Listing {
     String status;
 	int listingIDnumber;
 
-    public Listing(LandlordAccount landlord, Property property, double paymentFee) {
-		this.landlord = landlord;
+    public Listing(int landlordAccountId, Property property, double paymentFee, String status, int listingIDnumber) {
+		this.landlordAccountId = landlordAccountId;
         this.property = property;
         this.paymentFee = paymentFee;
-        this.status = "suspended";
+        this.status = status;
+        this.listingIDnumber = listingIDnumber;
     }
 
 	public Property getProperty() {
@@ -58,5 +59,17 @@ public class Listing {
 
 	public void setListingIDnumber(int listingIDnumber) {
 		this.listingIDnumber = listingIDnumber;
+	}
+
+	public int getLandlordAccountId() {
+		return landlordAccountId;
+	}
+
+	public void setLandlordAccountId(int landlordAccountId) {
+		this.landlordAccountId = landlordAccountId;
+	}
+
+	public void setProperty(Property property) {
+		this.property = property;
 	}
 }

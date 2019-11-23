@@ -57,7 +57,7 @@ public class Client {
     public String getListings(String type, String beds,
         String baths, String furnished, String quad) {
         try {
-            socketOut.println("GET/LISTING-" + checkNull(accountID.toString()) +
+            socketOut.println("GET/LISTINGS-" + checkNull(accountID) +
                 "-" + type + "-" + checkNull(beds) + "-" + checkNull(baths) + 
                 "-" + checkNull(furnished) + "-" + quad);
             String response = socketIn.readLine();
@@ -66,10 +66,12 @@ public class Client {
             {
                 listings += response;
                 listings += "\n";
+                response = socketIn.readLine();
             }
             return listings;
         } catch(Exception e) {
             System.err.println(e.getMessage());
+            e.printStackTrace();
             return "ERROR";
         }
     }
@@ -118,9 +120,15 @@ public class Client {
     }
 
     public String checkNull(String input) {
-        if(input.equals(""))
+        if(input == null || input.equals(""))
             return "NULL";
         return input;
+    }
+
+    public String checkNull(Integer input) {
+        if(input == null)
+            return "NULL";
+        return input.toString();
     }
 
     /**

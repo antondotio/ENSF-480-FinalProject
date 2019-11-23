@@ -10,6 +10,7 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 import Entity.Account;
+import Entity.Listing;
 
 public class Server {
     /**
@@ -38,6 +39,11 @@ public class Server {
     private Hashtable<Integer, RegisteredRenterAccount> loggedInRenters;
     private Hashtable<Integer, ManagerAccount> loggedInManagers;
 
+    private LandlordController landlordController;
+    private RenterController renterController;
+    private RegisteredRenterController registeredRenterController;
+    private ManagerController managerController;
+
     /**
      * Constructor for Server
      * @param portNumber port used for Socket
@@ -48,6 +54,12 @@ public class Server {
         loggedInLandlords = new Hashtable<>();
         loggedInRenters = new Hashtable<>();
         loggedInManagers = new Hashtable<>();
+
+        landlordController = new LandlordController(db);
+        renterController = new RenterController(db);
+        registeredRenterController = new RegisteredRenterController(db);
+        managerController = new ManagerController(db);
+
         try {
             serverSocket = new ServerSocket(portNumber);
             clientSocket = serverSocket.accept();
@@ -74,12 +86,11 @@ public class Server {
                 System.out.println(input);
                 //  NOTE: I chose to ignore email because since it's simulated we can handle it all on the front end
                 if(input.startsWith("GET/LISTINGS-")) {
+                    handleGetListings(input);
+                } else if (input.startsWith("POST/LISTING-")) {
                     String[] params = parseParams(input);
                     socketOut.println("NULL");
                     socketOut.println("DONE");               
-                } else if (input.startsWith("POST/PROPERTY-")) {
-                    String[] params = parseParams(input);
-                    socketOut.println("DONE");
                 } else if (input.startsWith("POST/FEE-")) {
                     String[] params = parseParams(input);
                     // create listing and make it visible for renters
@@ -103,6 +114,7 @@ public class Server {
                 }
             } catch(Exception e) {
                 System.err.println(e.getMessage());
+                e.printStackTrace();
             }
         }
     }
@@ -117,6 +129,32 @@ public class Server {
             socketOut.println(accInfo);
         } else {
             socketOut.println("ERROR");
+        }
+    }
+
+    public void handleGetListings(String input) {
+        String[] params = parseParams(input);
+        ArrayList<Listing> listings;
+        if (params[0].equals("NULL")) {
+            //  use rentercontroller
+            listings = renterController.getListings(Parsing.parseAny(params[1]), Parsing.parseInt(params[2]), Parsing.parseDouble(params[3]),
+                    Parsing.parseFurnished(params[4]), Parsing.parseAny(params[5]));
+        } else {
+            //  use registeredrentercontroller
+            listings = registeredRenterController.getListings(Integer.parseInt(params[0]), Parsing.parseAny(params[1]), Parsing.parseInt(params[2]),
+                    Parsing.parseDouble(params[3]), Parsing.parseFurnished(params[4]), Parsing.parseAny(params[5]));
+        }
+        if (listings == null) {
+            socketOut.println("NULL");
+        } else {
+            for (Listing l : listings) {
+                if (l.getStatus().equals("Active")) {
+                    socketOut.println(l.getListingIDnumber() + "\t" + l.getProperty().getAddress().toString() + "\t" +
+                            l.getProperty().getQuadrant() + "\t" + l.getProperty().getType() + "\t" + l.getProperty().getNumOfBedrooms() +
+                            "\t" + l.getProperty().getNumOfBathrooms() + "\t" + l.getProperty().isFurnished());
+                }
+            }
+            socketOut.println("DONE");
         }
     }
 
