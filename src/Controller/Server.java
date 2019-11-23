@@ -76,6 +76,7 @@ public class Server {
                 if(input.startsWith("GET/LISTINGS-")) {
                     String[] params = parseParams(input);
                     socketOut.println("NULL");
+                    socketOut.println("DONE");               
                 } else if (input.startsWith("POST/PROPERTY-")) {
                     String[] params = parseParams(input);
                     socketOut.println("DONE");

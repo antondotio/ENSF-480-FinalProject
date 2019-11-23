@@ -3,6 +3,8 @@ package Controller;
 import java.net.Socket;
 import java.io.*;
 import java.lang.StringBuilder;
+import java.io.IOException;
+
 
 public class Client {
     /**
@@ -17,6 +19,8 @@ public class Client {
      * Output to socket.
      */
     private PrintWriter socketOut;
+
+    private int accountID;
 
     /**
      * Constructs a new Client.
@@ -33,6 +37,46 @@ public class Client {
         }
     }
 
+    public String login(String username, String password) {
+        try {
+            socketOut.println("LOGIN-" + username + "-" + password);
+            String response = socketIn.readLine();
+            if(response.equals("ERROR")) {
+                return "ERROR";
+            }
+            String [] params = parseParams(response);
+            accountID = Integer.parseInt(params[0]);
+            return params[1];
+        }
+        catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
+
+    public String getListings(boolean typeApart, boolean typeBase, 
+        boolean typeAttach, boolean typeDetach, boolean typeTown, 
+        boolean typeCondo, String beds, String baths, String furnished, 
+        boolean quadNE, boolean quadNW, boolean quadSE, boolean quadSW) {
+        try {
+            socketOut.println("GET/LISTING-" + typeApart + "-" + typeBase +
+                "-" + typeAttach + "-" + typeDetach + "-" + typeTown +
+                "-" + typeCondo + "-" + checkNull(beds) + "-" + checkNull(baths) +
+                "-" + checkNull(furnished) + "-" + quadNE + "-" + quadNW + 
+                "-" + quadSE + "-" + quadSW);
+                String response = socketIn.readLine();
+                String listings = "";
+                while(!response.equals("DONE"))
+                {
+                    listings += response;
+                    listings += "\n";
+                }
+                return listings;
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
 //    /**
 //     * Display all tools in the shop.
 //     * @return A string containing all tools in the shop.
@@ -49,6 +93,16 @@ public class Client {
 //        }
 //        return data.toString();
 //    }
+
+public String[] parseParams(String input) {
+    return input.split("-");
+}
+
+public String checkNull(String input) {
+    if(input.equals(""))
+        return "NULL";
+    return input;
+}
 
     /**
      * Closes all connections to the socket.

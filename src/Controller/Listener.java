@@ -27,4 +27,9 @@ public class Listener {
         String listings = "hi";
         return listings;
     }
+
+    String loginCommand(String username, String password)
+    {
+        return client.login(username, password);
+    }
 }
