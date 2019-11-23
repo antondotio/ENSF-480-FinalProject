@@ -23,18 +23,36 @@ public class Listener {
         client = c;
     }
 
-    public String getListings(boolean typeApart, 
-    boolean typeAttach, boolean typeDetach, boolean typeTown, 
-    String beds, String baths, String furnished, 
-    boolean quadNE, boolean quadNW, boolean quadSE, boolean quadSW) {
+    public String getListings(String type, String beds, String baths, String furnished, String quad) {
         
-        return client.getListings(typeApart, typeAttach, 
-            typeDetach, typeTown, beds, baths, furnished, 
-            quadNE, quadNW, quadSE, quadSW);
+        return client.getListings(type, beds, baths, furnished, quad);
     }
 
-    public String loginCommand(String username, String password)
-    {
+    public String loginCommand(String username, String password) {
         return client.login(username, password);
+    }
+
+    public String postListing() {
+        //  needs landlord GUI
+        return null;
+    }
+
+    public String updateListing() {
+        //  needs manager GUI
+        return null;
+    }
+
+    public String getSingleListing() {
+        // needs manager GUI
+        return null;
+    }
+
+    public String getSummary() {
+        //  needs manager GUI
+        return null;
+    }
+
+    public String changeState(String listingID, String newState) {
+        return client.changeListingState(listingID, newState);
     }
 }
