@@ -24,7 +24,6 @@ public class Listener {
     }
 
     public String getListings(String type, String beds, String baths, String furnished, String quad) {
-        
         return client.getListings(type, beds, baths, furnished, quad);
     }
 

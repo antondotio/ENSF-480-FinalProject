@@ -2,9 +2,9 @@ package Entity;
 
 public class SearchCriteria {
     String type;
-    int numOfBedrooms;
-    double numOfBathrooms;
-    boolean furnished;
+    Integer numOfBedrooms;
+    Double numOfBathrooms;
+    Boolean furnished;
     String quadrant;
     int accountId;
 

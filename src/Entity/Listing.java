@@ -9,11 +9,12 @@ public class Listing {
     String status;
 	int listingIDnumber;
 
-    public Listing(int landlordAccountId, Property property, double paymentFee) {
+    public Listing(int landlordAccountId, Property property, double paymentFee, String status, int listingIDnumber) {
 		this.landlordAccountId = landlordAccountId;
         this.property = property;
         this.paymentFee = paymentFee;
-        this.status = "suspended";
+        this.status = status;
+        this.listingIDnumber = listingIDnumber;
     }
 
 	public Property getProperty() {

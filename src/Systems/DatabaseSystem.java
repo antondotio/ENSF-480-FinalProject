@@ -24,7 +24,11 @@ public class DatabaseSystem {
     public String authenticate(String email, String password) {
         try {
             rs = getAccount(email, password);
-            return rs.getInt("id") + "-" + rs.getString("type");
+            if (rs.next()) {
+                return rs.getInt("id") + "-" + rs.getString("type");
+            } else {
+                throw new Exception("No results returned for logging in " + email);
+            }
         } catch (Exception e) {
             System.out.println("Error logging in user " + email);
             return null;
@@ -33,10 +37,10 @@ public class DatabaseSystem {
 
     public ArrayList<Listing> getListings(SearchCriteria sc) {
         try {
-            String statementStr = "SELECT * FROM `Listing` AS L, `Property` AS P WHERE ";
-            statementStr = updateSearchStatementCriteria(statementStr, sc);
+            StringBuilder statementStr = new StringBuilder("SELECT * FROM `Listing` AS `L`, `Property` AS `P` ");
+            updateSearchStatementCriteria(statementStr, sc);
             statement = connection.createStatement();
-            rs = statement.executeQuery(statementStr);
+            rs = statement.executeQuery(statementStr.toString());
             ArrayList<Listing> listings = new ArrayList<>();
             while (rs.next()) {
                 listings.add(
@@ -46,7 +50,7 @@ public class DatabaseSystem {
                                         rs.getString("street"), rs.getString("city"),
                                         rs.getString("country"), rs.getString("postalCode")),
                                 rs.getInt("P.id")),
-                            rs.getDouble("fee")));
+                            rs.getDouble("fee"), rs.getString("status"), rs.getInt("L.id")));
             }
             return listings;
         } catch (SQLException e) {
@@ -85,9 +89,12 @@ public class DatabaseSystem {
     public LandlordAccount getLandlordAccount(String email, String password) {
         try {
             rs = getAccount(email, password);
-
-            return new LandlordAccount(new Name(rs.getString("fname"), rs.getString("lname")),
-                    rs.getInt("id"), rs.getString("email"));
+            if (rs.next()) {
+                return new LandlordAccount(new Name(rs.getString("fname"), rs.getString("lname")),
+                        rs.getInt("id"), rs.getString("email"));
+            } else {
+                throw new Exception("No results returned for logging in " + email);
+            }
         } catch (Exception e) {
             System.out.println("Error getting user " + email);
             return null;
@@ -97,8 +104,12 @@ public class DatabaseSystem {
     public ManagerAccount getManagerAccount(String email, String password) {
         try {
             rs = getAccount(email, password);
-            return new ManagerAccount(new Name(rs.getString("fname"), rs.getString("lname")),
-                    rs.getInt("id"), rs.getString("email"));
+            if (rs.next()) {
+                return new ManagerAccount(new Name(rs.getString("fname"), rs.getString("lname")),
+                        rs.getInt("id"), rs.getString("email"));
+            } else {
+                throw new Exception("No results returned for logging in " + email);
+            }
         } catch (Exception e) {
             System.out.println("Error getting user " + email);
             return null;
@@ -108,51 +119,49 @@ public class DatabaseSystem {
     public RegisteredRenterAccount getRenterAccount(String email, String password) {
         try {
             rs = getAccount(email, password);
-            return new RegisteredRenterAccount(new Name(rs.getString("fname"), rs.getString("lname")),
-                    rs.getInt("id"), rs.getString("email"));
+            if (rs.next()) {
+                return new RegisteredRenterAccount(new Name(rs.getString("fname"), rs.getString("lname")),
+                        rs.getInt("id"), rs.getString("email"));
+            } else {
+                throw new Exception("No results returned for logging in " + email);
+            }
         } catch (Exception e) {
             System.out.println("Error getting user " + email);
             return null;
         }
     }
 
-    private String updateSearchStatementCriteria(String statementStr, SearchCriteria sc) {
+    private void updateSearchStatementCriteria(StringBuilder statementStr, SearchCriteria sc) {
         boolean atLeastOneCriteria = false;
         if (sc.getQuadrant() != null) {
-            if (atLeastOneCriteria) {
-                statementStr += "AND ";
-            }
-            statementStr += "`quadrant` = '" + sc.getQuadrant() + "' ";
-            atLeastOneCriteria = true;
+            atLeastOneCriteria = handleIfFirst(statementStr, atLeastOneCriteria);
+            statementStr.append("`quadrant` = '" + sc.getQuadrant() + "' ");
         }
         if (sc.getType() != null) {
-            if (atLeastOneCriteria) {
-                statementStr += "AND ";
-            }
-            statementStr += "`type` = '" + sc.getType() + "' ";
-            atLeastOneCriteria = true;
+            atLeastOneCriteria = handleIfFirst(statementStr, atLeastOneCriteria);
+            statementStr.append("`type` = '" + sc.getType() + "' ");
         }
         if (sc.isFurnished() != null) {
-            if (atLeastOneCriteria) {
-                statementStr += "AND ";
-            }
-            statementStr += "`isFurnished` = '" + sc.isFurnished() + "' ";
-            atLeastOneCriteria = true;
+            atLeastOneCriteria = handleIfFirst(statementStr, atLeastOneCriteria);
+            statementStr.append("`isFurnished` = '" + (sc.isFurnished() ? '1' : '0') + "' ");
         }
         if (sc.getNumOfBedrooms() != null) {
-            if (atLeastOneCriteria) {
-                statementStr += "AND ";
-            }
-            statementStr += "`numBedrooms` = '" + sc.getNumOfBedrooms() + "' ";
-            atLeastOneCriteria = true;
+            atLeastOneCriteria = handleIfFirst(statementStr, atLeastOneCriteria);
+            statementStr.append("`numBedrooms` = '" + sc.getNumOfBedrooms() + "' ");
         }
         if (sc.getNumOfBathrooms() != null) {
-            if (atLeastOneCriteria) {
-                statementStr += "AND ";
-            }
-            statementStr += "`numBathrooms` = '" + sc.getNumOfBathrooms() + "' ";
-            atLeastOneCriteria = true;
+            atLeastOneCriteria = handleIfFirst(statementStr, atLeastOneCriteria);
+            statementStr.append("`numBathrooms` = '" + sc.getNumOfBathrooms() + "' ");
         }
-        return statementStr;
+    }
+
+    private boolean handleIfFirst(StringBuilder statementStr, boolean atLeastOneCriteria) {
+        if (atLeastOneCriteria) {
+            statementStr.append("AND ");
+            return true;
+        }
+        statementStr.append("WHERE ");
+        atLeastOneCriteria = true;
+        return true;
     }
 }

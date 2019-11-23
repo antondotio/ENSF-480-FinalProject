@@ -18,6 +18,13 @@ public class Parsing {
         return null;
     }
 
+    public static String parseAny(String s) {
+        if (s.equals("Any")) {
+            return null;
+        }
+        return s;
+    }
+
     public static Double parseDouble(String s) {
         if (s.equals("NULL")) {
             return null;

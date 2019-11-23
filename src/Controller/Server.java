@@ -114,6 +114,7 @@ public class Server {
                 }
             } catch(Exception e) {
                 System.err.println(e.getMessage());
+                e.printStackTrace();
             }
         }
     }
@@ -136,19 +137,24 @@ public class Server {
         ArrayList<Listing> listings;
         if (params[0].equals("NULL")) {
             //  use rentercontroller
-            listings = renterController.getListings(params[1], Parsing.parseInt(params[2]), Parsing.parseDouble(params[3]),
-                    Parsing.parseFurnished(params[4]), params[5]);
+            listings = renterController.getListings(Parsing.parseAny(params[1]), Parsing.parseInt(params[2]), Parsing.parseDouble(params[3]),
+                    Parsing.parseFurnished(params[4]), Parsing.parseAny(params[5]));
         } else {
             //  use registeredrentercontroller
-            listings = registeredRenterController.getListings(Integer.parseInt(params[0]), params[1], Parsing.parseInt(params[2]),
-                    Parsing.parseDouble(params[3]), Parsing.parseFurnished(params[4]), params[5]);
+            listings = registeredRenterController.getListings(Integer.parseInt(params[0]), Parsing.parseAny(params[1]), Parsing.parseInt(params[2]),
+                    Parsing.parseDouble(params[3]), Parsing.parseFurnished(params[4]), Parsing.parseAny(params[5]));
         }
         if (listings == null) {
             socketOut.println("NULL");
         } else {
-            for (Listing : listing) {
-                //  print each listing
+            for (Listing l : listings) {
+                if (l.getStatus().equals("Active")) {
+                    socketOut.println(l.getListingIDnumber() + "\t" + l.getProperty().getAddress().toString() + "\t" +
+                            l.getProperty().getQuadrant() + "\t" + l.getProperty().getType() + "\t" + l.getProperty().getNumOfBedrooms() +
+                            "\t" + l.getProperty().getNumOfBathrooms() + "\t" + l.getProperty().isFurnished());
+                }
             }
+            socketOut.println("DONE");
         }
     }
 
