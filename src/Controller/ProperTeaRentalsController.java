@@ -49,6 +49,7 @@ public class ProperTeaRentalsController {
     @FXML
     void login(ActionEvent event) throws IOException {
         // handle the event here
+
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

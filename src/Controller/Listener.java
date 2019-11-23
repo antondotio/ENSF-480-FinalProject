@@ -28,7 +28,7 @@ public class Listener {
         return listings;
     }
 
-    String loginCommand(String username, String password)
+    public String loginCommand(String username, String password)
     {
         return client.login(username, password);
     }
