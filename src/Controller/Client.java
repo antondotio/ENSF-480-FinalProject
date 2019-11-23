@@ -2,7 +2,6 @@ package Controller;
 
 import java.net.Socket;
 import java.io.*;
-import java.lang.StringBuilder;
 import java.io.IOException;
 
 
@@ -54,14 +53,14 @@ public class Client {
         }
     }
 
-    public String getListings(boolean typeApart, boolean typeBase, 
-        boolean typeAttach, boolean typeDetach, boolean typeTown, 
-        boolean typeCondo, String beds, String baths, String furnished, 
-        boolean quadNE, boolean quadNW, boolean quadSE, boolean quadSW) {
+    public String getListings(boolean typeApart, boolean typeAttach, 
+        boolean typeDetach, boolean typeTown, String beds, 
+        String baths, String furnished, boolean quadNE, 
+        boolean quadNW, boolean quadSE, boolean quadSW) {
         try {
-            socketOut.println("GET/LISTING-" + typeApart + "-" + typeBase +
+            socketOut.println("GET/LISTING-" + accountID + "-" + typeApart +
                 "-" + typeAttach + "-" + typeDetach + "-" + typeTown +
-                "-" + typeCondo + "-" + checkNull(beds) + "-" + checkNull(baths) +
+                "-" + checkNull(beds) + "-" + checkNull(baths) +
                 "-" + checkNull(furnished) + "-" + quadNE + "-" + quadNW + 
                 "-" + quadSE + "-" + quadSW);
                 String response = socketIn.readLine();

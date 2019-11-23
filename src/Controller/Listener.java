@@ -23,13 +23,13 @@ public class Listener {
         client = c;
     }
 
-    public String getListings(boolean typeApart, boolean typeBase, 
+    public String getListings(boolean typeApart, 
     boolean typeAttach, boolean typeDetach, boolean typeTown, 
-    boolean typeCondo, String beds, String baths, String furnished, 
+    String beds, String baths, String furnished, 
     boolean quadNE, boolean quadNW, boolean quadSE, boolean quadSW) {
         
-        return client.getListings(typeApart, typeBase, typeAttach, 
-            typeDetach, typeTown, typeCondo, beds, baths, furnished, 
+        return client.getListings(typeApart, typeAttach, 
+            typeDetach, typeTown, beds, baths, furnished, 
             quadNE, quadNW, quadSE, quadSW);
     }
 
