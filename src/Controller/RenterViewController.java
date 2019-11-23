@@ -114,13 +114,14 @@ public class RenterViewController {
 
     @FXML
     void search(ActionEvent event) {
+        System.out.println(((RadioButton) type.getSelectedToggle()).getText());
         String listings = listener.getListener().getListings(
                 ((RadioButton) type.getSelectedToggle()).getText(),
                 numOfBed.getText(),
                 numOfBath.getText(),
                 ((RadioButton) furnished.getSelectedToggle()).getText(),
                 ((RadioButton) quad.getSelectedToggle()).getText());
-        getListing(listings);
+        getListings(listings);
     }
 
     @FXML
@@ -158,9 +159,13 @@ public class RenterViewController {
 
     }
 
-    public void getListing(String listings){
+    public void getListings(String listings){
         listingTable.setEditable(true);
-        listingTable.setText(listings);
+        String table =
+                ("Listing ID\t|\tAddress\t|\tQuadrant\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\n" +
+                        "-----------------------------------------------------------------------------------" +
+                        listings);
+        listingTable.setText(table);
         listingTable.setEditable(false);
     }
 }

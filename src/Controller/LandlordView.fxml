@@ -7,14 +7,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="950.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.LandlordViewController">
+<AnchorPane prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.LandlordViewController">
   <children>
     <Text layoutX="378.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProperTea Rentals">
       <font>
         <Font size="40.0" />
       </font>
     </Text>
-    <Button id="logoutHutton" fx:id="logoutButton" layoutX="962.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
     <Text layoutX="14.0" layoutY="206.0" smooth="true" strokeType="OUTSIDE" strokeWidth="0.0" text="House Type:" visible="true" />
     <TextField fx:id="type" layoutX="136.0" layoutY="183.0" prefWidth="200.0" promptText="" text="" />
     <Text layoutX="14.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Bathrooms:" />
@@ -44,8 +43,17 @@
         <Font size="30.0" />
       </font>
     </Text>
-    <TextArea fx:id="landlordProperties" layoutX="14.0" layoutY="377.0" prefHeight="369.0" prefWidth="1047.0" wrapText="true" />
+    <TextArea fx:id="landlordProperties" layoutX="14.0" layoutY="377.0" prefHeight="269.0" prefWidth="1047.0" wrapText="true" />
     <Text layoutX="14.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Properties:" />
-    <Text layoutX="14.0" layoutY="785.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update:" />
+    <Text layoutX="13.0" layoutY="687.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update:" />
+    <Text layoutX="537.0" layoutY="687.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment:" />
+    <Text layoutX="577.0" layoutY="745.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
+    <TextField layoutX="684.0" layoutY="719.0" prefWidth="109.0" />
+    <Button layoutX="849.0" layoutY="718.0" mnemonicParsing="false" text="Make Payment" />
+    <Text layoutX="20.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
+    <TextField layoutX="128.0" layoutY="700.0" prefWidth="109.0" />
+    <Text layoutX="63.0" layoutY="765.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State:" />
+    <TextField layoutX="128.0" layoutY="742.0" prefWidth="109.0" />
+    <Button layoutX="286.0" layoutY="716.0" mnemonicParsing="false" text="Update" />
   </children>
 </AnchorPane>

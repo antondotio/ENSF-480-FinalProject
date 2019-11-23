@@ -46,6 +46,7 @@ public class Client {
             }
             String [] params = parseParams(response);
             accountID = Integer.parseInt(params[0]);
+            System.out.println(response);
             return params[1];
         }
         catch(Exception e) {
