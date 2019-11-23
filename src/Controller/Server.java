@@ -91,9 +91,6 @@ public class Server {
                     String[] params = parseParams(input);
                     socketOut.println("NULL");
                     socketOut.println("DONE");               
-                } else if (input.startsWith("POST/PROPERTY-")) {
-                    String[] params = parseParams(input);
-                    socketOut.println("DONE");
                 } else if (input.startsWith("POST/FEE-")) {
                     String[] params = parseParams(input);
                     // create listing and make it visible for renters
@@ -139,12 +136,12 @@ public class Server {
         ArrayList<Listing> listings;
         if (params[0].equals("NULL")) {
             //  use rentercontroller
-            listings = renterController.getListings(params[1], Integer.parseInt(params[2]), Double.parseDouble(params[3]),
-                    params[4] == null ? null : Boolean.parseBoolean(params[4]), params[5]);
+            listings = renterController.getListings(params[1], Parsing.parseInt(params[2]), Parsing.parseDouble(params[3]),
+                    Parsing.parseFurnished(params[4]), params[5]);
         } else {
             //  use registeredrentercontroller
-            listings = registeredRenterController.getListings(Integer.parseInt(params[0]), params[1], Integer.parseInt(params[2]),
-                    Double.parseDouble(params[3]), params[4] == null ? null : Boolean.parseBoolean(params[4]), params[5]);
+            listings = registeredRenterController.getListings(Integer.parseInt(params[0]), params[1], Parsing.parseInt(params[2]),
+                    Parsing.parseDouble(params[3]), Parsing.parseFurnished(params[4]), params[5]);
         }
         if (listings == null) {
             socketOut.println("NULL");
