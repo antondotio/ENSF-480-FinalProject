@@ -32,9 +32,9 @@ public class Listener {
         return client.login(username, password);
     }
 
-    public String postListing() {
-        //  needs landlord GUI
-        return null;
+    public String postListing(String type, String bedrooms, String baths, String furnished,
+    String quad, String street, String city, String country, String postalCode) {
+        return client.postListing(type, bedrooms, baths, furnished, quad, street, city, country, postalCode);
     }
 
     public String updateListing() {

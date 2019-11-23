@@ -39,7 +39,7 @@ public class Client {
 
     public String login(String username, String password) {
         try {
-            socketOut.println("LOGIN-" + username + "-" + password);
+            socketOut.println("LOGIN-" + checkNull(username) + "-" + checkNull(password));
             String response = socketIn.readLine();
             if(response.equals("ERROR")) {
                 return "ERROR";
@@ -74,7 +74,16 @@ public class Client {
         }
     }
 
-
+    public String postListing(String type, String bedrooms, String baths, String furnished,
+    String quad, String street, String city, String country, String postalCode) {
+        try {
+            sockeyOut.println("POST/PROPERTY-" + type, + "-" + bedrooms + "-" + baths + 
+                "-" + furnished + "-" + quad + "-" + street + "-" + city + "-" + country + "-" + postalCode);
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
 
     public String changeListingState(String listingID, String newState) {
         try {
