@@ -98,10 +98,10 @@ public class Server {
                     socketOut.println("DONE");
                 } else if (input.startsWith("LOGIN-")) {
                     handleLogin(input);
-                } else if (input.startsWith("POST/UPDATELISTING-")) {
+                } else if (input.startsWith("POST/UPDATELISTINGFEES-")) {
                     //  expects listingId-newFee-newFeePeriod
                     //  e.g. POST/UPDATELISTING-1-35-30 will set listing 1's fee to $35 and it will last 35 days on next payment
-                    handleUpdateListing(input);
+                    handleUpdateListingFees(input);
                 } else if (input.equals("GET/SUMMARYREPORT")) {
                     socketOut.println("NULL");
                 } else if (input.startsWith("POST/CHANGESTATE-")) {
@@ -157,7 +157,7 @@ public class Server {
         socketOut.println("DONE");
     }
 
-    public void handleUpdateListing(String input) {
+    public void handleUpdateListingFees(String input) {
         String[] params = parseParams(input);
         socketOut.println("DONE");
     }
