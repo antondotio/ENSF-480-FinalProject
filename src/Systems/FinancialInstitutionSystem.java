@@ -8,6 +8,6 @@ public class FinancialInstitutionSystem {
 
     public void submitPayment(Payment payment)
     {
-        System.out.printf("Payment %d sent to the bank\n", payment.getPaymentID());
+        System.out.printf("Payment for listing %d sent to the bank, by landlord %d\n", payment.getListingId(), payment.getLandlordId());
     }
 }

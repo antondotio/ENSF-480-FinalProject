@@ -1,16 +1,13 @@
 package Controller;
 
-import Entity.LandlordAccount;
-import Entity.ManagerAccount;
-import Entity.RegisteredRenterAccount;
+import Entity.*;
 import Systems.DatabaseSystem;
+import Systems.FinancialInstitutionSystem;
 
 import java.io.IOException;
 import java.net.*;
 import java.io.*;
 import java.util.*;
-import Entity.Account;
-import Entity.Listing;
 
 public class Server {
     /**
@@ -39,6 +36,7 @@ public class Server {
     private ListingController listingController;
 
     private DatabaseSystem db;
+    private FinancialInstitutionSystem fis;
 
     //  map account ids to account objects
     private Hashtable<Integer, LandlordAccount> loggedInLandlords;
@@ -51,6 +49,7 @@ public class Server {
      */
     public Server(int portNumber) {
         db = new DatabaseSystem();
+
         login = LoginController.getInstance(db);
         loggedInLandlords = new Hashtable<>();
         loggedInRenters = new Hashtable<>();
@@ -89,9 +88,9 @@ public class Server {
                     socketOut.println("NULL");
                     socketOut.println("DONE");               
                 } else if (input.startsWith("POST/PAYMENT-")) {
-                    String[] params = parseParams(input);
-                    // update
-                    socketOut.println("DONE");
+                    //  expects listingId
+                    //  e.g. POST/PAYMENT-1 will pay for listing 1
+                    handlePayment(input);
                 } else if (input.startsWith("LOGIN-")) {
                     handleLogin(input);
                 } else if (input.startsWith("POST/UPDATELISTINGFEES-")) {
@@ -112,6 +111,19 @@ public class Server {
                 System.err.println(e.getMessage());
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void handlePayment(String input) {
+        String[] params = parseParams(input);
+        //  mark correct listingid as paid, create a payment object
+        Payment payment = listingController.pay(Integer.parseInt(params[0]));
+        if (payment == null) {
+            System.out.println("ERROR: Failed to pay for listing with id " + params[0] + ".");
+            socketOut.println("ERROR");
+        } else {
+            fis.submitPayment(payment); // send payment to financial institution
+            socketOut.println("DONE");
         }
     }
 
@@ -212,6 +224,10 @@ public class Server {
         managerController.setListingController(listingController);
     }
 
+    public void setFinancialInstitutionSystem(FinancialInstitutionSystem fis) {
+        this.fis = fis;
+    }
+
     /**
      * CLoses the socket, printwrite and bufferedreader
      */
@@ -231,6 +247,8 @@ public class Server {
      */
     public static void main(String[] args) {
         Server server = new Server(5050);
+        FinancialInstitutionSystem fis = new FinancialInstitutionSystem();
+        server.setFinancialInstitutionSystem(fis);
         server.communicate();
     }
 

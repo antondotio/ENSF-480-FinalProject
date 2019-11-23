@@ -15,7 +15,7 @@ public class ManagerController {
         if (newState.equals("Active") && result) {
             //  set paid to false, because manager is now activating listing
             //  TODO: investigate case of manager setting to active without wanting to change paid state
-            return listingController.updatePaid(listingId, false);
+            return listingController.activateListing(listingId);
         }
         return result;
     }

@@ -1,6 +1,8 @@
 package Systems;
 
 import java.sql.*;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import Entity.*;
@@ -94,20 +96,61 @@ public class DatabaseSystem {
         }
     }
 
-    public boolean updatePaid(int listingId, boolean newState) {
+    //  set listing to active, set appropriate start and end dates, mark as not paid for next cycle
+    public boolean activateListing(int listingId) {
         try {
-            String newStateStr = newState ? "1" : "0";
-            String statementStr = "UPDATE `Listing` SET `paid`=? WHERE `id`=?";
+            String statementStr = "SELECT `feePeriod` FROM Listing WHERE `id`=?";
             pStatement = connection.prepareStatement(statementStr);
-            pStatement.setBoolean(1, newState);
-            pStatement.setInt(2, listingId);
+            pStatement.setInt(1, listingId);
+            rs = pStatement.executeQuery();
+
+            int feePeriod;
+            if (rs.next()) {
+                feePeriod = rs.getInt("feePeriod");
+            } else {
+                throw new SQLException("Unable to fetch feePeriod for listing with id " + listingId);
+            }
+
+            statementStr = "UPDATE `Listing` SET `paid`=?, `listingStart`=?, `listingEnd`=? WHERE `id`=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setBoolean(1, false);
+            pStatement.setObject(2, LocalDate.now());
+            pStatement.setObject(3, LocalDate.now().plusDays(feePeriod));
+            pStatement.setInt(4, listingId);
             pStatement.executeUpdate();
             return true;
         } catch(SQLException e) {
-            System.out.println("Database error when trying to set paid state of listing " + listingId + " to " + newState);
+            System.out.println("Database error when trying activate listing " + listingId);
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
+        }
+    }
+
+    //  update paid state of listing in db, then retrieve listing that you paid for so we can create a payment object.
+    public Payment pay(int listingId) {
+        try {
+            String statementStr = "UPDATE `Listing` SET `paid`=? WHERE `id`=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setBoolean(1, true);
+            pStatement.setInt(2, listingId);
+            pStatement.executeUpdate();
+
+            statementStr = "SELECT `id`, `landlordId`, `fee` FROM `Listing` WHERE `id`=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setInt(1, listingId);
+            rs = pStatement.executeQuery();
+
+            if (rs.next()) {
+                return new Payment(LocalDate.now(), rs.getInt("fee"), rs.getInt("id"), rs.getInt("landlordId"));
+            } else {
+                throw new SQLException("Database error when attempting to retrieve listing " + listingId + " after payment.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error when trying to pay for listing " + listingId);
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return null;
         }
     }
 

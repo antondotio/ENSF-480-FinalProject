@@ -1,21 +1,25 @@
 package Entity;
 
-public class Payment {
-    Date date;
-    double amount;
-    int paymentID;
+import java.time.LocalDate;
 
-    public Payment(Date date, double amount, int paymentID) {
+public class Payment {
+    LocalDate date;
+    double amount;
+    int listingId;
+    int landlordId;
+
+    public Payment(LocalDate date, double amount, int listingId, int landlordId) {
         this.date = date;
         this.amount = amount;
-        this.paymentID = paymentID;
+        this.listingId = listingId;
+        this.landlordId = landlordId;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -27,16 +31,29 @@ public class Payment {
         this.amount = amount;
     }
 
-    public int getPaymentID() {
-        return paymentID;
+    public int getListingId() {
+        return listingId;
     }
 
-    public void setPaymentID(int paymentID) {
-        this.paymentID = paymentID;
+    public void setListingId(int listingId) {
+        this.listingId = listingId;
+    }
+
+    public int getLandlordId() {
+        return landlordId;
+    }
+
+    public void setLandlordId(int landlordId) {
+        this.landlordId = landlordId;
     }
 
     @Override
     public String toString() {
-        return "Payment [amount=" + amount + ", date=" + date + ", paymentID=" + paymentID + "]";
+        return "Payment{" +
+                "date=" + date +
+                ", amount=" + amount +
+                ", listingId=" + listingId +
+                ", landlordId=" + landlordId +
+                '}';
     }
 }
