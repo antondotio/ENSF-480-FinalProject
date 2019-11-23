@@ -98,6 +98,7 @@ public class Client {
             {
                 listings += response;
                 listings += "\n";
+                response = socketIn.readLine();
             }
             return listings;
         } catch(Exception e) {
@@ -116,6 +117,9 @@ public class Client {
         }
     }
 
+    public String payFee(String listingID) {
+        return "";
+    }
 
 //    /**
 //     * Display all tools in the shop.
