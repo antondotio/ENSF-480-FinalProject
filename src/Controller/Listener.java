@@ -30,6 +30,6 @@ public class Listener {
 
     String loginCommand(String username, String password)
     {
-        return client.loign(username, password);
+        return client.login(username, password);
     }
 }

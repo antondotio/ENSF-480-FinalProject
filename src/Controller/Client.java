@@ -50,6 +50,7 @@ public class Client {
         }
         catch(Exception e) {
             System.err.println(e.getMessage());
+            return "ERROR";
         }
     }
 
@@ -64,15 +65,16 @@ public class Client {
                 "-" + checkNull(furnished) + "-" + quadNE + "-" + quadNW + 
                 "-" + quadSE + "-" + quadSW);
                 String response = socketIn.readLine();
-                String listings;
+                String listings = "";
                 while(!response.equals("DONE"))
                 {
-                    listings.append(response);
-                    listings.append("\n");
+                    listings += response;
+                    listings += "\n";
                 }
                 return listings;
         } catch(Exception e) {
-            System.err.println(e.getMessage);
+            System.err.println(e.getMessage());
+            return "ERROR";
         }
     }
 //    /**
@@ -96,8 +98,8 @@ public String[] parseParams(String input) {
     return input.split("-");
 }
 
-public String checkNullString(String input) {
-    if(input.equals(""));
+public String checkNull(String input) {
+    if(input.equals(""))
         return "NULL";
     return input;
 }
