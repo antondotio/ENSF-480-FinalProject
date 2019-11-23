@@ -59,6 +59,7 @@ public class Server {
                 if(input.startsWith("GET/LISTINGS-")) {
                     String[] params = parseParams(input);
                     socketOut.println("NULL");
+                    socketOut.println("DONE");               
                 } else if (input.startsWith("POST/PROPERTY-")) {
                     String[] params = parseParams(input);
                     socketOut.println("DONE");
@@ -70,6 +71,7 @@ public class Server {
                 } else if (input.startsWith("LOGIN-")) {
                     String[] params = parseParams(input);
                     socketOut.println("NULL");
+                    socketOut.println("DONE");
                 } else if (input.startsWith("POST/UPDATELISTING-")) {
                     String[] params = parseParams(input);
                     socketOut.println("DONE");

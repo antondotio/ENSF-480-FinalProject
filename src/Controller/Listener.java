@@ -27,4 +27,9 @@ public class Listener {
         ArrayList<String> listings = new ArrayList<>();
         return listings;
     }
+
+    String loginCommand(String username, String password)
+    {
+        return client.loign(username, password);
+    }
 }
