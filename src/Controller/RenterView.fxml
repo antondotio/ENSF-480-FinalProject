@@ -55,5 +55,6 @@
     <Text layoutX="16.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Property Listing:" />
     <Text layoutX="358.0" layoutY="755.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
     <TextField fx:id="emailListingID" layoutX="457.0" layoutY="729.0" prefWidth="104.0" />
+    <RadioButton fx:id="anyFurnished" layoutX="509.0" layoutY="213.0" mnemonicParsing="false" selected="true" text="Any" toggleGroup="$furnished" />
   </children>
 </AnchorPane>

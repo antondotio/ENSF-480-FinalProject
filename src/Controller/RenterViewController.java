@@ -20,6 +20,9 @@ public class RenterViewController {
     private AnchorPane RenterViewGUI;
 
     @FXML
+    private RadioButton anyFurnished;
+
+    @FXML
     private CheckMenuItem apartmentType;
 
     @FXML
@@ -108,16 +111,32 @@ public class RenterViewController {
 
     @FXML
     void search(ActionEvent event) {
+        String listings = listener.getListener().getListings(
+                apartmentType.isSelected(),
+                basementType.isSelected(),
+                attachedType.isSelected(),
+                detachedType.isSelected(),
+                townhouseType.isSelected(),
+                condoType.isSelected(),
+                numOfBed.getText(),
+                numOfBath.getText(),
+                ((RadioButton) furnished.getSelectedToggle()).getText(),
+                northEast.isSelected(),
+                northWest.isSelected(),
+                southEast.isSelected(),
+                southWest.isSelected());
+        getListing(listings);
     }
 
     @FXML
     void update(ActionEvent event) {
-        getListing();
+        search(event);
     }
 
     @FXML
     void initialize() {
         assert RenterViewGUI != null : "fx:id=\"RenterViewGUI\" was not injected: check your FXML file 'RenterView.fxml'.";
+        assert anyFurnished != null : "fx:id=\"anyFurnished\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert apartmentType != null : "fx:id=\"apartmentType\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert attachedType != null : "fx:id=\"attachedType\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert basementType != null : "fx:id=\"basementType\" was not injected: check your FXML file 'RenterView.fxml'.";
@@ -140,12 +159,24 @@ public class RenterViewController {
         assert updateButton != null : "fx:id=\"updateButton\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert yesFurnished != null : "fx:id=\"yesFurnished\" was not injected: check your FXML file 'RenterView.fxml'.";
 
-        getListing();
-
+        String listings = listener.getListener().getListings(
+                apartmentType.isSelected(),
+                basementType.isSelected(),
+                attachedType.isSelected(),
+                detachedType.isSelected(),
+                townhouseType.isSelected(),
+                condoType.isSelected(),
+                numOfBed.getText(),
+                numOfBath.getText(),
+                ((RadioButton) furnished.getSelectedToggle()).getText(),
+                northEast.isSelected(),
+                northWest.isSelected(),
+                southEast.isSelected(),
+                southWest.isSelected());
+        getListing(listings);
     }
 
-    public void getListing(){
-        String listings = listener.getListener().getListings();
+    public void getListing(String listings){
         listingTable.setEditable(true);
         listingTable.setText(listings);
         listingTable.setEditable(false);

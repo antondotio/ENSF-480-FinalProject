@@ -33,7 +33,8 @@ public class Listener {
             quadNE, quadNW, quadSE, quadSW);
     }
 
-    String loginCommand(String username, String password) {
+    public String loginCommand(String username, String password)
+    {
         return client.login(username, password);
     }
 }
