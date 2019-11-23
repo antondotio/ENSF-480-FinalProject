@@ -10,7 +10,7 @@ public class LandlordController {
     }
 
     public boolean updateListingState(int listingId, String newState) {
-        if (newState == "Active") {
+        if (newState.equals("Active")) {
             return false;   //  landlord cannot change state to active, only managers can
         }
         return listingController.updateListingState(listingId, newState);

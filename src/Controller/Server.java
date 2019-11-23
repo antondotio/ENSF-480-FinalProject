@@ -89,19 +89,15 @@ public class Server {
                     String[] params = parseParams(input);
                     socketOut.println("NULL");
                     socketOut.println("DONE");               
-                } else if (input.startsWith("POST/FEE-")) {
+                } else if (input.startsWith("POST/PAYMENT-")) {
                     String[] params = parseParams(input);
-                    // create listing and make it visible for renters
-                    // and notify renters
+                    // update
                     socketOut.println("DONE");
                 } else if (input.startsWith("LOGIN-")) {
                     handleLogin(input);
                 } else if (input.startsWith("POST/UPDATELISTING-")) {
                     String[] params = parseParams(input);
                     socketOut.println("DONE");
-                } else if (input.startsWith("GET/SINGLELISTING-")) {
-                    String[] params = parseParams(input);
-                    socketOut.println("NULL");
                 } else if (input.equals("GET/SUMMARYREPORT")) {
                     socketOut.println("NULL");
                 } else if (input.startsWith("POST/CHANGESTATE-")) {

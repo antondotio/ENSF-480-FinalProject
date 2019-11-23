@@ -11,7 +11,10 @@ public class ManagerController {
     }
 
     public boolean updateListingState(int listingId, String newState) {
-        return listingController.updateListingState(listingId, newState);
+        boolean result = listingController.updateListingState(listingId, newState);
+        if (newState.equals("Active") && result) {
+            //  set paid to false, because manager is now activating listing
+        }
     }
 
     public void setListingController(ListingController listingController) {
