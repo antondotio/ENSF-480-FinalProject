@@ -8,7 +8,9 @@ public class Listing {
     double paymentFee;
     String status;
 	int listingIDnumber;
+	Date listingAddedDate;
 
+	//	constructor with all the data the RENTER needs
     public Listing(int landlordAccountId, Property property, double paymentFee, String status, int listingIDnumber) {
 		this.landlordAccountId = landlordAccountId;
         this.property = property;
@@ -16,6 +18,18 @@ public class Listing {
         this.status = status;
         this.listingIDnumber = listingIDnumber;
     }
+
+    //	constructor with all the data the MANAGER needs
+	public Listing(int landlordAccountId, Property property, Date listingStart, Date listingEnd, double paymentFee, String status, int listingIDnumber, Date listingAddedDate) {
+		this.landlordAccountId = landlordAccountId;
+		this.property = property;
+		this.listingStart = listingStart;
+		this.listingEnd = listingEnd;
+		this.paymentFee = paymentFee;
+		this.status = status;
+		this.listingIDnumber = listingIDnumber;
+		this.listingAddedDate = listingAddedDate;
+	}
 
 	public Property getProperty() {
 		return property;
@@ -71,5 +85,13 @@ public class Listing {
 
 	public void setProperty(Property property) {
 		this.property = property;
+	}
+
+	public Date getListingAddedDate() {
+		return listingAddedDate;
+	}
+
+	public void setListingAddedDate(Date listingAddedDate) {
+		this.listingAddedDate = listingAddedDate;
 	}
 }
