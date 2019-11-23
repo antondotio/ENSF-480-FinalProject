@@ -53,10 +53,8 @@ public class ProperTeaRentalsController {
     void login(ActionEvent event) throws IOException {
         // handle the event here
         String type = listener.getListener().loginCommand(usernameForm.getText(), passwordForm.getText());
-
-        boolean accepted = false;
         if(type.equals("RENTER")){
-            accepted = true;
+
         } else if (type.equals("LANDLORD")){
             Parent landlordViewParent = FXMLLoader.load(getClass().getResource("LandlordView.fxml"));
             Scene landlordViewScene = new Scene(landlordViewParent);
