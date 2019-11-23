@@ -80,6 +80,9 @@ public class Server {
         String input = "";
         while(true) {
             try {
+                //  all of these will print DONE for success if no return, ERROR if failure
+                //  getlistings will print several lines THEN print DONE
+                //  login will ONLY print its info or ERROR, no DONE
                 input = socketIn.readLine();
                 System.out.println(input);
                 //  NOTE: I chose to ignore email because since it's simulated we can handle it all on the front end
@@ -96,8 +99,9 @@ public class Server {
                 } else if (input.startsWith("LOGIN-")) {
                     handleLogin(input);
                 } else if (input.startsWith("POST/UPDATELISTING-")) {
-                    String[] params = parseParams(input);
-                    socketOut.println("DONE");
+                    //  expects listingId-newFee-newFeePeriod
+                    //  e.g. POST/UPDATELISTING-1-35-30 will set listing 1's fee to $35 and it will last 35 days on next payment
+                    handleUpdateListing();
                 } else if (input.equals("GET/SUMMARYREPORT")) {
                     socketOut.println("NULL");
                 } else if (input.startsWith("POST/CHANGESTATE-")) {
@@ -150,6 +154,11 @@ public class Server {
                 }
             }
         }
+        socketOut.println("DONE");
+    }
+
+    public void handleUpdateListing(String input) {
+        String[] params = parseParams(input);
         socketOut.println("DONE");
     }
 
