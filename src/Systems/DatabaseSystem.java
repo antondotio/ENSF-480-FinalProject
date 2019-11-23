@@ -59,6 +59,24 @@ public class DatabaseSystem {
         }
     }
 
+    public boolean updateListingFees(int listingId, int newFee, int newFeePeriodInDays) {
+        try {
+            String statementStr = "UPDATE `Listing` SET `fee`=?, `feePeriod`=? WHERE `id`=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setInt(1, newFee);
+            pStatement.setInt(2, newFeePeriodInDays);
+            pStatement.setInt(3, listingId);
+            pStatement.executeUpdate();
+
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Database error when trying to update fees of listing " + listingId + " to " + newFee + " and its fee period to " + newFeePeriodInDays);
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean updateListingState(int listingId, String newState) {
         try {
             String statementStr = "UPDATE `Listing` SET `status`=? WHERE `id`=?";
@@ -70,6 +88,8 @@ public class DatabaseSystem {
             return true;
         } catch(SQLException e) {
             System.out.println("Database error when trying to set state of listing " + listingId + " to " + newState);
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -85,6 +105,8 @@ public class DatabaseSystem {
             return true;
         } catch(SQLException e) {
             System.out.println("Database error when trying to set paid state of listing " + listingId + " to " + newState);
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }

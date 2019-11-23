@@ -17,4 +17,8 @@ public class ListingController {
     public boolean updatePaid(int listingId, boolean newState) {
         return db.updatePaid(listingId, newState);
     }
+
+    public boolean updateListingFees(int listingId, int newFee, int newFeePeriodInDays) {
+        return db.updateListingFees(listingId, newFee, newFeePeriodInDays);
+    }
 }

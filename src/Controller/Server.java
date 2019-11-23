@@ -73,10 +73,6 @@ public class Server {
      * Waits for client input then acts accordingly to the input
      */
     public void communicate() {
-//        ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
-//        readSuppliers(suppliers);
-//        Inventory theInventory = new Inventory(readItems(suppliers));
-//        Shop theShop = new Shop(theInventory, suppliers);
         String input = "";
         while(true) {
             try {
@@ -100,7 +96,8 @@ public class Server {
                     handleLogin(input);
                 } else if (input.startsWith("POST/UPDATELISTINGFEES-")) {
                     //  expects listingId-newFee-newFeePeriod
-                    //  e.g. POST/UPDATELISTING-1-35-30 will set listing 1's fee to $35 and it will last 35 days on next payment
+                    //  e.g. POST/UPDATELISTINGFEES-1-30-30 will set listing 1's fee to $30 and it will last 30 days
+                    //  THIS IS FOR THE NEXT PAYMENT CYCLE. DOES NOT AFFECT ACTIVE LISTINGS. WILL AFFECT THEM WHEN THEY EXPIRE.
                     handleUpdateListingFees(input);
                 } else if (input.equals("GET/SUMMARYREPORT")) {
                     socketOut.println("NULL");
@@ -159,7 +156,12 @@ public class Server {
 
     public void handleUpdateListingFees(String input) {
         String[] params = parseParams(input);
-        socketOut.println("DONE");
+        if (listingController.updateListingFees(Integer.parseInt(params[0]), Integer.parseInt(params[1]), Integer.parseInt(params[2]))) {
+            socketOut.println("DONE");
+        } else {
+            System.out.println("ERROR: Failed to change listing with id " + params[0] + "'s fees to " + params[1] + " and its fee period to " + params[2]);
+            socketOut.println("ERROR");
+        }
     }
 
     public void handleChangeListingState(String input) {
