@@ -6,15 +6,15 @@ public class SearchCriteria {
     double numOfBathrooms;
     boolean furnished;
     String quadrant;
-    RegisteredRenterAccount account;
+    int accountId;
 
-    public SearchCriteria(String type, int numOfBedrooms, double numOfBathrooms, boolean furnished, String quadrant, RegisteredRenterAccount account) {
+    public SearchCriteria(String type, Integer numOfBedrooms, Double numOfBathrooms, Boolean furnished, String quadrant, int accountId) {
         this.type = type;
         this.numOfBedrooms = numOfBedrooms;
         this.numOfBathrooms = numOfBathrooms;
         this.furnished = furnished;
         this.quadrant = quadrant;
-        this.account = account;
+        this.accountId = accountId;
     }
 
     public String getType() {
@@ -25,7 +25,7 @@ public class SearchCriteria {
         this.type = type;
     }
 
-    public int getNumOfBedrooms() {
+    public Integer getNumOfBedrooms() {
         return numOfBedrooms;
     }
 
@@ -33,7 +33,7 @@ public class SearchCriteria {
         this.numOfBedrooms = numOfBedrooms;
     }
 
-    public double getNumOfBathrooms() {
+    public Double getNumOfBathrooms() {
         return numOfBathrooms;
     }
 
@@ -41,7 +41,7 @@ public class SearchCriteria {
         this.numOfBathrooms = numOfBathrooms;
     }
 
-    public boolean isFurnished() {
+    public Boolean isFurnished() {
         return furnished;
     }
 
@@ -57,11 +57,7 @@ public class SearchCriteria {
         this.quadrant = quadrant;
     }
 
-    public RegisteredRenterAccount getAccount() {
-        return account;
-    }
-
-    public void setAccount(RegisteredRenterAccount account) {
-        this.account = account;
+    public int getAccountId() {
+        return accountId;
     }
 }

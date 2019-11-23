@@ -10,6 +10,7 @@ public class RegisteredRenterAccount extends Account {
     public RegisteredRenterAccount(Name name, int accountID, String email) {
         super(name, accountID, email);
         notification = new ArrayList<Notification>();
+        //  todo: fetch notifications
         searchCriteria = new ArrayList<SearchCriteria>();
     }
 }
