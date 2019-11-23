@@ -1,0 +1,16 @@
+package Controller;
+
+import Systems.DatabaseSystem;
+
+//  handles backend behaviour regarding changing/updating/creating listings
+public class ListingController {
+    private DatabaseSystem db;
+
+    public ListingController(DatabaseSystem db) {
+        this.db = db;
+    }
+
+    public boolean updateListingState(int listingId, String newState) {
+        return db.updateListingState(listingId, newState);
+    }
+}

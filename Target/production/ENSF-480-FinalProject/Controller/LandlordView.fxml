@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.LandlordViewController">
+  <children>
+    <Text layoutX="378.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProperTea Rentals">
+      <font>
+        <Font size="40.0" />
+      </font>
+    </Text>
+    <Text layoutX="14.0" layoutY="206.0" smooth="true" strokeType="OUTSIDE" strokeWidth="0.0" text="House Type:" visible="true" />
+    <TextField fx:id="type" layoutX="136.0" layoutY="183.0" prefWidth="200.0" promptText="" text="" />
+    <Text layoutX="14.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Bathrooms:" />
+    <Text layoutX="14.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Bedrooms:" />
+    <TextField fx:id="numBath" layoutX="236.0" layoutY="235.0" prefWidth="100.0" />
+    <TextField fx:id="numBed" layoutX="236.0" layoutY="285.0" prefWidth="100.0" />
+    <Text layoutX="368.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Furnished:" />
+    <RadioButton fx:id="yesFurnished" layoutX="478.0" layoutY="288.0" mnemonicParsing="false" text="Yes">
+      <toggleGroup>
+        <ToggleGroup fx:id="furnished" />
+      </toggleGroup>
+    </RadioButton>
+    <RadioButton fx:id="notFurnished" layoutX="555.0" layoutY="288.0" mnemonicParsing="false" text="No" toggleGroup="$furnished" />
+    <Text layoutX="368.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" />
+    <TextField fx:id="address" layoutX="463.0" layoutY="183.0" prefWidth="361.0" />
+    <Text layoutX="844.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quadrant:" />
+    <TextField fx:id="quad" layoutX="946.0" layoutY="183.0" prefWidth="66.00009999999747" />
+    <Text layoutX="368.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City:" />
+    <TextField fx:id="city" layoutX="421.0" layoutY="235.0" prefWidth="113.78759765625" />
+    <Text layoutX="544.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country:" />
+    <TextField fx:id="country" layoutX="640.0" layoutY="235.0" prefWidth="113.78759765625" />
+    <Text layoutX="775.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Postal Code:" />
+    <TextField fx:id="postalCode" layoutX="899.0" layoutY="235.0" prefWidth="113.78759765625" />
+    <Button fx:id="registerButton" layoutX="835.0" layoutY="281.0" mnemonicParsing="false" onAction="#registerListing" text="Register Listing" />
+    <Text layoutX="14.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register Listing:">
+      <font>
+        <Font size="30.0" />
+      </font>
+    </Text>
+    <TextArea fx:id="landlordProperties" layoutX="14.0" layoutY="377.0" prefHeight="269.0" prefWidth="1047.0" wrapText="true" />
+    <Text layoutX="14.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Properties:" />
+    <Text layoutX="13.0" layoutY="687.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update:" />
+    <Text layoutX="537.0" layoutY="687.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment:" />
+    <Text layoutX="577.0" layoutY="745.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
+    <TextField layoutX="684.0" layoutY="719.0" prefWidth="109.0" />
+    <Button layoutX="849.0" layoutY="718.0" mnemonicParsing="false" text="Make Payment" />
+    <Text layoutX="20.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
+    <TextField layoutX="128.0" layoutY="700.0" prefWidth="109.0" />
+    <Text layoutX="63.0" layoutY="765.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State:" />
+    <TextField layoutX="128.0" layoutY="742.0" prefWidth="109.0" />
+    <Button layoutX="286.0" layoutY="716.0" mnemonicParsing="false" text="Update" />
+  </children>
+</AnchorPane>

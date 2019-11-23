@@ -59,6 +59,21 @@ public class DatabaseSystem {
         }
     }
 
+    public boolean updateListingState(int listingId, String newState) {
+        try {
+            String statementStr = "UPDATE `Listing` SET `status`=? WHERE `id`=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setString(1, newState);
+            pStatement.setInt(2, listingId);
+            pStatement.executeUpdate();
+
+            return true;
+        } catch(SQLException e) {
+            System.out.println("Database error when trying to set state of listing " + listingId + " to " + newState);
+            return false;
+        }
+    }
+
     public void insertSearchCriteria(SearchCriteria sc) {
         try {
             String statementStr = "INSERT INTO `SearchCriteria` (`quadrant`, `isFurnished`, `numOfBathrooms`, `numOfBedrooms`, `type`) values(?, ?, ?, ?, ?)";

@@ -30,7 +30,13 @@ public class Server {
      */
     private BufferedReader socketIn;
 
+    //  backend controllers
     private static LoginController login;
+    private LandlordController landlordController;
+    private RenterController renterController;
+    private RegisteredRenterController registeredRenterController;
+    private ManagerController managerController;
+    private ListingController listingController;
 
     private DatabaseSystem db;
 
@@ -38,11 +44,6 @@ public class Server {
     private Hashtable<Integer, LandlordAccount> loggedInLandlords;
     private Hashtable<Integer, RegisteredRenterAccount> loggedInRenters;
     private Hashtable<Integer, ManagerAccount> loggedInManagers;
-
-    private LandlordController landlordController;
-    private RenterController renterController;
-    private RegisteredRenterController registeredRenterController;
-    private ManagerController managerController;
 
     /**
      * Constructor for Server
@@ -55,10 +56,7 @@ public class Server {
         loggedInRenters = new Hashtable<>();
         loggedInManagers = new Hashtable<>();
 
-        landlordController = new LandlordController(db);
-        renterController = new RenterController(db);
-        registeredRenterController = new RegisteredRenterController(db);
-        managerController = new ManagerController(db);
+        initControllers();
 
         try {
             serverSocket = new ServerSocket(portNumber);
@@ -106,9 +104,10 @@ public class Server {
                     socketOut.println("NULL");
                 } else if (input.equals("GET/SUMMARYREPORT")) {
                     socketOut.println("NULL");
-                } else if (input.startsWith("POST/CHANGESTATE")) {
-                    String[] params = parseParams(input);
-                    socketOut.println("NULL");
+                } else if (input.startsWith("POST/CHANGESTATE-")) {
+                    //  expects accountId-listingId-newState
+                    //  e.g. POST/CHANGESTATE-3-1-Suspended will cause user 3 to try and change listing 1 to Suspended
+                    handleChangeListingState(input);
                 } else if (input.startsWith("EMAIL")) {
                     socketOut.println("DONE");
                 }
@@ -135,6 +134,7 @@ public class Server {
     public void handleGetListings(String input) {
         String[] params = parseParams(input);
         ArrayList<Listing> listings;
+        //  get listings
         if (params[0].equals("NULL")) {
             //  use rentercontroller
             listings = renterController.getListings(Parsing.parseAny(params[1]), Parsing.parseInt(params[2]), Parsing.parseDouble(params[3]),
@@ -144,9 +144,8 @@ public class Server {
             listings = registeredRenterController.getListings(Integer.parseInt(params[0]), Parsing.parseAny(params[1]), Parsing.parseInt(params[2]),
                     Parsing.parseDouble(params[3]), Parsing.parseFurnished(params[4]), Parsing.parseAny(params[5]));
         }
-        if (listings == null) {
-            socketOut.println("NULL");
-        } else {
+        //  print listings
+        if (listings != null) {
             for (Listing l : listings) {
                 if (l.getStatus().equals("Active")) {
                     socketOut.println(l.getListingIDnumber() + "\t\t\t" + l.getProperty().getAddress().toString() + "\t\t\t" +
@@ -154,13 +153,30 @@ public class Server {
                             "\t\t\t\t" + l.getProperty().getNumOfBathrooms() + "\t\t\t\t" + l.getProperty().isFurnished());
                 }
             }
-            socketOut.println("DONE");
         }
+        socketOut.println("DONE");
     }
 
-    public String[] parseParams(String input) {
-        String[] split = input.split("-");
-        return Arrays.copyOfRange(split, 1, split.length);
+    public void handleChangeListingState(String input) {
+        String[] params = parseParams(input);
+        boolean updatedSuccessfully = false;
+        Integer userId = Integer.parseInt(params[0]);
+        if (loggedInLandlords.containsKey(userId)) {
+            updatedSuccessfully = landlordController.updateListingState(Integer.parseInt(params[1]), params[2]);
+        } else if (loggedInManagers.containsKey(userId)) {
+            updatedSuccessfully = managerController.updateListingState(Integer.parseInt(params[1]), params[2]);
+        } else {
+            System.out.println("User with id " + params[0] + " tried to change listing state of listing " + params[1] + " and failed. Unable to find user in list of logged in users.");
+            socketOut.println("ERROR");
+            return;
+        }
+
+        if (updatedSuccessfully) {
+            socketOut.println("DONE");
+        } else {
+            System.out.println("User with id " + params[0] + " tried to change listing state of listing " + params[1] + " and failed.");
+            socketOut.println("ERROR");
+        }
     }
 
     private void addAccount(String email, String password, int id, String type) {
@@ -171,6 +187,22 @@ public class Server {
         } else if (type == "MANAGER") {
             loggedInManagers.put(id, db.getManagerAccount(email, password));
         }
+    }
+
+    public String[] parseParams(String input) {
+        String[] split = input.split("-");
+        return Arrays.copyOfRange(split, 1, split.length);
+    }
+
+    public void initControllers() {
+        landlordController = new LandlordController(db);
+        renterController = new RenterController(db);
+        registeredRenterController = new RegisteredRenterController(db);
+        managerController = new ManagerController(db);
+        listingController = new ListingController(db);
+
+        landlordController.setListingController(listingController);
+        managerController.setListingController(listingController);
     }
 
     /**
