@@ -12,7 +12,7 @@ public class DatabaseSystem {
     ResultSet rs;
 
     public DatabaseSystem() {
-        //  TODO: get the server to create the database, build methods to execute certain statements/queries, and eventually CLOSE THE CONNECTION/STATEMENT!
+        //  TODO: close the connection/statement at some point lol
         try {
             connection = DriverManager.getConnection("jdbc:mysql://remotemysql.com:3306/bhodcTO1R2", "bhodcTO1R2", "NFeETF8mpF");
             System.out.println("Database has successfully been connected.");
@@ -70,6 +70,21 @@ public class DatabaseSystem {
             return true;
         } catch(SQLException e) {
             System.out.println("Database error when trying to set state of listing " + listingId + " to " + newState);
+            return false;
+        }
+    }
+
+    public boolean updatePaid(int listingId, boolean newState) {
+        try {
+            String newStateStr = newState ? "1" : "0";
+            String statementStr = "UPDATE `Listing` SET `paid`=? WHERE `id`=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setBoolean(1, newState);
+            pStatement.setInt(2, listingId);
+            pStatement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            System.out.println("Database error when trying to set paid state of listing " + listingId + " to " + newState);
             return false;
         }
     }

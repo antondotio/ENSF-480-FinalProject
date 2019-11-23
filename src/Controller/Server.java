@@ -166,7 +166,6 @@ public class Server {
             socketOut.println("ERROR");
             return;
         }
-
         if (updatedSuccessfully) {
             socketOut.println("DONE");
         } else {
@@ -179,6 +178,7 @@ public class Server {
         if (type == "LANDLORD") {
             loggedInLandlords.put(id, db.getLandlordAccount(email, password));
         } else if (type == "RENTER") {
+            //  TODO: need to add notification functionality on login
             loggedInRenters.put(id, db.getRenterAccount(email, password));
         } else if (type == "MANAGER") {
             loggedInManagers.put(id, db.getManagerAccount(email, password));
