@@ -13,10 +13,9 @@ public class DatabaseSystem {
     Statement statement;
     ResultSet rs;
     public DatabaseSystem() {
-        super();
         //  TODO: get the server to create the database, build methods to execute certain statements/queries, and eventually CLOSE THE CONNECTION/STATEMENT!
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://remotemysql.com:5432/bhodcTO1R2", "bhodcTO1R2", "NFeETF8mpF");
+            connection = DriverManager.getConnection("jdbc:mysql://remotemysql.com:3306/bhodcTO1R2", "bhodcTO1R2", "NFeETF8mpF");
             System.out.println("Database has successfully been connected.");
         } catch (SQLException e) {
             System.err.println(e.getMessage());

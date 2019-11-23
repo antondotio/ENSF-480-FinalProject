@@ -67,11 +67,11 @@ public class Server {
 //        readSuppliers(suppliers);
 //        Inventory theInventory = new Inventory(readItems(suppliers));
 //        Shop theShop = new Shop(theInventory, suppliers);
-        String input = "GET/LISTINGS-Calgary/NE/900/1200";
-        System.out.println(input);
+        String input = "";
         while(true) {
             try {
                 input = socketIn.readLine();
+                System.out.println(input);
                 //  NOTE: I chose to ignore email because since it's simulated we can handle it all on the front end
                 if(input.startsWith("GET/LISTINGS-")) {
                     String[] params = parseParams(input);

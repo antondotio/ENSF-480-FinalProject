@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -52,19 +53,32 @@ public class ProperTeaRentalsController {
     void login(ActionEvent event) throws IOException {
         // handle the event here
         String type = listener.getListener().loginCommand(usernameForm.getText(), passwordForm.getText());
-        Parent newView;
+
+        boolean accepted = false;
         if(type.equals("RENTER")){
-
+            accepted = true;
         } else if (type.equals("LANDLORD")){
-            newView = FXMLLoader.load(getClass().getResource("LandlordView.fxml"));
+            Parent landlordViewParent = FXMLLoader.load(getClass().getResource("LandlordView.fxml"));
+            Scene landlordViewScene = new Scene(landlordViewParent);
+
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(landlordViewScene);
+            window.show();
+
         } else if (type.equals("MANAGER")){
-            newView = FXMLLoader.load(getClass().getResource("ManagerView.fxml"));
+            Parent managerViewParent = FXMLLoader.load(getClass().getResource("ManagerView.fxml"));
+            Scene managerViewScene = new Scene(managerViewParent);
+
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(managerViewScene);
+            window.show();
         } else if (type.equals("ERROR")){
-
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("ERROR!");
+            error.setContentText("Wrong username or password!");
+            error.setHeaderText(null);
+            error.showAndWait();
         }
-
-
-
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
