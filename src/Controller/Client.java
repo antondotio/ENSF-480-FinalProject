@@ -39,7 +39,7 @@ public class Client {
 
     public String login(String username, String password) {
         try {
-            socketOut.println("LOGIN-" + username + "-" + password);
+            socketOut.println("LOGIN-" + checkNull(username) + "-" + checkNull(password));
             String response = socketIn.readLine();
             if(response.equals("ERROR")) {
                 return "ERROR";
@@ -58,9 +58,40 @@ public class Client {
     public String getListings(String type, String beds,
         String baths, String furnished, String quad) {
         try {
-            socketOut.println("GET/LISTING-" + checkNull(accountID.toString()) +
+            socketOut.println("GET/LISTINGS-" + checkNull(accountID) +
                 "-" + type + "-" + checkNull(beds) + "-" + checkNull(baths) + 
                 "-" + checkNull(furnished) + "-" + quad);
+            String response = socketIn.readLine();
+            String listings = "";
+            while(!response.equals("DONE"))
+            {
+                listings += response;
+                listings += "\n";
+                response = socketIn.readLine();
+            }
+            return listings;
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return "ERROR";
+        }
+    }
+
+    public String postListing(String type, String bedrooms, String baths, String furnished,
+    String quad, String street, String city, String country, String postalCode) {
+        try {
+            sockeyOut.println("POST/PROPERTY-" + type, + "-" + bedrooms + "-" + baths + 
+                "-" + furnished + "-" + quad + "-" + street + "-" + city + "-" + country + "-" + postalCode);
+            return socketIn.readLine();
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
+
+    public String getLandlordListings() {
+        try {
+            socketOut.println("GET/LANDLORDLISTINGS-" + checkNull(accountID.toString()));
             String response = socketIn.readLine();
             String listings = "";
             while(!response.equals("DONE"))
@@ -74,8 +105,6 @@ public class Client {
             return "ERROR";
         }
     }
-
-
 
     public String changeListingState(String listingID, String newState) {
         try {
@@ -110,9 +139,15 @@ public class Client {
     }
 
     public String checkNull(String input) {
-        if(input.equals(""))
+        if(input == null || input.equals(""))
             return "NULL";
         return input;
+    }
+
+    public String checkNull(Integer input) {
+        if(input == null)
+            return "NULL";
+        return input.toString();
     }
 
     /**

@@ -2,9 +2,9 @@ package Controller;
 
 import Systems.DatabaseSystem;
 
-public class LandlordController {
+public class ManagerController {
     private DatabaseSystem db;
-    public LandlordController(DatabaseSystem db) {
+    public ManagerController(DatabaseSystem db) {
         this.db = db;
     }
 }
