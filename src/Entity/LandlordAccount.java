@@ -6,8 +6,8 @@ public class LandlordAccount extends Account {
 
     ArrayList<Listing> myListings;
 
-    public LandlordAccount(Name name, String password, int accountID, String email) {
-        super(name, password, accountID, email);
+    public LandlordAccount(Name name, int accountID, String email) {
+        super(name, accountID, email);
         myListings = new ArrayList<Listing>();
     }
 
