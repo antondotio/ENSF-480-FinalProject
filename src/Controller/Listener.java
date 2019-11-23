@@ -23,8 +23,36 @@ public class Listener {
         client = c;
     }
 
-    public ArrayList<String> getListings() {
-        ArrayList<String> listings = new ArrayList<>();
-        return listings;
+    public String getListings(String type, String beds, String baths, String furnished, String quad) {
+        
+        return client.getListings(type, beds, baths, furnished, quad);
+    }
+
+    public String loginCommand(String username, String password) {
+        return client.login(username, password);
+    }
+
+    public String postListing() {
+        //  needs landlord GUI
+        return null;
+    }
+
+    public String updateListing() {
+        //  needs manager GUI
+        return null;
+    }
+
+    public String getSingleListing() {
+        // needs manager GUI
+        return null;
+    }
+
+    public String getSummary() {
+        //  needs manager GUI
+        return null;
+    }
+
+    public String changeState(String listingID, String newState) {
+        return client.changeListingState(listingID, newState);
     }
 }

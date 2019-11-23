@@ -7,56 +7,45 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="950.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.LandlordView">
+<AnchorPane prefHeight="950.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.LandlordViewController">
   <children>
     <Text layoutX="378.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProperTea Rentals">
       <font>
         <Font size="40.0" />
       </font>
     </Text>
-    <TableView fx:id="listingTable" layoutX="14.0" layoutY="345.0" maxWidth="-1.0" prefHeight="453.0" prefWidth="1047.0" tableMenuButtonVisible="true">
-      <columns>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="116.0" text="Listing ID" fx:id="idColumn" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="146.0" text="Listing Start" fx:id="startColumn" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="132.0" text="Listing End" fx:id="endColumn" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="473.0" text="Address" fx:id="addressColumn" />
-        <TableColumn prefWidth="75.0" text="Quad" fx:id="quadColumn" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="95.0" text="Price" fx:id="priceColumn" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="124.0" text="Type" fx:id="typeColumn" />
-        <TableColumn prefWidth="75.0" text="Bed" fx:id="bedColumn" />
-        <TableColumn prefWidth="75.0" text="Bath" fx:id="bathColumn" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="107.0" text="Furnished" fx:id="furnishedColumn" />
-      </columns>
-    </TableView>
     <Button id="logoutHutton" fx:id="logoutButton" layoutX="962.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
     <Text layoutX="14.0" layoutY="206.0" smooth="true" strokeType="OUTSIDE" strokeWidth="0.0" text="House Type:" visible="true" />
-    <TextField layoutX="136.0" layoutY="183.0" prefWidth="200.0" promptText="" text="" />
+    <TextField fx:id="type" layoutX="136.0" layoutY="183.0" prefWidth="200.0" promptText="" text="" />
     <Text layoutX="14.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Bathrooms:" />
     <Text layoutX="14.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Bedrooms:" />
-    <TextField layoutX="236.0" layoutY="235.0" prefWidth="100.0" />
-    <TextField layoutX="236.0" layoutY="285.0" prefWidth="100.0" />
+    <TextField fx:id="numBath" layoutX="236.0" layoutY="235.0" prefWidth="100.0" />
+    <TextField fx:id="numBed" layoutX="236.0" layoutY="285.0" prefWidth="100.0" />
     <Text layoutX="368.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Furnished:" />
-    <RadioButton layoutX="478.0" layoutY="288.0" mnemonicParsing="false" text="Yes">
+    <RadioButton fx:id="yesFurnished" layoutX="478.0" layoutY="288.0" mnemonicParsing="false" text="Yes">
       <toggleGroup>
         <ToggleGroup fx:id="furnished" />
       </toggleGroup>
     </RadioButton>
-    <RadioButton layoutX="555.0" layoutY="288.0" mnemonicParsing="false" text="No" toggleGroup="$furnished" />
+    <RadioButton fx:id="notFurnished" layoutX="555.0" layoutY="288.0" mnemonicParsing="false" text="No" toggleGroup="$furnished" />
     <Text layoutX="368.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" />
-    <TextField layoutX="463.0" layoutY="183.0" prefWidth="361.0" />
+    <TextField fx:id="address" layoutX="463.0" layoutY="183.0" prefWidth="361.0" />
     <Text layoutX="844.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quadrant:" />
-    <TextField layoutX="946.0" layoutY="183.0" prefWidth="66.00009999999747" />
+    <TextField fx:id="quad" layoutX="946.0" layoutY="183.0" prefWidth="66.00009999999747" />
     <Text layoutX="368.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City:" />
-    <TextField layoutX="421.0" layoutY="235.0" prefWidth="113.78759765625" />
+    <TextField fx:id="city" layoutX="421.0" layoutY="235.0" prefWidth="113.78759765625" />
     <Text layoutX="544.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country:" />
-    <TextField layoutX="640.0" layoutY="235.0" prefWidth="113.78759765625" />
+    <TextField fx:id="country" layoutX="640.0" layoutY="235.0" prefWidth="113.78759765625" />
     <Text layoutX="775.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Postal Code:" />
-    <TextField layoutX="899.0" layoutY="235.0" prefWidth="113.78759765625" />
-    <Button layoutX="835.0" layoutY="281.0" mnemonicParsing="false" text="Register Listing" />
+    <TextField fx:id="postalCode" layoutX="899.0" layoutY="235.0" prefWidth="113.78759765625" />
+    <Button fx:id="registerButton" layoutX="835.0" layoutY="281.0" mnemonicParsing="false" onAction="#registerListing" text="Register Listing" />
     <Text layoutX="14.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register Listing:">
       <font>
         <Font size="30.0" />
       </font>
     </Text>
+    <TextArea fx:id="landlordProperties" layoutX="14.0" layoutY="377.0" prefHeight="369.0" prefWidth="1047.0" wrapText="true" />
+    <Text layoutX="14.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Properties:" />
+    <Text layoutX="14.0" layoutY="785.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update:" />
   </children>
 </AnchorPane>

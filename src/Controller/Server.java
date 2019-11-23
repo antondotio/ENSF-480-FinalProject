@@ -79,16 +79,25 @@ public class Server {
 //        readSuppliers(suppliers);
 //        Inventory theInventory = new Inventory(readItems(suppliers));
 //        Shop theShop = new Shop(theInventory, suppliers);
-        String input = "GET/LISTINGS-Calgary/NE/900/1200";
-        System.out.println(input);
+        String input = "";
         while(true) {
             try {
                 input = socketIn.readLine();
+                System.out.println(input);
                 //  NOTE: I chose to ignore email because since it's simulated we can handle it all on the front end
                 if(input.startsWith("GET/LISTINGS-")) {
                     handleGetListings(input);
                 } else if (input.startsWith("POST/LISTING-")) {
                     String[] params = parseParams(input);
+                    socketOut.println("NULL");
+                    socketOut.println("DONE");               
+                } else if (input.startsWith("POST/PROPERTY-")) {
+                    String[] params = parseParams(input);
+                    socketOut.println("DONE");
+                } else if (input.startsWith("POST/FEE-")) {
+                    String[] params = parseParams(input);
+                    // create listing and make it visible for renters
+                    // and notify renters
                     socketOut.println("DONE");
                 } else if (input.startsWith("LOGIN-")) {
                     handleLogin(input);
@@ -117,7 +126,7 @@ public class Server {
         String accInfo = login.authenticate(params[0], params[1]);
         String[] accInfoSplit = accInfo.split("-");
         addAccount(params[0], params[1], Integer.parseInt(accInfoSplit[0]), accInfoSplit[1]);
-
+        System.out.println(accInfo);
         if (accInfo != null) {
             socketOut.println(accInfo);
         } else {
@@ -147,8 +156,8 @@ public class Server {
     }
 
     public String[] parseParams(String input) {
-        String[] splitQueryAndParams = input.split("-");
-        return splitQueryAndParams[1].split("/");
+        String[] split = input.split("-");
+        return Arrays.copyOfRange(split, 1, split.length);
     }
 
     private void addAccount(String email, String password, int id, String type) {
