@@ -33,6 +33,8 @@ public class ProperTeaRentalsController {
     @FXML // fx:id="usernameForm"
     private TextField usernameForm; // Value injected by FXMLLoader
 
+    private Listener listener;
+
     // Handler for Button[fx:id="guestButton"] onAction
     @FXML
     void guestLogin(ActionEvent event) throws IOException {
@@ -49,6 +51,19 @@ public class ProperTeaRentalsController {
     @FXML
     void login(ActionEvent event) throws IOException {
         // handle the event here
+        String type = listener.getListener().loginCommand(usernameForm.getText(), passwordForm.getText());
+        Parent newView;
+        if(type.equals("RENTER")){
+
+        } else if (type.equals("LANDLORD")){
+            newView = FXMLLoader.load(getClass().getResource("LandlordView.fxml"));
+        } else if (type.equals("MANAGER")){
+            newView = FXMLLoader.load(getClass().getResource("ManagerView.fxml"));
+        } else if (type.equals("ERROR")){
+
+        }
+
+
 
     }
 

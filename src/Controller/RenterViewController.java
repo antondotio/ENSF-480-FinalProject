@@ -29,12 +29,6 @@ public class RenterViewController {
     private CheckMenuItem attachedType;
 
     @FXML
-    private CheckMenuItem basementType;
-
-    @FXML
-    private CheckMenuItem condoType;
-
-    @FXML
     private CheckMenuItem detachedType;
 
     @FXML
@@ -113,11 +107,9 @@ public class RenterViewController {
     void search(ActionEvent event) {
         String listings = listener.getListener().getListings(
                 apartmentType.isSelected(),
-                basementType.isSelected(),
                 attachedType.isSelected(),
                 detachedType.isSelected(),
                 townhouseType.isSelected(),
-                condoType.isSelected(),
                 numOfBed.getText(),
                 numOfBath.getText(),
                 ((RadioButton) furnished.getSelectedToggle()).getText(),
@@ -139,8 +131,6 @@ public class RenterViewController {
         assert anyFurnished != null : "fx:id=\"anyFurnished\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert apartmentType != null : "fx:id=\"apartmentType\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert attachedType != null : "fx:id=\"attachedType\" was not injected: check your FXML file 'RenterView.fxml'.";
-        assert basementType != null : "fx:id=\"basementType\" was not injected: check your FXML file 'RenterView.fxml'.";
-        assert condoType != null : "fx:id=\"condoType\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert detachedType != null : "fx:id=\"detachedType\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert emailButton != null : "fx:id=\"emailButton\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert emailListingID != null : "fx:id=\"emailListingID\" was not injected: check your FXML file 'RenterView.fxml'.";
@@ -158,22 +148,6 @@ public class RenterViewController {
         assert townhouseType != null : "fx:id=\"townhouseType\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert updateButton != null : "fx:id=\"updateButton\" was not injected: check your FXML file 'RenterView.fxml'.";
         assert yesFurnished != null : "fx:id=\"yesFurnished\" was not injected: check your FXML file 'RenterView.fxml'.";
-
-        String listings = listener.getListener().getListings(
-                apartmentType.isSelected(),
-                basementType.isSelected(),
-                attachedType.isSelected(),
-                detachedType.isSelected(),
-                townhouseType.isSelected(),
-                condoType.isSelected(),
-                numOfBed.getText(),
-                numOfBath.getText(),
-                ((RadioButton) furnished.getSelectedToggle()).getText(),
-                northEast.isSelected(),
-                northWest.isSelected(),
-                southEast.isSelected(),
-                southWest.isSelected());
-        getListing(listings);
     }
 
     public void getListing(String listings){

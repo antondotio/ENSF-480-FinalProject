@@ -36,11 +36,9 @@
     <MenuButton fx:id="homeType" layoutX="167.0" layoutY="174.0" mnemonicParsing="false" text="Select Type">
       <items>
         <CheckMenuItem mnemonicParsing="false" text="Apartment" fx:id="apartmentType" />
-        <CheckMenuItem mnemonicParsing="false" text="Basement" fx:id="basementType" />
         <CheckMenuItem mnemonicParsing="false" text="Attached House" fx:id="attachedType" />
         <CheckMenuItem mnemonicParsing="false" text="Detatched House" fx:id="detachedType" />
         <CheckMenuItem mnemonicParsing="false" text="Townhouse" fx:id="townhouseType" />
-        <CheckMenuItem mnemonicParsing="false" text="Condo" fx:id="condoType" />
       </items>
     </MenuButton>
     <Text layoutX="697.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quadrant:" />
