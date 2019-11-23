@@ -19,7 +19,7 @@ public class Client {
      */
     private PrintWriter socketOut;
 
-    private int accountID;
+    private Integer accountID;
 
     /**
      * Constructs a new Client.
@@ -27,6 +27,7 @@ public class Client {
      * @param portNumber Port on server to connect to.
      */
     public Client(String serverName, int portNumber) {
+        accountID = null;
         try {
             socket = new Socket(serverName, portNumber);
             socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -53,29 +54,39 @@ public class Client {
         }
     }
 
-    public String getListings(boolean typeApart, boolean typeAttach, 
-        boolean typeDetach, boolean typeTown, String beds, 
-        String baths, String furnished, boolean quadNE, 
-        boolean quadNW, boolean quadSE, boolean quadSW) {
+    public String getListings(boolean type, String beds, 
+        String baths, String furnished, boolean quad) {
         try {
-            socketOut.println("GET/LISTING-" + accountID + "-" + typeApart +
-                "-" + typeAttach + "-" + typeDetach + "-" + typeTown +
-                "-" + checkNull(beds) + "-" + checkNull(baths) +
-                "-" + checkNull(furnished) + "-" + quadNE + "-" + quadNW + 
-                "-" + quadSE + "-" + quadSW);
-                String response = socketIn.readLine();
-                String listings = "";
-                while(!response.equals("DONE"))
-                {
-                    listings += response;
-                    listings += "\n";
-                }
-                return listings;
+            socketOut.println("GET/LISTING-" + checkNull(accountID) + 
+                "-" + type + "-" + checkNull(beds) + "-" + checkNull(baths) + 
+                "-" + checkNull(furnished) + "-" + quad);
+            String response = socketIn.readLine();
+            String listings = "";
+            while(!response.equals("DONE"))
+            {
+                listings += response;
+                listings += "\n";
+            }
+            return listings;
         } catch(Exception e) {
             System.err.println(e.getMessage());
             return "ERROR";
         }
     }
+
+
+
+    public String changeListingState(String listingID, String newState) {
+        try {
+            socketOut.println("POST/CHANGESTATE-" + listingID + "-" + newState);
+            return socketIn.readLine();
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
+
+
 //    /**
 //     * Display all tools in the shop.
 //     * @return A string containing all tools in the shop.
@@ -93,15 +104,15 @@ public class Client {
 //        return data.toString();
 //    }
 
-public String[] parseParams(String input) {
-    return input.split("-");
-}
+    public String[] parseParams(String input) {
+        return input.split("-");
+    }
 
-public String checkNull(String input) {
-    if(input.equals(""))
-        return "NULL";
-    return input;
-}
+    public String checkNull(String input) {
+        if(input.equals(""))
+            return "NULL";
+        return input;
+    }
 
     /**
      * Closes all connections to the socket.
