@@ -94,9 +94,9 @@ public class Server {
                     //  expects no parameters
                     handleGetAllListings();
                 } else if (input.equals("GET/ALLRENTERS")) {
-
+                    handleGetAllUsers("RENTER");
                 } else if (input.equals("GET/ALLLANDLORDS")) {
-
+                    handleGetAllUsers("LANDLORD");
                 } else if (input.startsWith("POST/LISTING-")) {
                     String[] params = parseParams(input);
                     socketOut.println("NULL");
@@ -190,6 +190,10 @@ public class Server {
         socketOut.println("DONE");
     }
 
+    public void handleGetAllUsers(String userType) {
+        ArrayList<Account> accounts = managerController.getUsersOfType(userType);
+    }
+
     public void handleUpdateListingFees(String input) {
         String[] params = parseParams(input);
         if (listingController.updateListingFees(Integer.parseInt(params[0]), Integer.parseInt(params[1]), Integer.parseInt(params[2]))) {
@@ -222,12 +226,12 @@ public class Server {
     }
 
     private void addAccount(String email, String password, int id, String type) {
-        if (type == "LANDLORD") {
+        if (type.equals("LANDLORD")) {
             loggedInLandlords.put(id, db.getLandlordAccount(email, password));
-        } else if (type == "RENTER") {
+        } else if (type.equals("RENTER")) {
             //  TODO: need to add notification functionality on login
             loggedInRenters.put(id, db.getRenterAccount(email, password));
-        } else if (type == "MANAGER") {
+        } else if (type.equals("MANAGER")) {
             loggedInManagers.put(id, db.getManagerAccount(email, password));
         }
     }

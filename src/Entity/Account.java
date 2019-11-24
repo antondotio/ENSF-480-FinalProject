@@ -1,6 +1,6 @@
 package Entity;
 
-public abstract class Account {
+public class Account {
     Name name;
     int accountID;
     String email;
