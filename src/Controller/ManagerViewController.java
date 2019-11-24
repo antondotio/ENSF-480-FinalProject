@@ -70,8 +70,8 @@ public class ManagerViewController {
     void displayLandlords(ActionEvent event) {
         String landlords = listener.getListener().getAllLandlords();
         String landlordsTable =
-                (
-
+                ("User ID\t|\t\tName\t\t|\t\tEmail Address\t\t|\n" +
+                        "------------------------------------------------------------------------\n" +
                         landlords);
         setTable(landlordsTable);
     }
@@ -80,7 +80,7 @@ public class ManagerViewController {
     void displayListings(ActionEvent event) {
         String listings = listener.getListener().getAllListings();
         String listingsTable =
-                ("Listing ID\t\t|\tListing Start\t|\tListing End\t|\tState\t|\tFee\t\t|\tPaid\t\t|\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                ("Listing ID\t\t|\tListing Start\t|\tListing End\t|\tState\t|\tFee\t\t|\tFee Period\t|\tPaid\t\t|\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
                         "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
                         listings);
         setTable(listingsTable);
@@ -90,8 +90,8 @@ public class ManagerViewController {
     void displayRenters(ActionEvent event) {
         String renters = listener.getListener().getAllRenters();
         String rentersTable =
-                (
-
+                ("User ID\t|\t\tName\t\t|\t\tEmail Address\t\t|\n" +
+                        "------------------------------------------------------------------------\n" +
                         renters);
         setTable(rentersTable);
     }
