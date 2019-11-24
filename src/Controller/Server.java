@@ -192,6 +192,12 @@ public class Server {
 
     public void handleGetAllUsers(String userType) {
         ArrayList<Account> accounts = managerController.getUsersOfType(userType);
+        if (accounts != null) {
+            for (Account a : accounts) {
+                socketOut.println(a.getAccountID() + "\t" + a.getName().toString() + "\t" + a.getEmail());
+            }
+        }
+        socketOut.println("DONE");
     }
 
     public void handleUpdateListingFees(String input) {
