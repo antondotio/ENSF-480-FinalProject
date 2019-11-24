@@ -5,6 +5,7 @@ import Systems.DatabaseSystem;
 import Systems.FinancialInstitutionSystem;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.*;
 import java.io.*;
 import java.util.*;
@@ -76,13 +77,22 @@ public class Server {
         while(true) {
             try {
                 //  all of these will print DONE for success if no return, ERROR if failure
-                //  getlistings will print several lines THEN print DONE
+                //  getlistings and getlandlordlistings will print several lines THEN print DONE
                 //  login will ONLY print its info or ERROR, no DONE
                 input = socketIn.readLine();
                 System.out.println(input);
                 //  NOTE: I chose to ignore email because since it's simulated we can handle it all on the front end
-                if(input.startsWith("GET/LISTINGS-")) {
+                if (input.startsWith("LOGIN-")) {
+                    handleLogin(input);
+                } else if(input.startsWith("GET/LISTINGS-")) {
+                    //  expects parameter to be renter user id, or null if not registered
                     handleGetListings(input);
+                } else if (input.startsWith("GET/LANDLORDLISTINGS-")) {
+                    // expects parameter to be landlord ID
+                    handleGetLandlordListings(input);
+                } else if (input.startsWith("GET/ALLLISTINGS")) {
+                    //  expects no parameters
+                    handleGetAllListings();
                 } else if (input.startsWith("POST/LISTING-")) {
                     String[] params = parseParams(input);
                     socketOut.println("NULL");
@@ -91,8 +101,6 @@ public class Server {
                     //  expects listingId
                     //  e.g. POST/PAYMENT-1 will pay for listing 1
                     handlePayment(input);
-                } else if (input.startsWith("LOGIN-")) {
-                    handleLogin(input);
                 } else if (input.startsWith("POST/UPDATELISTINGFEES-")) {
                     //  expects listingId-newFee-newFeePeriod
                     //  e.g. POST/UPDATELISTINGFEES-1-30-30 will set listing 1's fee to $30 and it will last 30 days
@@ -166,6 +174,19 @@ public class Server {
         socketOut.println("DONE");
     }
 
+    public void handleGetLandlordListings(String input) {
+        String[] params = parseParams(input);
+        ArrayList<Listing> listings = landlordController.getListings(Integer.parseInt(params[0]));
+        printDetailedListingsResults(listings);
+        socketOut.println("DONE");
+    }
+
+    public void handleGetAllListings() {
+        ArrayList<Listing> listings = managerController.getListings();
+        printDetailedListingsResults(listings);
+        socketOut.println("DONE");
+    }
+
     public void handleUpdateListingFees(String input) {
         String[] params = parseParams(input);
         if (listingController.updateListingFees(Integer.parseInt(params[0]), Integer.parseInt(params[1]), Integer.parseInt(params[2]))) {
@@ -205,6 +226,16 @@ public class Server {
             loggedInRenters.put(id, db.getRenterAccount(email, password));
         } else if (type == "MANAGER") {
             loggedInManagers.put(id, db.getManagerAccount(email, password));
+        }
+    }
+
+    public void printDetailedListingsResults(ArrayList<Listing> listings) {
+        if (listings != null) {
+            for (Listing l : listings) {
+                socketOut.println(l.getListingIDnumber() + "\t" + l.getListingStart().toString() + "\t" + l.getListingEnd().toString() + "\t" + l.getPaymentFee() + "\t" +
+                        l.isFeePaid() + "\t" + l.getProperty().getAddress().toString() + "\t" + l.getProperty().getQuadrant() + "\t" + l.getProperty().getType() + "\t" + l.getProperty().getNumOfBedrooms()
+                        + "\t" + l.getProperty().getNumOfBathrooms() + "\t" + l.getProperty().isFurnished());
+            }
         }
     }
 

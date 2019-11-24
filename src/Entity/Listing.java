@@ -1,14 +1,17 @@
 package Entity;
 
+import java.time.LocalDate;
+
 public class Listing {
 	int landlordAccountId;
     Property property;
-    Date listingStart;
-    Date listingEnd;
+	LocalDate listingStart;
+	LocalDate listingEnd;
     double paymentFee;
     String status;
 	int listingIDnumber;
-	Date listingAddedDate;
+	LocalDate listingAddedDate;
+	boolean feePaid;
 
 	//	constructor with all the data the RENTER needs
     public Listing(int landlordAccountId, Property property, double paymentFee, String status, int listingIDnumber) {
@@ -20,7 +23,8 @@ public class Listing {
     }
 
     //	constructor with all the data the MANAGER needs
-	public Listing(int landlordAccountId, Property property, Date listingStart, Date listingEnd, double paymentFee, String status, int listingIDnumber, Date listingAddedDate) {
+	public Listing(int landlordAccountId, Property property, LocalDate listingStart, LocalDate listingEnd, double paymentFee,
+				   String status, int listingIDnumber, LocalDate listingAddedDate, boolean feePaid) {
 		this.landlordAccountId = landlordAccountId;
 		this.property = property;
 		this.listingStart = listingStart;
@@ -29,25 +33,26 @@ public class Listing {
 		this.status = status;
 		this.listingIDnumber = listingIDnumber;
 		this.listingAddedDate = listingAddedDate;
+		this.feePaid = feePaid;
 	}
 
 	public Property getProperty() {
 		return property;
 	}
 
-	public Date getListingStart() {
+	public LocalDate getListingStart() {
 		return listingStart;
 	}
 
-	public void setListingStart(Date listingStart) {
+	public void setListingStart(LocalDate listingStart) {
 		this.listingStart = listingStart;
 	}
 
-	public Date getListingEnd() {
+	public LocalDate getListingEnd() {
 		return listingEnd;
 	}
 
-	public void setListingEnd(Date listingEnd) {
+	public void setListingEnd(LocalDate listingEnd) {
 		this.listingEnd = listingEnd;
 	}
 
@@ -87,11 +92,15 @@ public class Listing {
 		this.property = property;
 	}
 
-	public Date getListingAddedDate() {
+	public LocalDate getListingAddedDate() {
 		return listingAddedDate;
 	}
 
-	public void setListingAddedDate(Date listingAddedDate) {
+	public void setListingAddedDate(LocalDate listingAddedDate) {
 		this.listingAddedDate = listingAddedDate;
+	}
+
+	public boolean isFeePaid() {
+		return feePaid;
 	}
 }

@@ -1,6 +1,9 @@
 package Controller;
 
+import Entity.Listing;
 import Systems.DatabaseSystem;
+
+import java.util.ArrayList;
 
 public class LandlordController {
     private DatabaseSystem db;
@@ -18,5 +21,9 @@ public class LandlordController {
 
     public void setListingController(ListingController listingController) {
         this.listingController = listingController;
+    }
+
+    public ArrayList<Listing> getListings(int landlordId) {
+        return db.getLandlordListings(landlordId);
     }
 }
