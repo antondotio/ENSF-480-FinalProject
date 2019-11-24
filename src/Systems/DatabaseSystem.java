@@ -84,6 +84,27 @@ public class DatabaseSystem {
         }
     }
 
+    public ArrayList<Account> getUsersOfType(String userType) {
+        try {
+            String statementStr = "SELECT * FROM `Account` WHERE `type`=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setString(1, userType);
+            rs = pStatement.executeQuery();
+
+            ArrayList<Account> accounts = new ArrayList<>();
+            while (rs.next()) {
+                accounts.add(new Account(new Name(rs.getString("fname"), rs.getString("lname")),
+                        rs.getInt("id"), rs.getString("email")));
+            }
+            return accounts;
+        } catch (SQLException e) {
+            System.err.println("Database Error: Failed to retrieve ALL users of type: " + userType);
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private ArrayList<Listing> handleListingsResults() throws SQLException {
         ArrayList<Listing> listings = new ArrayList<>();
         while (rs.next()) {
