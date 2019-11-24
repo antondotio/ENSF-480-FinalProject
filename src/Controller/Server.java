@@ -5,9 +5,9 @@ import Systems.DatabaseSystem;
 import Systems.FinancialInstitutionSystem;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.*;
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Server {
@@ -98,9 +98,7 @@ public class Server {
                 } else if (input.equals("GET/ALLLANDLORDS")) {
                     handleGetAllUsers("LANDLORD");
                 } else if (input.startsWith("POST/LISTING-")) {
-                    String[] params = parseParams(input);
-                    socketOut.println("NULL");
-                    socketOut.println("DONE");               
+                    handlePostListing(input);
                 } else if (input.startsWith("POST/PAYMENT-")) {
                     //  expects listingId
                     //  e.g. POST/PAYMENT-1 will pay for listing 1
@@ -190,6 +188,18 @@ public class Server {
         socketOut.println("DONE");
     }
 
+    public void handlePostListing(String input) {
+        String[] params = parseParams(input);
+        if (listingController.postListing(Integer.parseInt(params[0]), params[1], Integer.parseInt(params[2]),
+                Double.parseDouble(params[3]), Boolean.parseBoolean(params[4]), params[5],
+                params[6], params[7], params[8], params[9])) {
+            socketOut.println("DONE");
+        } else {
+            System.out.println("Failed to post listing for user: " + params[0]);
+            socketOut.println("ERROR");
+        }
+    }
+
     public void handleGetAllUsers(String userType) {
         ArrayList<Account> accounts = managerController.getUsersOfType(userType);
         if (accounts != null) {
@@ -245,11 +255,15 @@ public class Server {
     public void printDetailedListingsResults(ArrayList<Listing> listings) {
         if (listings != null) {
             for (Listing l : listings) {
-                socketOut.println(l.getListingIDnumber() + "\t" + l.getListingStart().toString() + "\t" + l.getListingEnd().toString() + "\t" + l.getStatus() + "\t" + l.getPaymentFee() + "\t" +
-                        l.isFeePaid() + "\t" + l.getProperty().getAddress().toString() + "\t" + l.getProperty().getQuadrant() + "\t" + l.getProperty().getType() + "\t" + l.getProperty().getNumOfBedrooms()
+                socketOut.println(l.getListingIDnumber() + "\t" + nullDateToString(l.getListingStart()) + "\t" + nullDateToString(l.getListingEnd()) + "\t" + l.getStatus() + "\t" + l.getPaymentFee() + "\t" +
+                        l.isFeePaid() + "\t" + l.getFeePeriod() + "\t" + l.getProperty().getAddress().toString() + "\t" + l.getProperty().getQuadrant() + "\t" + l.getProperty().getType() + "\t" + l.getProperty().getNumOfBedrooms()
                         + "\t" + l.getProperty().getNumOfBathrooms() + "\t" + l.getProperty().isFurnished());
             }
         }
+    }
+
+    private String nullDateToString(LocalDate l) {
+        return l != null ? l.toString() : "N/A\t\t";
     }
 
     public String[] parseParams(String input) {

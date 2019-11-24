@@ -12,6 +12,7 @@ public class Listing {
 	int listingIDnumber;
 	LocalDate listingAddedDate;
 	boolean feePaid;
+	int feePeriod;
 
 	//	constructor with all the data the RENTER needs
     public Listing(int landlordAccountId, Property property, double paymentFee, String status, int listingIDnumber) {
@@ -24,7 +25,7 @@ public class Listing {
 
     //	constructor with all the data the MANAGER needs
 	public Listing(int landlordAccountId, Property property, LocalDate listingStart, LocalDate listingEnd, double paymentFee,
-				   String status, int listingIDnumber, LocalDate listingAddedDate, boolean feePaid) {
+				   String status, int listingIDnumber, LocalDate listingAddedDate, boolean feePaid, int feePeriod) {
 		this.landlordAccountId = landlordAccountId;
 		this.property = property;
 		this.listingStart = listingStart;
@@ -34,6 +35,7 @@ public class Listing {
 		this.listingIDnumber = listingIDnumber;
 		this.listingAddedDate = listingAddedDate;
 		this.feePaid = feePaid;
+		this.feePeriod = feePeriod;
 	}
 
 	public Property getProperty() {
@@ -102,5 +104,13 @@ public class Listing {
 
 	public boolean isFeePaid() {
 		return feePaid;
+	}
+
+	public void setFeePeriod(int period) {
+    	this.feePeriod = period;
+	}
+
+	public int getFeePeriod() {
+		return feePeriod;
 	}
 }
