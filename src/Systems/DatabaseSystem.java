@@ -33,13 +33,15 @@ public class DatabaseSystem {
             }
         } catch (Exception e) {
             System.out.println("Error logging in user " + email);
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             return null;
         }
     }
 
     public ArrayList<Listing> getListings(SearchCriteria sc) {
         try {
-            StringBuilder statementStr = new StringBuilder("SELECT * FROM `Listing` AS `L`, `Property` AS `P` ");
+            StringBuilder statementStr = new StringBuilder("SELECT * FROM `Listing` AS `L`, `Property` AS `P` WHERE L.propertyId=P.id ");
             updateSearchStatementCriteria(statementStr, sc);
             statement = connection.createStatement();
             rs = statement.executeQuery(statementStr.toString());
@@ -55,7 +57,7 @@ public class DatabaseSystem {
 
     public ArrayList<Listing> getLandlordListings(int landlordId) {
         try {
-            String statementStr = "SELECT * FROM `Listing` AS `L`, `Property` AS `P` WHERE L.landlordId=?";
+            String statementStr = "SELECT * FROM `Listing` AS `L`, `Property` AS `P` WHERE L.landlordId=? AND L.propertyId=P.id ";
             pStatement = connection.prepareStatement(statementStr);
             pStatement.setInt(1, landlordId);
             rs = pStatement.executeQuery();
@@ -71,7 +73,7 @@ public class DatabaseSystem {
 
     public ArrayList<Listing> getAllListings() {
         try {
-            String statementStr = "SELECT * FROM `Listing` AS `L`, `Property` AS `P`";
+            String statementStr = "SELECT * FROM `Listing` AS `L`, `Property` AS `P` WHERE L.propertyId=P.id ";
             pStatement = connection.prepareStatement(statementStr);
             rs = pStatement.executeQuery();
 
@@ -81,6 +83,49 @@ public class DatabaseSystem {
             System.err.println(e.getMessage());
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public boolean postListing(Listing listing) {
+        try {
+            String statementStr = "INSERT INTO `Property` (`type`, `numBedrooms`, `numBathrooms`, " +
+                    "`isFurnished`, `quadrant`, `street`, `city`, `country`, `postalCode`) " +
+                    "values(?,?,?,?,?,?,?,?,?)";
+            pStatement = connection.prepareStatement(statementStr, pStatement.RETURN_GENERATED_KEYS);
+            pStatement.setString(1, listing.getProperty().getType());
+            pStatement.setInt(2, listing.getProperty().getNumOfBedrooms());
+            pStatement.setDouble(3, listing.getProperty().getNumOfBathrooms());
+            pStatement.setBoolean(4, listing.getProperty().isFurnished());
+            pStatement.setString(5, listing.getProperty().getQuadrant());
+            pStatement.setString(6, listing.getProperty().getAddress().getStreet());
+            pStatement.setString(7, listing.getProperty().getAddress().getCity());
+            pStatement.setString(8, listing.getProperty().getAddress().getCountry());
+            pStatement.setString(9, listing.getProperty().getAddress().getPostalCode());
+            pStatement.executeUpdate();
+
+            rs = pStatement.getGeneratedKeys();
+            if (rs.next()) {
+                int propertyId = rs.getInt(1);
+                statementStr = "INSERT INTO `Listing` (`landlordId`, `propertyId`, `fee`, `status`, " +
+                        "`feePeriod`, `paid`, `listingAddedDate`) values(?,?,?,?,?,?,?)";
+                pStatement = connection.prepareStatement(statementStr);
+                pStatement.setInt(1, listing.getLandlordAccountId());
+                pStatement.setInt(2, propertyId);
+                pStatement.setInt(3, (int) listing.getPaymentFee());
+                pStatement.setString(4, listing.getStatus());
+                pStatement.setInt(5, listing.getFeePeriod());
+                pStatement.setBoolean(6, listing.isFeePaid());
+                pStatement.setObject(7, LocalDate.now());
+                pStatement.executeUpdate();
+                return true;
+            } else {
+                throw new SQLException("Creating property failed, for landlord: " + listing.getLandlordAccountId());
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error when trying to insert new listing for landlord: " + listing.getLandlordAccountId());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -117,7 +162,7 @@ public class DatabaseSystem {
                             rs.getInt("P.id")),
                     rs.getObject("listingStart", LocalDate.class), rs.getObject("listingEnd", LocalDate.class),
                     rs.getDouble("fee"), rs.getString("status"), rs.getInt("L.id"),
-                    rs.getObject("listingAddedDate", LocalDate.class), rs.getBoolean("paid")));
+                    rs.getObject("listingAddedDate", LocalDate.class), rs.getBoolean("paid"), rs.getInt("feePeriod")));
         }
         return listings;
     }
@@ -316,7 +361,6 @@ public class DatabaseSystem {
             statementStr.append("AND ");
             return true;
         }
-        statementStr.append("WHERE ");
         atLeastOneCriteria = true;
         return true;
     }
