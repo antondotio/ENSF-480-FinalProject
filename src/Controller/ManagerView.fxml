@@ -12,7 +12,7 @@
     <TextArea id="landlordProperties" fx:id="infoTable" editable="false" layoutX="12.0" layoutY="211.0" prefHeight="269.0" prefWidth="1054.0" wrapText="true" />
     <Text layoutX="15.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Information Table:" />
     <Button fx:id="renterButton" layoutX="351.0" layoutY="145.0" mnemonicParsing="false" onAction="#displayRenters" text="Display Renters" />
-    <Button fx:id="propertyButton" layoutX="858.0" layoutY="145.0" mnemonicParsing="false" onAction="#displayProperties" text="Display Properties" />
+    <Button fx:id="propertyButton" layoutX="858.0" layoutY="145.0" mnemonicParsing="false" onAction="#displayListings" text="Display Listings" />
     <Button fx:id="landlordButton" layoutX="596.0" layoutY="145.0" mnemonicParsing="false" onAction="#displayLandlords" text="Display Landlords" />
     <Text layoutX="378.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProperTea Rentals">
       <font>

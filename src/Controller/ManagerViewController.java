@@ -60,6 +60,7 @@ public class ManagerViewController {
     @FXML
     private Button updateStateButton;
 
+    private Listener listener;
 
     @FXML
     void changeState(ActionEvent event) {
@@ -67,14 +68,32 @@ public class ManagerViewController {
 
     @FXML
     void displayLandlords(ActionEvent event) {
+        String landlords = listener.getListener().getAllLandlords();
+        String landlordsTable =
+                (
+
+                        landlords);
+        setTable(landlordsTable);
     }
 
     @FXML
-    void displayProperties(ActionEvent event) {
+    void displayListings(ActionEvent event) {
+        String listings = listener.getListener().getAllListings();
+        String listingsTable =
+                (
+
+                        listings);
+        setTable(listingsTable);
     }
 
     @FXML
     void displayRenters(ActionEvent event) {
+        String renters = listener.getListener().getAllRenters();
+        String rentersTable =
+                (
+
+                        renters);
+        setTable(rentersTable);
     }
 
     @FXML
@@ -103,6 +122,13 @@ public class ManagerViewController {
         assert updateStateButton != null : "fx:id=\"updateStateButton\" was not injected: check your FXML file 'ManagerView.fxml'.";
 
 
+    }
+
+    public void setTable(String table){
+        infoTable.setWrapText(false);
+        infoTable.setEditable(true);
+        infoTable.setText(table);
+        infoTable.setEditable(false);
     }
 
 }
