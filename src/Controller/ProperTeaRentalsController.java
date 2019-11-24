@@ -54,7 +54,12 @@ public class ProperTeaRentalsController {
         // handle the event here
         String type = listener.getListener().loginCommand(usernameForm.getText(), passwordForm.getText());
         if(type.equals("RENTER")){
+            Parent registeredRenterViewParent = FXMLLoader.load(getClass().getResource("RegisteredRenterView.fxml"));
+            Scene registeredRenterViewScene = new Scene(registeredRenterViewParent);
 
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(registeredRenterViewScene);
+            window.show();
         } else if (type.equals("LANDLORD")){
             Parent landlordViewParent = FXMLLoader.load(getClass().getResource("LandlordView.fxml"));
             Scene landlordViewScene = new Scene(landlordViewParent);
