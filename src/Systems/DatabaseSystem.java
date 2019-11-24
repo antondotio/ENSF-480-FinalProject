@@ -47,13 +47,15 @@ public class DatabaseSystem {
             return handleListingsResults();
         } catch (SQLException e) {
             System.out.println("Failed to retrieve listings.");
+            System.err.println(e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
 
     public ArrayList<Listing> getLandlordListings(int landlordId) {
         try {
-            String statementStr = "SELECT * FROM `Listing` AS `L`, `Property` AS `P` WHERE `L.id`=?";
+            String statementStr = "SELECT * FROM `Listing` AS `L`, `Property` AS `P` WHERE L.landlordId=?";
             pStatement = connection.prepareStatement(statementStr);
             pStatement.setInt(1, landlordId);
             rs = pStatement.executeQuery();
@@ -61,6 +63,8 @@ public class DatabaseSystem {
             return handleListingsResults();
         } catch (SQLException e) {
             System.err.println("Database Error: Failed to retrieve listings. For landlord " + landlordId);
+            System.err.println(e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
@@ -74,6 +78,8 @@ public class DatabaseSystem {
             return handleListingsResults();
         } catch (SQLException e) {
             System.err.println("Database Error: Failed to retrieve ALL listings at once. ");
+            System.err.println(e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
@@ -192,11 +198,11 @@ public class DatabaseSystem {
         try {
             String statementStr = "INSERT INTO `SearchCriteria` (`quadrant`, `isFurnished`, `numOfBathrooms`, `numOfBedrooms`, `type`) values(?, ?, ?, ?, ?)";
             PreparedStatement pStmt = connection.prepareStatement(statementStr);
-            pStmt.setString(1, sc.getQuadrant());
-            pStmt.setBoolean(2, sc.isFurnished());
-            pStmt.setDouble(3, sc.getNumOfBathrooms());
-            pStmt.setInt(4, sc.getNumOfBedrooms());
-            pStmt.setString(5, sc.getType());
+            pStmt.setObject(1, sc.getQuadrant(), JDBCType.VARCHAR);
+            pStmt.setObject(2, sc.isFurnished(), JDBCType.BOOLEAN);
+            pStmt.setObject(3, sc.getNumOfBathrooms(), JDBCType.DOUBLE);
+            pStmt.setObject(4, sc.getNumOfBedrooms(), JDBCType.INTEGER);
+            pStmt.setObject(5, sc.getType(), JDBCType.VARCHAR);
 
             pStmt.executeUpdate();
             pStmt.close();

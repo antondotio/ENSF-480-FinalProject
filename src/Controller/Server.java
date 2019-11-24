@@ -90,8 +90,9 @@ public class Server {
                 } else if (input.startsWith("GET/LANDLORDLISTINGS-")) {
                     // expects parameter to be landlord ID
                     handleGetLandlordListings(input);
-                } else if (input.startsWith("GET/ALL")) {
-
+                } else if (input.startsWith("GET/ALLLISTINGS")) {
+                    //  expects no parameters
+                    handleGetAllListings();
                 } else if (input.startsWith("POST/LISTING-")) {
                     String[] params = parseParams(input);
                     socketOut.println("NULL");
