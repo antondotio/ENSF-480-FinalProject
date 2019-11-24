@@ -48,8 +48,8 @@ public class Listener {
         return client.payFee(listingID);
     }
 
-    public String updateListingFee(String listingID, String newFee) {
-        return client.updateListingFee(listingID, newFee);
+    public String updateListingFees(String listingID, String newFee, String newPeriod) {
+        return client.updateListingFees(listingID, newFee, newPeriod);
     }
 
     public String getSummary(String startDate, String endDate) {

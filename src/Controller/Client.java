@@ -38,11 +38,14 @@ public class Client {
     }
 
     public String login(String username, String password) {
+        if(username.equals("") || password.equals("")) {
+            return "ERROR";
+        }
         try {
-            socketOut.println("LOGIN-" + checkNull(username) + "-" + checkNull(password));
+            socketOut.println("LOGIN-" + username + "-" + password);
             String response = socketIn.readLine();
             if(response.equals("ERROR")) {
-                return "ERROR";
+                return response;
             }
             String [] params = parseParams(response);
             accountID = Integer.parseInt(params[0]);
@@ -79,6 +82,10 @@ public class Client {
 
     public String postListing(String type, String bedrooms, String baths, String furnished,
     String quad, String street, String city, String country, String postalCode) {
+        if(type.equals("") || bedrooms.equals("") || baths.equals("") || street.equals("") 
+        || city.equals("") || country.equals("") || postalCode.equals("")) {
+            return "ERROR";
+        }
         try {
             socketOut.println("POST/LISTING-" + accountID.toString() + "-" + type + "-" + bedrooms + "-" + baths +
                 "-" + furnished + "-" + quad + "-" + street + "-" + city + "-" + country + "-" + postalCode);
@@ -108,8 +115,11 @@ public class Client {
     }
 
     public String changeListingState(String listingID, String newState) {
+        if(listingID.equals("") || newState.equals("")) {
+            return "ERROR";
+        }
         try {
-            socketOut.println("POST/CHANGESTATE-" + accountID + "-" + listingID + "-" + newState);
+            socketOut.println("POST/CHANGESTATE-" + accountID.toString() + "-" + listingID + "-" + newState);
             return socketIn.readLine();
         } catch(Exception e) {
             System.err.println(e.getMessage());
@@ -118,6 +128,9 @@ public class Client {
     }
 
     public String payFee(String listingID) {
+        if(listingID.equals("")) {
+            return "ERROR";
+        }
         try {
             socketOut.println("POST/PAYMENT-" + listingID);
             return socketIn.readLine();
@@ -127,12 +140,12 @@ public class Client {
         }
     }
 
-    public String updateListingFee(String listingID, String newFee) {
+    public String updateListingFees(String listingID, String newFee, String newPeriod) {
+        if(listingID.equals("") || newFee.equals("") || newPeriod.equals("")) {
+            return "ERROR";
+        }
         try {
-            if(listingID.equals("") || newFee.equals("")) {
-                return "ERROR";
-            }
-            socketOut.println("UPDATELISTINGFEES-" + listingID + "-" + newFee);
+            socketOut.println("UPDATELISTINGFEES-" + listingID + "-" + newFee + "-" + newPeriod);
             return socketIn.readLine();
         } catch(Exception e) {
             System.err.println(e.getMessage());
@@ -141,10 +154,10 @@ public class Client {
     }
 
     public String getSummary(String startDate, String endDate) {
+        if(startDate.equals("") || endDate.equals("")) {
+            return "ERROR";
+        }
         try {
-            if(startDate.equals("") || endDate.equals("")) {
-                return "ERROR";
-            }
             socketOut.println("POST/UPDATELISTINGFEES-" + startDate + "-" + endDate);
             String response = socketIn.readLine();
             String summary = "";
@@ -216,10 +229,10 @@ public class Client {
     }
 
     public String sendEmail(String listingID, String message) {
+        if(listingID.equals("") || message.equals("")) {
+            return "ERROR";
+        }
         try {
-            if(listingID.equals("") || message.equals("")) {
-                return "ERROR";
-            }
             socketOut.println("EMAIL-" + checkNull(accountID) + "-" + listingID + "-" + message);
             return socketIn.readLine();
         } catch(Exception e) {
