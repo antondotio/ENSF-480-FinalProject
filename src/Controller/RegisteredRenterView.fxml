@@ -58,7 +58,7 @@
     </RadioButton>
     <RadioButton fx:id="apartmentType" layoutX="181.0" layoutY="143.0" mnemonicParsing="false" text="Apartment" toggleGroup="$type" />
     <RadioButton fx:id="townType" layoutX="265.0" layoutY="187.0" mnemonicParsing="false" text="Townhome" toggleGroup="$type" />
-    <RadioButton fx:id="detatchedType" layoutX="51.0" layoutY="228.0" mnemonicParsing="false" text="Detached House" toggleGroup="$type" />
+    <RadioButton id="detatchedType" fx:id="detachedType" layoutX="51.0" layoutY="228.0" mnemonicParsing="false" text="Detached House" toggleGroup="$type" />
     <RadioButton fx:id="anyType" layoutX="265.0" layoutY="228.0" mnemonicParsing="false" selected="true" text="Any" toggleGroup="$type" />
     <Button fx:id="subscribeButton" layoutX="802.0" layoutY="276.0" mnemonicParsing="false" onAction="#subscribe" text="Subscribe" />
   </children>

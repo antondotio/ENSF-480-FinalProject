@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -64,6 +65,21 @@ public class ManagerViewController {
 
     @FXML
     void changeState(ActionEvent event) {
+        String response = listener.getListener().changeState(updateID.getText(), updateState.getText());
+        if (response.equals("DONE")) {
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setTitle("Success!");
+            success.setContentText("State has been changed!");
+            success.setHeaderText(null);
+            success.showAndWait();
+        } else if (response.equals("ERROR")) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error!");
+            error.setContentText("State has not been changed.\nPlease try again!");
+            error.setHeaderText(null);
+            error.showAndWait();
+        }
+        displayListings(event);
     }
 
     @FXML
@@ -98,10 +114,26 @@ public class ManagerViewController {
 
     @FXML
     void requestSummary(ActionEvent event) {
+    // TODO need to do dis :3...
     }
 
     @FXML
     void updateFeePeriod(ActionEvent event) {
+        String response = listener.getListener().updateListingFees(updateID.getText(), updateFee.getText(), updatePeriod.getText());
+        if (response.equals("DONE")) {
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setTitle("Success!");
+            success.setContentText("Fee and period has been changed!");
+            success.setHeaderText(null);
+            success.showAndWait();
+        } else if (response.equals("ERROR")) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error!");
+            error.setContentText("Fee and period has not been changed.\nPlease try again!");
+            error.setHeaderText(null);
+            error.showAndWait();
+        }
+        displayListings(event);
     }
 
     @FXML
