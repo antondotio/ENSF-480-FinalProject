@@ -158,7 +158,7 @@ public class Client {
             return "ERROR";
         }
         try {
-            socketOut.println("POST/UPDATELISTINGFEES-" + startDate + "-" + endDate);
+            socketOut.println("POSTSUMMARYREPORT-" + startDate + "-" + endDate);
             String response = socketIn.readLine();
             String summary = "";
             while(!response.equals("DONE"))
@@ -174,9 +174,9 @@ public class Client {
         }
     }
 
-    public String getRenters() {
+    public String getAllRenters() {
         try {
-            socketOut.println("GET/RENTERS");
+            socketOut.println("GET/ALLRENTERS");
             String response = socketIn.readLine();
             String renters = "";
             while(!response.equals("DONE"))
@@ -192,9 +192,9 @@ public class Client {
         }
     }
 
-    public String getLandlords() {
+    public String getAllLandlords() {
         try {
-            socketOut.println("GET/LANDLORDS");
+            socketOut.println("GET/ALLLANDLORDS");
             String response = socketIn.readLine();
             String landlords = "";
             while(!response.equals("DONE"))
@@ -210,9 +210,9 @@ public class Client {
         }
     }
 
-    public String getProperties() {
+    public String getAllListings() {
         try {
-            socketOut.println("GET/PROPERTIES");
+            socketOut.println("GET/ALLLISTINGS");
             String response = socketIn.readLine();
             String properties = "";
             while(!response.equals("DONE"))

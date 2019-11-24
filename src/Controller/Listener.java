@@ -56,16 +56,16 @@ public class Listener {
         return client.getSummary(startDate, endDate);
     }
 
-    public String getRenters() {
-        return client.getRenters();
+    public String getAllRenters() {
+        return client.getAllRenters();
     }
 
-    public String getLandlords() {
-        return client.getLandlords();
+    public String getAllLandlords() {
+        return client.getAllLandlords();
     }
 
-    public String getProperties() {
-        return client.getProperties();
+    public String getAllListings() {
+        return client.getAllListings();
     }
 
     public String sendEmail(String listingID, String message) {
