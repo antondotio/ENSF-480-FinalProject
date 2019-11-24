@@ -159,11 +159,12 @@ public class RenterViewController {
     }
 
     public void getListings(String listings){
-        listingTable.setEditable(true);
         String table =
                 ("Listing ID\t\t|\t\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
                         "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
                         listings);
+        listingTable.setWrapText(false);
+        listingTable.setEditable(true);
         listingTable.setText(table);
         listingTable.setEditable(false);
     }

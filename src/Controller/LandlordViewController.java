@@ -4,11 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 
 
 public class LandlordViewController {
@@ -65,6 +61,9 @@ public class LandlordViewController {
     private Button updateButton;
 
     @FXML
+    private Button fetchListingsButton;
+
+    @FXML
     private TextField updateID;
 
     @FXML
@@ -77,14 +76,14 @@ public class LandlordViewController {
 
     @FXML
     void makePayment(ActionEvent event) {
-        listener.getListener().payFee(payID.getText());
+        String response = listener.getListener().payFee(payID.getText());
 
         getMyListings();
     }
 
     @FXML
     void registerListing(ActionEvent event) {
-        listener.getListener().postListing(
+        String response = listener.getListener().postListing(
                 type.getText(),
                 numBed.getText(),
                 numBath.getText(),
@@ -95,13 +94,44 @@ public class LandlordViewController {
                 country.getText(),
                 postalCode.getText());
 
+        if (response.equals("DONE")) {
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setTitle("Success!");
+            success.setContentText("Listing has been registered!");
+            success.setHeaderText(null);
+            success.showAndWait();
+        } else if (response.equals("ERROR")) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error!");
+            error.setContentText("Error registering listing.\nPlease try again!");
+            error.setHeaderText(null);
+            error.showAndWait();
+        }
         getMyListings();
     }
 
     @FXML
-    void updateListingState(ActionEvent event) {
-        //listener.getListener().updateListingState(updateID.getText(), updateState.getText());
+    void changeState(ActionEvent event) {
+        String response = listener.getListener().changeState(updateID.getText(), updateState.getText());
         // maybe get back a string to show alert of if it changed or not
+        if (response.equals("DONE")) {
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setTitle("Success!");
+            success.setContentText("State has been changed!");
+            success.setHeaderText(null);
+            success.showAndWait();
+        } else if (response.equals("ERROR")) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error!");
+            error.setContentText("State has not been changed.\nPlease try again!");
+            error.setHeaderText(null);
+            error.showAndWait();
+        }
+        getMyListings();
+    }
+
+    @FXML
+    void fetchListings(ActionEvent event) {
         getMyListings();
     }
 
@@ -109,6 +139,7 @@ public class LandlordViewController {
     void initialize() {
         assert address != null : "fx:id=\"address\" was not injected: check your FXML file 'LandlordView.fxml'.";
         assert city != null : "fx:id=\"city\" was not injected: check your FXML file 'LandlordView.fxml'.";
+        assert fetchListingsButton != null : "fx:id=\"fetchListingsButton\" was not injected: check your FXML file 'LandlordView.fxml'.";
         assert country != null : "fx:id=\"country\" was not injected: check your FXML file 'LandlordView.fxml'.";
         assert furnished != null : "fx:id=\"furnished\" was not injected: check your FXML file 'LandlordView.fxml'.";
         assert landlordProperties != null : "fx:id=\"landlordProperties\" was not injected: check your FXML file 'LandlordView.fxml'.";
@@ -126,16 +157,16 @@ public class LandlordViewController {
         assert updateState != null : "fx:id=\"updateState\" was not injected: check your FXML file 'LandlordView.fxml'.";
         assert yesFurnished != null : "fx:id=\"yesFurnished\" was not injected: check your FXML file 'LandlordView.fxml'.";
 
-        //getMyListings();
 
     }
 
-    public void getMyListings(){
+    public void getMyListings() {
         String myListings = listener.getListener().getLandlordListings();
         String table =
-                ("Listing ID\t\t|\tListing Start\t|\tListing End\t\t|\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
-                        "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                ("Listing ID\t\t|\tListing Start\t|\tListing End\t|\tFee\t\t|\tPaid\t\t|\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                        "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
                         myListings);
+        landlordProperties.setWrapText(false);
         landlordProperties.setEditable(true);
         landlordProperties.setText(table);
         landlordProperties.setEditable(false);

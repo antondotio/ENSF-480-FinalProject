@@ -9,33 +9,32 @@
 
 <AnchorPane fx:id="managerView" prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.ManagerViewController">
   <children>
-    <TextArea id="landlordProperties" fx:id="infoTable" layoutX="12.0" layoutY="211.0" prefHeight="269.0" prefWidth="1054.0" wrapText="true" />
+    <TextArea id="landlordProperties" fx:id="infoTable" editable="false" layoutX="12.0" layoutY="211.0" prefHeight="269.0" prefWidth="1054.0" wrapText="true" />
     <Text layoutX="15.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Information Table:" />
-    <Button layoutX="351.0" layoutY="145.0" mnemonicParsing="false" text="Display Renters" />
-    <Button layoutX="858.0" layoutY="145.0" mnemonicParsing="false" text="Display Properties" />
-    <Button layoutX="596.0" layoutY="145.0" mnemonicParsing="false" text="Display Landlords" />
+    <Button fx:id="renterButton" layoutX="351.0" layoutY="145.0" mnemonicParsing="false" onAction="#displayRenters" text="Display Renters" />
+    <Button fx:id="propertyButton" layoutX="858.0" layoutY="145.0" mnemonicParsing="false" onAction="#displayProperties" text="Display Properties" />
+    <Button fx:id="landlordButton" layoutX="596.0" layoutY="145.0" mnemonicParsing="false" onAction="#displayLandlords" text="Display Landlords" />
     <Text layoutX="378.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProperTea Rentals">
       <font>
         <Font size="40.0" />
       </font>
     </Text>
     <Text layoutX="14.0" layoutY="663.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Summary:" />
-    <TextField layoutX="35.0" layoutY="722.0" prefWidth="200.0" />
-    <Text layoutX="21.0" layoutY="708.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date(mm-dd-yyyy):" />
-    <TextField layoutX="323.0" layoutY="722.0" prefWidth="200.0" />
-    <Text layoutX="309.0" layoutY="708.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date(mm-dd-yyyy):" />
-    <Button layoutX="582.0" layoutY="695.0" mnemonicParsing="false" text="Request Summary" />
-    <Text layoutX="15.0" layoutY="503.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Listing:" />
-    <Text layoutX="32.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
-    <TextField layoutX="132.0" layoutY="535.0" prefWidth="114.2109375" />
-    <Text layoutX="270.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing State:" />
-    <TextField layoutX="399.0" layoutY="535.0" prefWidth="115.0" />
-    <Text layoutX="552.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing Fee:" />
-    <TextField layoutX="681.0" layoutY="535.0" prefWidth="102.0" />
-    <Text layoutX="801.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing Period:" />
-    <TextField layoutX="943.0" layoutY="535.0" prefWidth="115.0" />
-    <Button layoutX="373.0" layoutY="590.0" mnemonicParsing="false" text="Update State" />
-    <Button layoutX="630.0" layoutY="590.0" mnemonicParsing="false" text="Update Fee" />
-    <Button layoutX="892.0" layoutY="590.0" mnemonicParsing="false" text="Update Period" />
+    <TextField fx:id="startDate" layoutX="125.0" layoutY="717.0" prefWidth="200.0" />
+    <Text layoutX="111.0" layoutY="703.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date(mm-dd-yyyy):" />
+    <TextField fx:id="endDate" layoutX="413.0" layoutY="717.0" prefWidth="200.0" />
+    <Text layoutX="399.0" layoutY="703.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date(mm-dd-yyyy):" />
+    <Button fx:id="requestSummaryButton" layoutX="672.0" layoutY="690.0" mnemonicParsing="false" onAction="#requestSummary" text="Request Summary" />
+    <Text layoutX="14.0" layoutY="514.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Listing:" />
+    <Text layoutX="32.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
+    <TextField id="updateListingID" fx:id="updateID" layoutX="132.0" layoutY="540.0" prefWidth="114.2109375" />
+    <Text layoutX="270.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing State:" />
+    <TextField fx:id="updateState" layoutX="399.0" layoutY="540.0" prefWidth="115.0" />
+    <Text layoutX="552.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing Fee:" />
+    <TextField fx:id="updateFee" layoutX="681.0" layoutY="540.0" prefWidth="102.0" />
+    <Text layoutX="801.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing Period:" />
+    <TextField fx:id="updatePeriod" layoutX="943.0" layoutY="540.0" prefWidth="115.0" />
+    <Button fx:id="updateStateButton" layoutX="373.0" layoutY="595.0" mnemonicParsing="false" onAction="#changeState" text="Update State" />
+    <Button fx:id="updateFeePeriodButton" layoutX="729.0" layoutY="595.0" mnemonicParsing="false" onAction="#updateFeePeriod" text="Update Fees and Period" />
   </children>
 </AnchorPane>

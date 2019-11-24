@@ -44,7 +44,7 @@
       </font>
     </Text>
     <TextArea fx:id="landlordProperties" editable="false" layoutX="14.0" layoutY="377.0" prefHeight="269.0" prefWidth="1047.0" wrapText="true" />
-    <Text layoutX="14.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Properties:" />
+    <Text layoutX="15.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Properties:" />
     <Text layoutX="13.0" layoutY="687.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update:" />
     <Text layoutX="537.0" layoutY="687.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment:" />
     <Text layoutX="577.0" layoutY="745.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
@@ -54,6 +54,7 @@
     <TextField fx:id="updateID" layoutX="128.0" layoutY="700.0" prefWidth="109.0" />
     <Text layoutX="63.0" layoutY="765.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State:" />
     <TextField fx:id="updateState" layoutX="128.0" layoutY="742.0" prefWidth="109.0" />
-    <Button fx:id="updateButton" layoutX="286.0" layoutY="716.0" mnemonicParsing="false" onAction="#updateListingState" text="Update State" />
+    <Button fx:id="updateButton" layoutX="286.0" layoutY="716.0" mnemonicParsing="false" onAction="#changeState" text="Update State" />
+    <Button fx:id="fetchListingsButton" layoutX="176.0" layoutY="338.0" mnemonicParsing="false" onAction="#fetchListings" text="Fetch Listings" />
   </children>
 </AnchorPane>

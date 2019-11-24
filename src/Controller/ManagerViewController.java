@@ -1,4 +1,108 @@
 package Controller;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+
+
 public class ManagerViewController {
+
+    @FXML
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
+
+    @FXML
+    private TextField endDate;
+
+    @FXML
+    private TextArea infoTable;
+
+    @FXML
+    private Button landlordButton;
+
+    @FXML
+    private AnchorPane managerView;
+
+    @FXML
+    private Button propertyButton;
+
+    @FXML
+    private Button renterButton;
+
+    @FXML
+    private Button requestSummaryButton;
+
+    @FXML
+    private TextField startDate;
+
+    @FXML
+    private TextField updateFee;
+
+    @FXML
+    private Button updateFeePeriodButton;
+
+    @FXML
+    private TextField updateID;
+
+    @FXML
+    private TextField updatePeriod;
+
+    @FXML
+    private TextField updateState;
+
+    @FXML
+    private Button updateStateButton;
+
+
+    @FXML
+    void changeState(ActionEvent event) {
+    }
+
+    @FXML
+    void displayLandlords(ActionEvent event) {
+    }
+
+    @FXML
+    void displayProperties(ActionEvent event) {
+    }
+
+    @FXML
+    void displayRenters(ActionEvent event) {
+    }
+
+    @FXML
+    void requestSummary(ActionEvent event) {
+    }
+
+    @FXML
+    void updateFeePeriod(ActionEvent event) {
+    }
+
+    @FXML
+    void initialize() {
+        assert endDate != null : "fx:id=\"endDate\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert infoTable != null : "fx:id=\"infoTable\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert landlordButton != null : "fx:id=\"landlordButton\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert managerView != null : "fx:id=\"managerView\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert propertyButton != null : "fx:id=\"propertyButton\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert renterButton != null : "fx:id=\"renterButton\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert requestSummaryButton != null : "fx:id=\"requestSummaryButton\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert startDate != null : "fx:id=\"startDate\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert updateFee != null : "fx:id=\"updateFee\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert updateFeePeriodButton != null : "fx:id=\"updateFeePeriodButton\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert updateID != null : "fx:id=\"updateID\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert updatePeriod != null : "fx:id=\"updatePeriod\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert updateState != null : "fx:id=\"updateState\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert updateStateButton != null : "fx:id=\"updateStateButton\" was not injected: check your FXML file 'ManagerView.fxml'.";
+
+
+    }
+
 }
