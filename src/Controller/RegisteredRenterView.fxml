@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.RegisteredRenterViewController">
+  <children>
+    <Button fx:id="searchButton" layoutX="963.0" layoutY="276.0" mnemonicParsing="false" onAction="#search" text="Search" />
+    <Text layoutX="378.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProperTea Rentals">
+      <font>
+        <Font size="40.0" />
+      </font>
+    </Text>
+    <Text id="searchListing" layoutX="39.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Listing:">
+      <font>
+        <Font size="30.0" />
+      </font>
+    </Text>
+    <Button id="searchButton" fx:id="updateButton" layoutX="14.0" layoutY="577.0" mnemonicParsing="false" onAction="#update" text="Update" visible="true" />
+    <Text layoutX="51.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home Type:" />
+    <Text layoutX="403.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of bedrooms:" />
+    <TextField id="numOfBed" fx:id="numBeds" layoutX="618.0" layoutY="266.0" prefWidth="119.0" promptText="Enter #" />
+    <Text layoutX="403.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of bathrooms:" />
+    <TextField id="numOfBath" fx:id="numBath" layoutX="625.0" layoutY="225.0" prefWidth="111.08056640625" promptText="Enter #" />
+    <Text layoutX="410.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Furnished:" />
+    <RadioButton fx:id="yesFurnished" layoutX="516.0" layoutY="139.0" mnemonicParsing="false" text="Yes">
+      <toggleGroup>
+        <ToggleGroup fx:id="furnished" />
+      </toggleGroup>
+    </RadioButton>
+    <RadioButton fx:id="notFurnished" layoutX="594.0" layoutY="139.0" mnemonicParsing="false" text="No" toggleGroup="$furnished" />
+    <Text layoutX="699.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quadrant:" />
+    <TextArea id="houseInfo" fx:id="emailMessage" editable="true" layoutX="220.0" layoutY="629.0" prefHeight="140.0" prefWidth="654.0" wrapText="true" />
+    <Text layoutX="220.0" layoutY="609.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
+    <Button id="searchButton" fx:id="emailLandlordButton" layoutX="887.0" layoutY="732.0" mnemonicParsing="false" onAction="#emailLandlord" text="Email Landlord" visible="true" />
+    <TextArea fx:id="listingTable" editable="true" layoutX="14.0" layoutY="323.0" prefHeight="239.0" prefWidth="1047.0" wrapText="true" />
+    <Text layoutX="16.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Property Listing:" />
+    <Text layoutX="357.0" layoutY="609.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
+    <TextField id="emailListingID" fx:id="emailLandlordID" layoutX="456.0" layoutY="583.0" prefWidth="104.0" />
+    <RadioButton fx:id="anyFurnished" layoutX="516.0" layoutY="173.0" mnemonicParsing="false" selected="true" text="Any" toggleGroup="$furnished" />
+    <RadioButton fx:id="nw" layoutX="802.0" layoutY="138.0" mnemonicParsing="false" text="NW">
+      <toggleGroup>
+        <ToggleGroup fx:id="quad" />
+      </toggleGroup>
+    </RadioButton>
+    <RadioButton fx:id="ne" layoutX="913.0" layoutY="140.0" mnemonicParsing="false" text="NE" toggleGroup="$quad" />
+    <RadioButton id="nw" fx:id="sw" layoutX="802.0" layoutY="181.0" mnemonicParsing="false" text="SW" toggleGroup="$quad" />
+    <RadioButton fx:id="se" layoutX="913.0" layoutY="181.0" mnemonicParsing="false" text="SE" toggleGroup="$quad" />
+    <RadioButton fx:id="anyQuad" layoutX="802.0" layoutY="223.0" mnemonicParsing="false" selected="true" text="Any" toggleGroup="$quad" />
+    <RadioButton fx:id="attachedType" layoutX="51.0" layoutY="187.0" mnemonicParsing="false" text="Attached House">
+      <toggleGroup>
+        <ToggleGroup fx:id="type" />
+      </toggleGroup>
+    </RadioButton>
+    <RadioButton fx:id="apartmentType" layoutX="181.0" layoutY="143.0" mnemonicParsing="false" text="Apartment" toggleGroup="$type" />
+    <RadioButton fx:id="townType" layoutX="265.0" layoutY="187.0" mnemonicParsing="false" text="Townhome" toggleGroup="$type" />
+    <RadioButton fx:id="detatchedType" layoutX="51.0" layoutY="228.0" mnemonicParsing="false" text="Detached House" toggleGroup="$type" />
+    <RadioButton fx:id="anyType" layoutX="265.0" layoutY="228.0" mnemonicParsing="false" selected="true" text="Any" toggleGroup="$type" />
+    <Button fx:id="subscribeButton" layoutX="802.0" layoutY="276.0" mnemonicParsing="false" onAction="#subscribe" text="Subscribe" />
+  </children>
+</AnchorPane>
