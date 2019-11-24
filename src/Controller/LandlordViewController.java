@@ -77,7 +77,8 @@ public class LandlordViewController {
     @FXML
     void makePayment(ActionEvent event) {
         String response = listener.getListener().payFee(payID.getText());
-
+        // TODO need to maybe add a new window for simulating paying or something idk
+        // TODO also do the DONE ERROR checking
         getMyListings();
     }
 
@@ -113,7 +114,6 @@ public class LandlordViewController {
     @FXML
     void changeState(ActionEvent event) {
         String response = listener.getListener().changeState(updateID.getText(), updateState.getText());
-        // maybe get back a string to show alert of if it changed or not
         if (response.equals("DONE")) {
             Alert success = new Alert(Alert.AlertType.INFORMATION);
             success.setTitle("Success!");
