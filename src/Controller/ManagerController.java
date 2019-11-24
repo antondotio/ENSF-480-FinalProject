@@ -1,6 +1,9 @@
 package Controller;
 
+import Entity.Listing;
 import Systems.DatabaseSystem;
+
+import java.util.ArrayList;
 
 public class ManagerController {
     private DatabaseSystem db;
@@ -22,5 +25,9 @@ public class ManagerController {
 
     public void setListingController(ListingController listingController) {
         this.listingController = listingController;
+    }
+
+    public ArrayList<Listing> getListings() {
+        return db.getAllListings();
     }
 }

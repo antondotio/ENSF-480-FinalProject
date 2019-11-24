@@ -22,6 +22,10 @@ public class ListingController {
 
     public boolean activateListing(int listingId) {
         return db.activateListing(listingId);
+        //  TODO: get listing back and send to notification controller
+//        Listing activatedListing = db.activateListing(listingId);
+//        //  send listing to notification controller now
+//        return activatedListing != null;    //  if non-null, then success
     }
 
     public Payment pay(int listingId) {

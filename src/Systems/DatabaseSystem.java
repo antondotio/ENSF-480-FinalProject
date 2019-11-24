@@ -43,24 +43,57 @@ public class DatabaseSystem {
             updateSearchStatementCriteria(statementStr, sc);
             statement = connection.createStatement();
             rs = statement.executeQuery(statementStr.toString());
-            ArrayList<Listing> listings = new ArrayList<>();
-            while (rs.next()) {
-                listings.add(
-                        new Listing(rs.getInt("landlordId"), new Property(
-                                rs.getString("type"), rs.getInt("numBedrooms"), rs.getDouble("numBathrooms"), rs.getBoolean("isFurnished"),
-                                rs.getString("quadrant"), new Address(
-                                        rs.getString("street"), rs.getString("city"),
-                                        rs.getString("country"), rs.getString("postalCode")),
-                                rs.getInt("P.id")),
-                            rs.getDouble("fee"), rs.getString("status"), rs.getInt("L.id")));
-            }
-            return listings;
+
+            return handleListingsResults();
         } catch (SQLException e) {
             System.out.println("Failed to retrieve listings.");
             return null;
         }
     }
 
+    public ArrayList<Listing> getLandlordListings(int landlordId) {
+        try {
+            String statementStr = "SELECT * FROM `Listing` AS `L`, `Property` AS `P` WHERE `L.id`=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setInt(1, landlordId);
+            rs = pStatement.executeQuery();
+
+            return handleListingsResults();
+        } catch (SQLException e) {
+            System.err.println("Database Error: Failed to retrieve listings. For landlord " + landlordId);
+            return null;
+        }
+    }
+
+    public ArrayList<Listing> getAllListings() {
+        try {
+            String statementStr = "SELECT * FROM `Listing` AS `L`, `Property` AS `P`";
+            pStatement = connection.prepareStatement(statementStr);
+            rs = pStatement.executeQuery();
+
+            return handleListingsResults();
+        } catch (SQLException e) {
+            System.err.println("Database Error: Failed to retrieve ALL listings at once. ");
+            return null;
+        }
+    }
+
+    private ArrayList<Listing> handleListingsResults() throws SQLException {
+        ArrayList<Listing> listings = new ArrayList<>();
+        while (rs.next()) {
+            listings.add(new Listing(rs.getInt("landlordId"),
+                    new Property(rs.getString("type"), rs.getInt("numBedrooms"),
+                            rs.getDouble("numBathrooms"), rs.getBoolean("isFurnished"),
+                            rs.getString("quadrant"),
+                            new Address(rs.getString("street"), rs.getString("city"),
+                                    rs.getString("country"), rs.getString("postalCode")),
+                            rs.getInt("P.id")),
+                    rs.getObject("listingStart", LocalDate.class), rs.getObject("listingEnd", LocalDate.class),
+                    rs.getDouble("fee"), rs.getString("status"), rs.getInt("L.id"),
+                    rs.getObject("listingAddedDate", LocalDate.class), rs.getBoolean("paid")));
+        }
+        return listings;
+    }
     public boolean updateListingFees(int listingId, int newFee, int newFeePeriodInDays) {
         try {
             String statementStr = "UPDATE `Listing` SET `fee`=?, `feePeriod`=? WHERE `id`=?";
@@ -118,6 +151,7 @@ public class DatabaseSystem {
             pStatement.setObject(3, LocalDate.now().plusDays(feePeriod));
             pStatement.setInt(4, listingId);
             pStatement.executeUpdate();
+
             return true;
         } catch(SQLException e) {
             System.out.println("Database error when trying activate listing " + listingId);
