@@ -77,7 +77,9 @@ public class LandlordViewController {
 
     @FXML
     void makePayment(ActionEvent event) {
+        listener.getListener().payFee(payID.getText());
 
+        getMyListings();
     }
 
     @FXML
@@ -97,8 +99,10 @@ public class LandlordViewController {
     }
 
     @FXML
-    void updateListing(ActionEvent event) {
-
+    void updateListingState(ActionEvent event) {
+        //listener.getListener().updateListingState(updateID.getText(), updateState.getText());
+        // maybe get back a string to show alert of if it changed or not
+        getMyListings();
     }
 
     @FXML
@@ -122,14 +126,18 @@ public class LandlordViewController {
         assert updateState != null : "fx:id=\"updateState\" was not injected: check your FXML file 'LandlordView.fxml'.";
         assert yesFurnished != null : "fx:id=\"yesFurnished\" was not injected: check your FXML file 'LandlordView.fxml'.";
 
-        getMyListings();
+        //getMyListings();
 
     }
 
     public void getMyListings(){
         String myListings = listener.getListener().getLandlordListings();
+        String table =
+                ("Listing ID\t\t|\tListing Start\t|\tListing End\t\t|\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                        "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                        myListings);
         landlordProperties.setEditable(true);
-        landlordProperties.setText(myListings);
+        landlordProperties.setText(table);
         landlordProperties.setEditable(false);
     }
 
