@@ -80,7 +80,7 @@ public class Client {
     public String postListing(String type, String bedrooms, String baths, String furnished,
     String quad, String street, String city, String country, String postalCode) {
         try {
-            socketOut.println("POST/PROPERTY-" + type + "-" + bedrooms + "-" + baths +
+            socketOut.println("POST/LISTING-" + accountID.toString() + "-" + type + "-" + bedrooms + "-" + baths +
                 "-" + furnished + "-" + quad + "-" + street + "-" + city + "-" + country + "-" + postalCode);
             return socketIn.readLine();
         } catch(Exception e) {
@@ -91,7 +91,7 @@ public class Client {
 
     public String getLandlordListings() {
         try {
-            socketOut.println("GET/LANDLORDLISTINGS-" + checkNull(accountID.toString()));
+            socketOut.println("GET/LANDLORDLISTINGS-" + accountID.toString());
             String response = socketIn.readLine();
             String listings = "";
             while(!response.equals("DONE"))
@@ -109,7 +109,7 @@ public class Client {
 
     public String changeListingState(String listingID, String newState) {
         try {
-            socketOut.println("POST/CHANGESTATE-" + listingID + "-" + newState);
+            socketOut.println("POST/CHANGESTATE-" + accountID + "-" + listingID + "-" + newState);
             return socketIn.readLine();
         } catch(Exception e) {
             System.err.println(e.getMessage());
@@ -118,8 +118,117 @@ public class Client {
     }
 
     public String payFee(String listingID) {
-        return "";
+        try {
+            socketOut.println("POST/PAYMENT-" + listingID);
+            return socketIn.readLine();
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
     }
+
+    public String updateListingFee(String listingID, String newFee) {
+        try {
+            if(listingID.equals("") || newFee.equals("")) {
+                return "ERROR";
+            }
+            socketOut.println("UPDATELISTINGFEES-" + listingID + "-" + newFee);
+            return socketIn.readLine();
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
+
+    public String getSummary(String startDate, String endDate) {
+        try {
+            if(startDate.equals("") || endDate.equals("")) {
+                return "ERROR";
+            }
+            socketOut.println("POST/UPDATELISTINGFEES-" + startDate + "-" + endDate);
+            String response = socketIn.readLine();
+            String summary = "";
+            while(!response.equals("DONE"))
+            {
+                summary += response;
+                summary += "\n";
+                response = socketIn.readLine();
+            }
+            return summary;
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
+
+    public String getRenters() {
+        try {
+            socketOut.println("GET/RENTERS");
+            String response = socketIn.readLine();
+            String renters = "";
+            while(!response.equals("DONE"))
+            {
+                renters += response;
+                renters += "\n";
+                response = socketIn.readLine();
+            }
+            return renters; 
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
+
+    public String getLandlords() {
+        try {
+            socketOut.println("GET/LANDLORDS");
+            String response = socketIn.readLine();
+            String landlords = "";
+            while(!response.equals("DONE"))
+            {
+                landlords += response;
+                landlords += "\n";
+                response = socketIn.readLine();
+            }
+            return landlords; 
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
+
+    public String getProperties() {
+        try {
+            socketOut.println("GET/PROPERTIES");
+            String response = socketIn.readLine();
+            String properties = "";
+            while(!response.equals("DONE"))
+            {
+                properties += response;
+                properties += "\n";
+                response = socketIn.readLine();
+            }
+            return properties; 
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
+
+    public String sendEmail(String listingID, String message) {
+        try {
+            if(listingID.equals("") || message.equals("")) {
+                return "ERROR";
+            }
+            socketOut.println("EMAIL-" + checkNull(accountID) + "-" + listingID + "-" + message);
+            return socketIn.readLine();
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
+
+
 
 //    /**
 //     * Display all tools in the shop.
