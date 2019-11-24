@@ -90,9 +90,13 @@ public class Server {
                 } else if (input.startsWith("GET/LANDLORDLISTINGS-")) {
                     // expects parameter to be landlord ID
                     handleGetLandlordListings(input);
-                } else if (input.startsWith("GET/ALLLISTINGS")) {
+                } else if (input.equals("GET/ALLLISTINGS")) {
                     //  expects no parameters
                     handleGetAllListings();
+                } else if (input.equals("GET/ALLRENTERS")) {
+
+                } else if (input.equals("GET/ALLLANDLORDS")) {
+
                 } else if (input.startsWith("POST/LISTING-")) {
                     String[] params = parseParams(input);
                     socketOut.println("NULL");
@@ -112,7 +116,7 @@ public class Server {
                     //  expects accountId-listingId-newState
                     //  e.g. POST/CHANGESTATE-3-1-Suspended will cause user 3 to try and change listing 1 to Suspended
                     handleChangeListingState(input);
-                } else if (input.startsWith("EMAIL")) {
+                } else if (input.startsWith("EMAIL-")) {
                     socketOut.println("DONE");
                 }
             } catch(Exception e) {
@@ -138,10 +142,9 @@ public class Server {
     public void handleLogin(String input) {
         String[] params = parseParams(input);
         String accInfo = login.authenticate(params[0], params[1]);
-        String[] accInfoSplit = accInfo.split("-");
-        addAccount(params[0], params[1], Integer.parseInt(accInfoSplit[0]), accInfoSplit[1]);
-        System.out.println(accInfo);
         if (accInfo != null) {
+            String[] accInfoSplit = accInfo.split("-");
+            addAccount(params[0], params[1], Integer.parseInt(accInfoSplit[0]), accInfoSplit[1]);
             socketOut.println(accInfo);
         } else {
             socketOut.println("ERROR");
@@ -232,7 +235,7 @@ public class Server {
     public void printDetailedListingsResults(ArrayList<Listing> listings) {
         if (listings != null) {
             for (Listing l : listings) {
-                socketOut.println(l.getListingIDnumber() + "\t" + l.getListingStart().toString() + "\t" + l.getListingEnd().toString() + "\t" + l.getPaymentFee() + "\t" +
+                socketOut.println(l.getListingIDnumber() + "\t" + l.getListingStart().toString() + "\t" + l.getListingEnd().toString() + "\t" + l.getStatus() + "\t" + l.getPaymentFee() + "\t" +
                         l.isFeePaid() + "\t" + l.getProperty().getAddress().toString() + "\t" + l.getProperty().getQuadrant() + "\t" + l.getProperty().getType() + "\t" + l.getProperty().getNumOfBedrooms()
                         + "\t" + l.getProperty().getNumOfBathrooms() + "\t" + l.getProperty().isFurnished());
             }
