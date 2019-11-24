@@ -40,27 +40,35 @@ public class Listener {
         return client.getLandlordListings();
     }
 
-    public String payFee(String listingID) {
-//        return client.payFee(listingID);
-        return "?";
-    }
-
-    public String updateListing() {
-        //  idk for who this is
-        return null;
-    }
-
-    public String getSingleListing() {
-        // needs manager GUI
-        return null;
-    }
-
-    public String getSummary() {
-        //  needs manager GUI
-        return null;
-    }
-
     public String changeState(String listingID, String newState) {
         return client.changeListingState(listingID, newState);
+    }
+
+    public String payFee(String listingID) {
+        return client.payFee(listingID);
+    }
+
+    public String updateListingFees(String listingID, String newFee, String newPeriod) {
+        return client.updateListingFees(listingID, newFee, newPeriod);
+    }
+
+    public String getSummary(String startDate, String endDate) {
+        return client.getSummary(startDate, endDate);
+    }
+
+    public String getAllRenters() {
+        return client.getAllRenters();
+    }
+
+    public String getAllLandlords() {
+        return client.getAllLandlords();
+    }
+
+    public String getAllListings() {
+        return client.getAllListings();
+    }
+
+    public String sendEmail(String listingID, String message) {
+        return client.sendEmail(listingID, message);
     }
 }
