@@ -1,5 +1,6 @@
 package Controller;
 
+import Entity.Account;
 import Entity.Listing;
 import Systems.DatabaseSystem;
 
@@ -29,5 +30,9 @@ public class ManagerController {
 
     public ArrayList<Listing> getListings() {
         return db.getAllListings();
+    }
+
+    public ArrayList<Account> getUsersOfType(String userType) {
+        return db.getUsersOfType(userType);
     }
 }
