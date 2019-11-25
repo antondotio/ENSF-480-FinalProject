@@ -363,7 +363,7 @@ public class DatabaseSystem {
 
     public boolean deleteSearchCriteria(int searchID) {
         try {
-            String statementStr = "DELETE FROM `Notification` WHERE `id`=?";
+            String statementStr = "DELETE FROM `SearchCriteria` WHERE `id`=?";
             pStatement = connection.prepareStatement(statementStr);
             pStatement.setInt(1, searchID);
             pStatement.executeUpdate();
