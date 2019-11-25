@@ -119,8 +119,11 @@ public class Server {
                     //  expects accountId
                     //  e.g. GET/NOTIFICATIONS-1 will try to get notifications for renter with user id 1
                     handleGetNotifications(input);
-                }  else if (input.startsWith("POST/SUBSCRIBE-")) {
+                } else if (input.startsWith("POST/SUBSCRIBE-")) {
                     handleSubscribe(input);
+                } else if (input.startsWith("POST/UNSUBSCRIBE-")) {
+                    handleUnsubscribe(input);
+
                 } else if (input.startsWith("EMAIL-")) {
                     socketOut.println("DONE");
                 }
@@ -170,6 +173,15 @@ public class Server {
         String[] params = parseParams(input);
         if (registeredRenterController.subscribe(Integer.parseInt(params[0]), Parsing.parseAny(params[1]), Parsing.parseInt(params[2]), Parsing.parseDouble(params[3]),
                 Parsing.parseFurnished(params[4]), Parsing.parseAny(params[5]))) {
+            socketOut.println("DONE");
+        } else {
+            socketOut.println("ERROR");
+        }
+    }
+
+    public void handleUnsubscribe(String input) {
+        String [] params = parseParams(input);
+        if (registeredRenterController.unsubscribe(Integer.parseInt(params[0]))) {
             socketOut.println("DONE");
         } else {
             socketOut.println("ERROR");

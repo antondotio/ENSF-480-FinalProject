@@ -341,6 +341,21 @@ public class DatabaseSystem {
         }
     }
 
+    public boolean deleteSearchCriteria(int searchID) {
+        try {
+            String statementStr = "DELETE FROM `Notification` WHERE `id`=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setInt(1, searchID);
+            pStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error deleting SearchCriteria.");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private Listing generateSingleListing() throws SQLException {
         return new Listing(rs.getInt("landlordId"),
                 new Property(rs.getString("type"), rs.getInt("numBedrooms"),
