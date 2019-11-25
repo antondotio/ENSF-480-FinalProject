@@ -167,6 +167,7 @@ public class RegisteredRenterViewController {
             error.setHeaderText(null);
             error.showAndWait();
         }
+        getSubscriptions(event);
     }
 
     @FXML
@@ -185,6 +186,7 @@ public class RegisteredRenterViewController {
             error.setHeaderText(null);
             error.showAndWait();
         }
+        getSubscriptions(event);
     }
 
     @FXML
