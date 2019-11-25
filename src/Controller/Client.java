@@ -1,6 +1,7 @@
 package Controller;
 
 import java.net.Socket;
+import java.util.ArrayList;
 import java.io.*;
 import java.io.IOException;
 
@@ -241,7 +242,79 @@ public class Client {
         }
     }
 
+    public String getSearchCriteria() {
+        try {
+            socketOut.println("GET/SEARCHCRITERIA-" + accountID.toString());
+            String response = socketIn.readLine();
+            String searchCriterias = "";
+            int counter = 1;
+            while(!response.equals("DONE"))
+            {
+                searchCriterias += counter++ + ".\t";
+                searchCriterias += response;
+                searchCriterias += "\n";
+                response = socketIn.readLine();
+            }
+            return searchCriterias; 
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
 
+    public String subscribe(String type, String beds, String baths, String furnished, String quad) {
+        try {
+            socketOut.println("POST/SUBSCRIBE-" + accountID.toString() +
+                "-" + type + "-" + checkNull(beds) + "-" + checkNull(baths) +
+                "-" + checkNull(furnished) + "-" + quad);
+            return socketIn.readLine();
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
+
+    public String unsubscribe(String index) {
+        try {
+            String criteria = getSearchCriteria();
+            if(criteria.contains(index + ".\t")) {
+                int startIndex = criteria.indexOf((index) + ".\t");
+                String searchCriteria;
+                int endIndex = 0;
+                if(criteria.contains((index + 1) + ".\t")) {
+                    endIndex = criteria.indexOf((index + 1) + ".\t");
+                }
+            }
+            String listingStart = index.concat(".\t");
+            int listingIndex = criteria.indexOf(listingStart);
+            return "";
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+
+
+    }
+
+    public String getNotifications() {
+        try {
+            socketOut.println("GET/SEARCHCRITERIA-" + accountID.toString());
+            String response = socketIn.readLine();
+            String searchCriterias = "";
+            int counter = 1;
+            while(!response.equals("DONE"))
+            {
+                searchCriterias += counter++ + ".\t";
+                searchCriterias += response;
+                searchCriterias += "\n";
+                response = socketIn.readLine();
+            }
+            return searchCriterias; 
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
 
 //    /**
 //     * Display all tools in the shop.

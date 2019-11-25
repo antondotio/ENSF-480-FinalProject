@@ -71,4 +71,20 @@ public class Listener {
     public String sendEmail(String listingID, String message) {
         return client.sendEmail(listingID, message);
     }
+
+    public String getSearchCriteria() {
+        return client.getSearchCriteria();
+    }
+
+    public String subscribe(String type, String beds, String baths, String furnished, String quad) {
+        return client.subscribe(type, beds, baths, furnished, quad);
+    }
+
+    public String unsubscribe(String index) {
+        return client.unsubscribe(index);
+    }
+
+    public String getNotifications() {
+        return client.getNotifications();
+    }
 }
