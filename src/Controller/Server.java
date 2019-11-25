@@ -124,6 +124,9 @@ public class Server {
                     handleGetSearchCriteria(input);
                 } else if (input.startsWith("POST/SUBSCRIBE-")) {
                     handleSubscribe(input);
+                } else if (input.startsWith("POST/UNSUBSCRIBE-")) {
+                    handleUnsubscribe(input);
+
                 } else if (input.startsWith("EMAIL-")) {
                     socketOut.println("DONE");
                 }
@@ -179,6 +182,15 @@ public class Server {
         }
     }
 
+    public void handleUnsubscribe(String input) {
+        String [] params = parseParams(input);
+        if (registeredRenterController.unsubscribe(Integer.parseInt(params[0]))) {
+            socketOut.println("DONE");
+        } else {
+            socketOut.println("ERROR");
+        }
+    }
+    
     public void handleGetSummary() {
         socketOut.println("DONE");
     }
