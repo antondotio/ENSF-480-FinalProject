@@ -98,7 +98,7 @@ public class RenterViewController {
         if(emailListingID.getText().equals("")) {
             Alert noID = new Alert(Alert.AlertType.ERROR);
             noID.setTitle("Error");
-            noID.setContentText("Please add a listing ID!");
+            noID.setContentText("Please enter a listing ID!");
             noID.setHeaderText(null);
             noID.showAndWait();
         } else {

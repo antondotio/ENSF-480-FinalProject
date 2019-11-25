@@ -7,8 +7,19 @@ public class SearchCriteria {
     Boolean furnished;
     String quadrant;
     int accountId;
+    int id;
 
     public SearchCriteria(String type, Integer numOfBedrooms, Double numOfBathrooms, Boolean furnished, String quadrant, int accountId) {
+        this.type = type;
+        this.numOfBedrooms = numOfBedrooms;
+        this.numOfBathrooms = numOfBathrooms;
+        this.furnished = furnished;
+        this.quadrant = quadrant;
+        this.accountId = accountId;
+    }
+
+    public SearchCriteria(int id, String type, Integer numOfBedrooms, Double numOfBathrooms, Boolean furnished, String quadrant, int accountId) {
+        this.id = id;
         this.type = type;
         this.numOfBedrooms = numOfBedrooms;
         this.numOfBathrooms = numOfBathrooms;
@@ -59,5 +70,9 @@ public class SearchCriteria {
 
     public int getAccountId() {
         return accountId;
+    }
+
+    public int getId() {
+        return id;
     }
 }
