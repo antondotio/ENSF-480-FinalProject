@@ -4,11 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 
 
 public class RegisteredRenterViewController {
@@ -50,6 +46,9 @@ public class RegisteredRenterViewController {
     private ToggleGroup furnished;
 
     @FXML
+    private Button getSubscriptionButton;
+
+    @FXML
     private TextArea listingTable;
 
     @FXML
@@ -80,6 +79,9 @@ public class RegisteredRenterViewController {
     private Button subscribeButton;
 
     @FXML
+    private TextField subscriptionID;
+
+    @FXML
     private RadioButton sw;
 
     @FXML
@@ -89,26 +91,94 @@ public class RegisteredRenterViewController {
     private ToggleGroup type;
 
     @FXML
-    private Button updateButton;
+    private Button unsubscribeButton;
 
     @FXML
     private RadioButton yesFurnished;
 
+    private Listener listener;
 
     @FXML
     void emailLandlord(ActionEvent event) {
+        if(emailLandlordID.getText().equals("")) {
+            Alert noID = new Alert(Alert.AlertType.ERROR);
+            noID.setTitle("Error");
+            noID.setContentText("Please add a listing ID!");
+            noID.setHeaderText(null);
+            noID.showAndWait();
+        } else {
+            Alert email = new Alert(Alert.AlertType.INFORMATION);
+            email.setTitle("Sending Email");
+            email.setContentText("If the Listing ID you inputted is valid,\n an email has been sent to the landlord.");
+            email.setHeaderText(null);
+            email.showAndWait();
+            emailLandlordID.setText("");
+            emailMessage.setText("");
+        }
+    }
+
+    @FXML
+    void getSubscriptions(ActionEvent event) {
+        String subscriptions = listener.getListener().getSearchCriteria();
+        String table = ("Subscription ID\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                            "------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                            subscriptions);
+        listingTable.setWrapText(false);
+        listingTable.setEditable(true);
+        listingTable.setText(table);
+        listingTable.setEditable(false);
     }
 
     @FXML
     void search(ActionEvent event) {
+        String listings = listener.getListener().getListings(
+                ((RadioButton) type.getSelectedToggle()).getText(),
+                numBeds.getText(),
+                numBath.getText(),
+                ((RadioButton) furnished.getSelectedToggle()).getText(),
+                ((RadioButton) quad.getSelectedToggle()).getText());
+        getListings(listings);
     }
 
     @FXML
     void subscribe(ActionEvent event) {
+        String response = listener.getListener().getListings(
+                ((RadioButton) type.getSelectedToggle()).getText(),
+                numBeds.getText(),
+                numBath.getText(),
+                ((RadioButton) furnished.getSelectedToggle()).getText(),
+                ((RadioButton) quad.getSelectedToggle()).getText());
+        if (response.equals("DONE")) {
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setTitle("Success!");
+            success.setContentText("Successfully subscribed to search criteria!");
+            success.setHeaderText(null);
+            success.showAndWait();
+        } else if (response.equals("ERROR")) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error!");
+            error.setContentText("Failed to subscribe to search criteria.\nPlease try again!");
+            error.setHeaderText(null);
+            error.showAndWait();
+        }
     }
 
     @FXML
-    void update(ActionEvent event) {
+    void unsubscribe(ActionEvent event) {
+        String response = listener.getListener().unsubscribe(subscriptionID.getText());
+        if (response.equals("DONE")) {
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setTitle("Success!");
+            success.setContentText("Successfully unsubscribed to search criteria!");
+            success.setHeaderText(null);
+            success.showAndWait();
+        } else if (response.equals("ERROR")) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error!");
+            error.setContentText("Failed to unsubscribe to search criteria.\nPlease try again!");
+            error.setHeaderText(null);
+            error.showAndWait();
+        }
     }
 
     @FXML
@@ -123,6 +193,7 @@ public class RegisteredRenterViewController {
         assert emailLandlordID != null : "fx:id=\"emailLandlordID\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
         assert emailMessage != null : "fx:id=\"emailMessage\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
         assert furnished != null : "fx:id=\"furnished\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
+        assert getSubscriptionButton != null : "fx:id=\"getSubscriptionButton\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
         assert listingTable != null : "fx:id=\"listingTable\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
         assert ne != null : "fx:id=\"ne\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
         assert notFurnished != null : "fx:id=\"notFurnished\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
@@ -133,13 +204,30 @@ public class RegisteredRenterViewController {
         assert se != null : "fx:id=\"se\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
         assert searchButton != null : "fx:id=\"searchButton\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
         assert subscribeButton != null : "fx:id=\"subscribeButton\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
+        assert subscriptionID != null : "fx:id=\"subscriptionID\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
         assert sw != null : "fx:id=\"sw\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
         assert townType != null : "fx:id=\"townType\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
         assert type != null : "fx:id=\"type\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
-        assert updateButton != null : "fx:id=\"updateButton\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
+        assert unsubscribeButton != null : "fx:id=\"unsubscribeButton\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
         assert yesFurnished != null : "fx:id=\"yesFurnished\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
 
 
+        Alert notif = new Alert(Alert.AlertType.INFORMATION);
+        notif.setTitle("NOTIFICATION");
+        notif.setContentText("NEW LISTINGS");
+        notif.setHeaderText(null);
+        notif.show();
+    }
+
+    public void getListings(String listings){
+        String table =
+                ("Listing ID\t\t|\t\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                        "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                        listings);
+        listingTable.setWrapText(false);
+        listingTable.setEditable(true);
+        listingTable.setText(table);
+        listingTable.setEditable(false);
     }
 
 }

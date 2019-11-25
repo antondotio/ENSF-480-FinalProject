@@ -77,8 +77,19 @@ public class LandlordViewController {
     @FXML
     void makePayment(ActionEvent event) {
         String response = listener.getListener().payFee(payID.getText());
-        // TODO need to maybe add a new window for simulating paying or something idk
-        // TODO also do the DONE ERROR checking
+        if (response.equals("DONE")) {
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setTitle("Success!");
+            success.setContentText("Payment has been made!");
+            success.setHeaderText(null);
+            success.showAndWait();
+        } else if (response.equals("ERROR")) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error!");
+            error.setContentText("Payment has not been made.\nPlease try again!");
+            error.setHeaderText(null);
+            error.showAndWait();
+        }
         getMyListings();
     }
 
@@ -117,13 +128,13 @@ public class LandlordViewController {
         if (response.equals("DONE")) {
             Alert success = new Alert(Alert.AlertType.INFORMATION);
             success.setTitle("Success!");
-            success.setContentText("State has been changed!");
+            success.setContentText("Listing State has been changed!");
             success.setHeaderText(null);
             success.showAndWait();
         } else if (response.equals("ERROR")) {
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setTitle("Error!");
-            error.setContentText("State has not been changed.\nPlease try again!");
+            error.setContentText("Listing State has not been changed.\nPlease try again!");
             error.setHeaderText(null);
             error.showAndWait();
         }
