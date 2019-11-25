@@ -119,14 +119,14 @@ public class RegisteredRenterViewController {
 
     @FXML
     void getSubscriptions(ActionEvent event) {
-//        String subscriptions = listener.getListener().getSearchCriteria();
-//        String table = ("Subscription ID\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
-//                            "------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
-//                            subscriptions);
-//        listingTable.setWrapText(false);
-//        listingTable.setEditable(true);
-//        listingTable.setText(table);
-//        listingTable.setEditable(false);
+        String subscriptions = listener.getListener().getSearchCriteria();
+        String table = ("Subscription ID\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                            "------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                            subscriptions);
+        listingTable.setWrapText(false);
+        listingTable.setEditable(true);
+        listingTable.setText(table);
+        listingTable.setEditable(false);
     }
 
     @FXML
@@ -165,20 +165,20 @@ public class RegisteredRenterViewController {
 
     @FXML
     void unsubscribe(ActionEvent event) {
-//        String response = listener.getListener().unsubscribe(subscriptionID.getText());
-//        if (response.equals("DONE")) {
-//            Alert success = new Alert(Alert.AlertType.INFORMATION);
-//            success.setTitle("Success!");
-//            success.setContentText("Successfully unsubscribed to search criteria!");
-//            success.setHeaderText(null);
-//            success.showAndWait();
-//        } else if (response.equals("ERROR")) {
-//            Alert error = new Alert(Alert.AlertType.ERROR);
-//            error.setTitle("Error!");
-//            error.setContentText("Failed to unsubscribe to search criteria.\nPlease try again!");
-//            error.setHeaderText(null);
-//            error.showAndWait();
-//        }
+        String response = listener.getListener().unsubscribe(subscriptionID.getText());
+        if (response.equals("DONE")) {
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setTitle("Success!");
+            success.setContentText("Successfully unsubscribed to search criteria!");
+            success.setHeaderText(null);
+            success.showAndWait();
+        } else if (response.equals("ERROR")) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error!");
+            error.setContentText("Failed to unsubscribe to search criteria.\nPlease try again!");
+            error.setHeaderText(null);
+            error.showAndWait();
+        }
     }
 
     @FXML
@@ -212,12 +212,11 @@ public class RegisteredRenterViewController {
         assert yesFurnished != null : "fx:id=\"yesFurnished\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
 
 
-        //TODO NOTIFICATION ON START
         Alert notif = new Alert(Alert.AlertType.INFORMATION);
         notif.setTitle("NOTIFICATION");
         notif.setContentText("NEW LISTINGS");
         notif.setHeaderText(null);
-        notif.showAndWait();
+        notif.show();
     }
 
     public void getListings(String listings){
