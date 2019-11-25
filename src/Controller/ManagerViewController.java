@@ -105,8 +105,8 @@ public class ManagerViewController {
     void displayListings(ActionEvent event) {
         String listings = listener.getListener().getAllListings();
         String listingsTable =
-                ("Listing ID\t\t|\tListing Start\t|\tListing End\t|\tState\t|\tFee\t\t|\tFee Period\t|\tPaid\t\t|\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
-                        "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                ("Listing ID\t\t|\tListing Start\t|\tListing End\t|\tState\t|\tFee\t\t|\tPaid\t\t|\\tFee Period\\t|\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                        "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
                         listings);
         setTable(listingsTable);
     }

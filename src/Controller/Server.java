@@ -188,7 +188,7 @@ public class Server {
         ArrayList<SearchCriteria> criterias = registeredRenterController.getSearchCriteria(Integer.parseInt(params[0]));
         if (criterias != null) {
             for (SearchCriteria sc : criterias) {
-                socketOut.println(sc.getId() + "\t\t\t\t" + nullObjectToString(sc.getQuadrant()) + "\t\t\t\t\t" +
+                socketOut.println(sc.getId() + "\t\t\t\t" + nullObjectToString(sc.getQuadrant()) + "\t\t\t\t\t\t" +
                         nullObjectToString(sc.getType()) + "\t\t\t" + nullObjectToString(sc.getNumOfBedrooms()) + "\t\t\t\t" + nullObjectToString(sc.getNumOfBathrooms()) +
                         "\t\t\t\t" + nullObjectToString(sc.isFurnished()));
             }
@@ -295,7 +295,7 @@ public class Server {
     public void printDetailedListingsResults(ArrayList<Listing> listings) {
         if (listings != null) {
             for (Listing l : listings) {
-                socketOut.println(l.getListingIDnumber() + "\t" + nullObjectToString(l.getListingStart()) + "\t" + nullObjectToString(l.getListingEnd()) + "\t" + l.getStatus() + "\t" + l.getPaymentFee() + "\t" +
+                socketOut.println(l.getListingIDnumber() + "\t" + nullDateToString(l.getListingStart()) + "\t" + nullDateToString(l.getListingEnd()) + "\t" + l.getStatus() + "\t" + l.getPaymentFee() + "\t" +
                         l.isFeePaid() + "\t" + l.getFeePeriod() + "\t" + l.getProperty().getAddress().toString() + "\t" + l.getProperty().getQuadrant() + "\t" + l.getProperty().getType() + "\t" + l.getProperty().getNumOfBedrooms()
                         + "\t" + l.getProperty().getNumOfBathrooms() + "\t" + l.getProperty().isFurnished());
             }
@@ -303,7 +303,11 @@ public class Server {
     }
 
     private String nullObjectToString(Object o) {
-        return o != null ? o.toString() : "N/A\t\t";
+        return o != null ? o.toString() : "N/A\t";
+    }
+
+    private String nullDateToString(LocalDate d) {
+        return d != null ? d.toString() : "N/A\t\t";
     }
 
     public String[] parseParams(String input) {
