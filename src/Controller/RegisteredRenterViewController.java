@@ -4,7 +4,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 
 public class RegisteredRenterViewController {
@@ -119,14 +125,14 @@ public class RegisteredRenterViewController {
 
     @FXML
     void getSubscriptions(ActionEvent event) {
-        String subscriptions = listener.getListener().getSearchCriteria();
-        String table = ("Subscription ID\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
-                            "------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
-                            subscriptions);
-        listingTable.setWrapText(false);
-        listingTable.setEditable(true);
-        listingTable.setText(table);
-        listingTable.setEditable(false);
+//        String subscriptions = listener.getListener().getSearchCriteria();
+//        String table = ("Subscription ID\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+//                            "------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+//                            subscriptions);
+//        listingTable.setWrapText(false);
+//        listingTable.setEditable(true);
+//        listingTable.setText(table);
+//        listingTable.setEditable(false);
     }
 
     @FXML
@@ -165,20 +171,20 @@ public class RegisteredRenterViewController {
 
     @FXML
     void unsubscribe(ActionEvent event) {
-        String response = listener.getListener().unsubscribe(subscriptionID.getText());
-        if (response.equals("DONE")) {
-            Alert success = new Alert(Alert.AlertType.INFORMATION);
-            success.setTitle("Success!");
-            success.setContentText("Successfully unsubscribed to search criteria!");
-            success.setHeaderText(null);
-            success.showAndWait();
-        } else if (response.equals("ERROR")) {
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setTitle("Error!");
-            error.setContentText("Failed to unsubscribe to search criteria.\nPlease try again!");
-            error.setHeaderText(null);
-            error.showAndWait();
-        }
+//        String response = listener.getListener().unsubscribe(subscriptionID.getText());
+//        if (response.equals("DONE")) {
+//            Alert success = new Alert(Alert.AlertType.INFORMATION);
+//            success.setTitle("Success!");
+//            success.setContentText("Successfully unsubscribed to search criteria!");
+//            success.setHeaderText(null);
+//            success.showAndWait();
+//        } else if (response.equals("ERROR")) {
+//            Alert error = new Alert(Alert.AlertType.ERROR);
+//            error.setTitle("Error!");
+//            error.setContentText("Failed to unsubscribe to search criteria.\nPlease try again!");
+//            error.setHeaderText(null);
+//            error.showAndWait();
+//        }
     }
 
     @FXML
@@ -212,11 +218,37 @@ public class RegisteredRenterViewController {
         assert yesFurnished != null : "fx:id=\"yesFurnished\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
 
 
-        Alert notif = new Alert(Alert.AlertType.INFORMATION);
-        notif.setTitle("NOTIFICATION");
-        notif.setContentText("NEW LISTINGS");
-        notif.setHeaderText(null);
-        notif.show();
+//        Alert notif = new Alert(Alert.AlertType.INFORMATION);
+//        notif.setTitle("NOTIFICATION");
+//        notif.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
+//        notif.setContentText(listener.getListener().getListings(
+//                ((RadioButton) type.getSelectedToggle()).getText(),
+//                numBeds.getText(),
+//                numBath.getText(),
+//                ((RadioButton) furnished.getSelectedToggle()).getText(),
+//                ((RadioButton) quad.getSelectedToggle()).getText()));
+//        notif.setHeaderText(null);
+//        notif.show();
+
+        String listingsNotifs = listener.getListener().getNotifications();
+        if(!listingsNotifs.equals("")) {
+            Stage notif = new Stage();
+            notif.initModality(Modality.APPLICATION_MODAL);
+            notif.setTitle("NOTIFICATION");
+            String table = ("New Listings for your search criteria have arrived!\n" +
+                    "Listing ID\t\t|\t\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                    "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                    listingsNotifs);
+            Label label = new Label(table);
+            Button button1 = new Button("OK");
+            button1.setOnAction(e -> notif.close());
+            VBox layout = new VBox(10);
+            layout.getChildren().addAll(label, button1);
+            layout.setAlignment(Pos.CENTER);
+            Scene scene1 = new Scene(layout, 900, 200);
+            notif.setScene(scene1);
+            notif.show();
+        }
     }
 
     public void getListings(String listings){
