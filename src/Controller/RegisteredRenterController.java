@@ -10,10 +10,9 @@ public class RegisteredRenterController extends RenterController {
         super(db);
     }
 
-    public ArrayList<Listing> getListings(int renterId, String type, Integer beds,
-                                          Double baths, Boolean furnished, String quadrant) {
+    public boolean subscribe(int renterId, String type, Integer beds,
+                          Double baths, Boolean furnished, String quadrant) {
         SearchCriteria sc = new SearchCriteria(type, beds, baths, furnished, quadrant, renterId);
-        db.insertSearchCriteria(sc);
-        return super.getListings(type, beds, baths, furnished, quadrant);
+        return db.insertSearchCriteria(sc);
     }
 }

@@ -115,10 +115,12 @@ public class Server {
                     //  expects accountId-listingId-newState
                     //  e.g. POST/CHANGESTATE-3-1-Suspended will cause user 3 to try and change listing 1 to Suspended
                     handleChangeListingState(input);
-                } else if (input.equals("GET/NOTIFICATIONS-")) {
+                } else if (input.startsWith("GET/NOTIFICATIONS-")) {
                     //  expects accountId
                     //  e.g. GET/NOTIFICATIONS-1 will try to get notifications for renter with user id 1
                     handleGetNotifications(input);
+                }  else if (input.startsWith("POST/SUBSCRIBE-")) {
+                    handleSubscribe(input);
                 } else if (input.startsWith("EMAIL-")) {
                     socketOut.println("DONE");
                 }
@@ -158,18 +160,20 @@ public class Server {
         String[] params = parseParams(input);
         ArrayList<Listing> listings;
         //  get listings
-        if (params[0].equals("NULL")) {
-            //  use rentercontroller
-            listings = renterController.getListings(Parsing.parseAny(params[1]), Parsing.parseInt(params[2]), Parsing.parseDouble(params[3]),
-                    Parsing.parseFurnished(params[4]), Parsing.parseAny(params[5]));
-        } else {
-            //  use registeredrentercontroller
-            listings = registeredRenterController.getListings(Integer.parseInt(params[0]), Parsing.parseAny(params[1]), Parsing.parseInt(params[2]),
-                    Parsing.parseDouble(params[3]), Parsing.parseFurnished(params[4]), Parsing.parseAny(params[5]));
-        }
+        listings = renterController.getListings(Parsing.parseAny(params[1]), Parsing.parseInt(params[2]), Parsing.parseDouble(params[3]), Parsing.parseFurnished(params[4]), Parsing.parseAny(params[5]));
         //  print listings
         printRenterListings(listings);
         socketOut.println("DONE");
+    }
+
+    public void handleSubscribe(String input) {
+        String[] params = parseParams(input);
+        if (registeredRenterController.subscribe(Integer.parseInt(params[0]), Parsing.parseAny(params[1]), Parsing.parseInt(params[2]), Parsing.parseDouble(params[3]),
+                Parsing.parseFurnished(params[4]), Parsing.parseAny(params[5]))) {
+            socketOut.println("DONE");
+        } else {
+            socketOut.println("ERROR");
+        }
     }
 
     public void handleGetLandlordListings(String input) {

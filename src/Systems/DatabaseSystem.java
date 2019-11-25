@@ -319,22 +319,25 @@ public class DatabaseSystem {
         }
     }
 
-    public void insertSearchCriteria(SearchCriteria sc) {
+    public boolean insertSearchCriteria(SearchCriteria sc) {
         try {
-            String statementStr = "INSERT INTO `SearchCriteria` (`quadrant`, `isFurnished`, `numOfBathrooms`, `numOfBedrooms`, `type`) values(?, ?, ?, ?, ?)";
+            String statementStr = "INSERT INTO `SearchCriteria` (`userId`, `quadrant`, `isFurnished`, `numOfBathrooms`, `numOfBedrooms`, `type`) values(?, ?, ?, ?, ?)";
             PreparedStatement pStmt = connection.prepareStatement(statementStr);
-            pStmt.setObject(1, sc.getQuadrant(), JDBCType.VARCHAR);
-            pStmt.setObject(2, sc.isFurnished(), JDBCType.BOOLEAN);
-            pStmt.setObject(3, sc.getNumOfBathrooms(), JDBCType.DOUBLE);
-            pStmt.setObject(4, sc.getNumOfBedrooms(), JDBCType.INTEGER);
-            pStmt.setObject(5, sc.getType(), JDBCType.VARCHAR);
+            pStmt.setInt(1, sc.getAccountId());
+            pStmt.setObject(2, sc.getQuadrant(), JDBCType.VARCHAR);
+            pStmt.setObject(3, sc.isFurnished(), JDBCType.BOOLEAN);
+            pStmt.setObject(4, sc.getNumOfBathrooms(), JDBCType.DOUBLE);
+            pStmt.setObject(5, sc.getNumOfBedrooms(), JDBCType.INTEGER);
+            pStmt.setObject(6, sc.getType(), JDBCType.VARCHAR);
 
             pStmt.executeUpdate();
             pStmt.close();
+            return true;
         } catch (SQLException e) {
-            System.out.println("Error inserting into table.");
+            System.out.println("Error inserting into SearchCriteria.");
+            System.out.println(e.getMessage());
             e.printStackTrace();
-            return;
+            return false;
         }
     }
 
