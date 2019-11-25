@@ -125,14 +125,14 @@ public class RegisteredRenterViewController {
 
     @FXML
     void getSubscriptions(ActionEvent event) {
-//        String subscriptions = listener.getListener().getSearchCriteria();
-//        String table = ("Subscription ID\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
-//                            "------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
-//                            subscriptions);
-//        listingTable.setWrapText(false);
-//        listingTable.setEditable(true);
-//        listingTable.setText(table);
-//        listingTable.setEditable(false);
+        String subscriptions = listener.getListener().getSearchCriteria();
+        String table = ("Subscription ID\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                            "------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                            subscriptions);
+        listingTable.setWrapText(false);
+        listingTable.setEditable(true);
+        listingTable.setText(table);
+        listingTable.setEditable(false);
     }
 
     @FXML
@@ -171,20 +171,20 @@ public class RegisteredRenterViewController {
 
     @FXML
     void unsubscribe(ActionEvent event) {
-//        String response = listener.getListener().unsubscribe(subscriptionID.getText());
-//        if (response.equals("DONE")) {
-//            Alert success = new Alert(Alert.AlertType.INFORMATION);
-//            success.setTitle("Success!");
-//            success.setContentText("Successfully unsubscribed to search criteria!");
-//            success.setHeaderText(null);
-//            success.showAndWait();
-//        } else if (response.equals("ERROR")) {
-//            Alert error = new Alert(Alert.AlertType.ERROR);
-//            error.setTitle("Error!");
-//            error.setContentText("Failed to unsubscribe to search criteria.\nPlease try again!");
-//            error.setHeaderText(null);
-//            error.showAndWait();
-//        }
+        String response = listener.getListener().unsubscribe(subscriptionID.getText());
+        if (response.equals("DONE")) {
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setTitle("Success!");
+            success.setContentText("Successfully unsubscribed to search criteria!");
+            success.setHeaderText(null);
+            success.showAndWait();
+        } else if (response.equals("ERROR")) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error!");
+            error.setContentText("Failed to unsubscribe to search criteria.\nPlease try again!");
+            error.setHeaderText(null);
+            error.showAndWait();
+        }
     }
 
     @FXML
@@ -217,25 +217,12 @@ public class RegisteredRenterViewController {
         assert unsubscribeButton != null : "fx:id=\"unsubscribeButton\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
         assert yesFurnished != null : "fx:id=\"yesFurnished\" was not injected: check your FXML file 'RegisteredRenterView.fxml'.";
 
-
-//        Alert notif = new Alert(Alert.AlertType.INFORMATION);
-//        notif.setTitle("NOTIFICATION");
-//        notif.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
-//        notif.setContentText(listener.getListener().getListings(
-//                ((RadioButton) type.getSelectedToggle()).getText(),
-//                numBeds.getText(),
-//                numBath.getText(),
-//                ((RadioButton) furnished.getSelectedToggle()).getText(),
-//                ((RadioButton) quad.getSelectedToggle()).getText()));
-//        notif.setHeaderText(null);
-//        notif.show();
-
         String listingsNotifs = listener.getListener().getNotifications();
         if(!listingsNotifs.equals("")) {
             Stage notif = new Stage();
             notif.initModality(Modality.APPLICATION_MODAL);
             notif.setTitle("NOTIFICATION");
-            String table = ("New Listings for your search criteria have arrived!\n" +
+            String table = ("New Listings for your search criteria have arrived!\n\n" +
                     "Listing ID\t\t|\t\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
                     "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
                     listingsNotifs);

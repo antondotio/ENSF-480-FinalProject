@@ -76,19 +76,27 @@ public class LandlordViewController {
 
     @FXML
     void makePayment(ActionEvent event) {
-        String response = listener.getListener().payFee(payID.getText());
-        if (response.equals("DONE")) {
-            Alert success = new Alert(Alert.AlertType.INFORMATION);
-            success.setTitle("Success!");
-            success.setContentText("Payment has been made!");
-            success.setHeaderText(null);
-            success.showAndWait();
-        } else if (response.equals("ERROR")) {
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setTitle("Error!");
-            error.setContentText("Payment has not been made.\nPlease try again!");
-            error.setHeaderText(null);
-            error.showAndWait();
+        if(payID.getText().equals("")){
+            Alert noID = new Alert(Alert.AlertType.ERROR);
+            noID.setTitle("Error");
+            noID.setContentText("Please enter a listing to pay for!");
+            noID.setHeaderText(null);
+            noID.showAndWait();
+        } else {
+            String response = listener.getListener().payFee(payID.getText());
+            if (response.equals("DONE")) {
+                Alert success = new Alert(Alert.AlertType.INFORMATION);
+                success.setTitle("Success!");
+                success.setContentText("Payment has been made!");
+                success.setHeaderText(null);
+                success.showAndWait();
+            } else if (response.equals("ERROR")) {
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Error!");
+                error.setContentText("Payment has not been made.\nPlease try again!");
+                error.setHeaderText(null);
+                error.showAndWait();
+            }
         }
         getMyListings();
     }
@@ -124,20 +132,29 @@ public class LandlordViewController {
 
     @FXML
     void changeState(ActionEvent event) {
-        String response = listener.getListener().changeState(updateID.getText(), updateState.getText());
-        if (response.equals("DONE")) {
-            Alert success = new Alert(Alert.AlertType.INFORMATION);
-            success.setTitle("Success!");
-            success.setContentText("Listing State has been changed!");
-            success.setHeaderText(null);
-            success.showAndWait();
-        } else if (response.equals("ERROR")) {
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setTitle("Error!");
-            error.setContentText("Listing State has not been changed.\nPlease try again!");
-            error.setHeaderText(null);
-            error.showAndWait();
+        if(updateID.getText().equals("") || updateState.getText().equals("")){
+            Alert noID = new Alert(Alert.AlertType.ERROR);
+            noID.setTitle("Error");
+            noID.setContentText("Please enter a listing to pay for!");
+            noID.setHeaderText(null);
+            noID.showAndWait();
+        } else {
+            String response = listener.getListener().changeState(updateID.getText(), updateState.getText());
+            if (response.equals("DONE")) {
+                Alert success = new Alert(Alert.AlertType.INFORMATION);
+                success.setTitle("Success!");
+                success.setContentText("Listing State has been changed!");
+                success.setHeaderText(null);
+                success.showAndWait();
+            } else if (response.equals("ERROR")) {
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Error!");
+                error.setContentText("Listing State has not been changed.\nPlease try again!");
+                error.setHeaderText(null);
+                error.showAndWait();
+            }
         }
+
         getMyListings();
     }
 
