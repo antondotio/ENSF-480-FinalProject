@@ -10,6 +10,7 @@ import Entity.Constants;
 //  handles backend behaviour regarding changing/updating/creating listings
 public class ListingController {
     private DatabaseSystem db;
+    private NotificationController n;
 
     public ListingController(DatabaseSystem db) {
         this.db = db;
@@ -24,11 +25,11 @@ public class ListingController {
     }
 
     public boolean activateListing(int listingId) {
-        return db.activateListing(listingId);
-        //  TODO: get listing back and send to notification controller
-//        Listing activatedListing = db.activateListing(listingId);
-//        //  send listing to notification controller now
-//        return activatedListing != null;    //  if non-null, then success
+        Listing activatedListing = db.activateListing(listingId);
+        //  send listing to notification controller
+        n.handleNewListing(activatedListing);
+
+        return activatedListing != null;    //  if non-null, then success
     }
 
     public boolean postListing(int accountId, String type, int bedrooms, double baths, boolean furnished,
@@ -37,6 +38,10 @@ public class ListingController {
                 new Address(street, city, country, postalCode), -1), Constants.DEFAULT_FEE, Constants.DEFAULT_STATUS, -1);
         listing.setFeePeriod(Constants.DEFAULT_FEEPERIOD);
         return db.postListing(listing);
+    }
+
+    public void setNotificationController(NotificationController n) {
+        this.n = n;
     }
 
     public Payment pay(int listingId) {
