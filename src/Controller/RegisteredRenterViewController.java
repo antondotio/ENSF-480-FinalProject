@@ -126,8 +126,8 @@ public class RegisteredRenterViewController {
     @FXML
     void getSubscriptions(ActionEvent event) {
         String subscriptions = listener.getListener().getSearchCriteria();
-        String table = ("Subscription ID\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
-                            "------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+        String table = ("Subscription ID\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                            "-----------------------------------------------------------------------------------------------------------------------------------------\n" +
                             subscriptions);
         listingTable.setWrapText(false);
         listingTable.setEditable(true);

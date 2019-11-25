@@ -65,20 +65,29 @@ public class ManagerViewController {
 
     @FXML
     void changeState(ActionEvent event) {
-        String response = listener.getListener().changeState(updateID.getText(), updateState.getText());
-        if (response.equals("DONE")) {
-            Alert success = new Alert(Alert.AlertType.INFORMATION);
-            success.setTitle("Success!");
-            success.setContentText("State has been changed!");
-            success.setHeaderText(null);
-            success.showAndWait();
-        } else if (response.equals("ERROR")) {
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setTitle("Error!");
-            error.setContentText("State has not been changed.\nPlease try again!");
-            error.setHeaderText(null);
-            error.showAndWait();
+        if(updateID.getText().equals("") || updateState.getText().equals("")) {
+            Alert noID = new Alert(Alert.AlertType.ERROR);
+            noID.setTitle("Error");
+            noID.setContentText("Please enter both an ID and a new state!");
+            noID.setHeaderText(null);
+            noID.showAndWait();
+        } else {
+            String response = listener.getListener().changeState(updateID.getText(), updateState.getText());
+            if (response.equals("DONE")) {
+                Alert success = new Alert(Alert.AlertType.INFORMATION);
+                success.setTitle("Success!");
+                success.setContentText("State has been changed!");
+                success.setHeaderText(null);
+                success.showAndWait();
+            } else if (response.equals("ERROR")) {
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Error!");
+                error.setContentText("State has not been changed.\nPlease try again!");
+                error.setHeaderText(null);
+                error.showAndWait();
+            }
         }
+
         displayListings(event);
     }
 
