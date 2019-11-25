@@ -142,7 +142,7 @@ public class RegisteredRenterViewController {
 
     @FXML
     void subscribe(ActionEvent event) {
-        String response = listener.getListener().getListings(
+        String response = listener.getListener().subscribe(
                 ((RadioButton) type.getSelectedToggle()).getText(),
                 numBeds.getText(),
                 numBath.getText(),

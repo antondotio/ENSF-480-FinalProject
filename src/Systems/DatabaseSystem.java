@@ -321,7 +321,7 @@ public class DatabaseSystem {
 
     public boolean insertSearchCriteria(SearchCriteria sc) {
         try {
-            String statementStr = "INSERT INTO `SearchCriteria` (`userId`, `quadrant`, `isFurnished`, `numOfBathrooms`, `numOfBedrooms`, `type`) values(?, ?, ?, ?, ?)";
+            String statementStr = "INSERT INTO `SearchCriteria` (`userId`, `quadrant`, `isFurnished`, `numOfBathrooms`, `numOfBedrooms`, `type`) values(?, ?, ?, ?, ?,?)";
             PreparedStatement pStmt = connection.prepareStatement(statementStr);
             pStmt.setInt(1, sc.getAccountId());
             pStmt.setObject(2, sc.getQuadrant(), JDBCType.VARCHAR);
