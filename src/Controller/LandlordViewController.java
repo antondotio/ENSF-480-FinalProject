@@ -135,7 +135,7 @@ public class LandlordViewController {
         if(updateID.getText().equals("") || updateState.getText().equals("")){
             Alert noID = new Alert(Alert.AlertType.ERROR);
             noID.setTitle("Error");
-            noID.setContentText("Please enter a listing to pay for!");
+            noID.setContentText("Please enter both an ID and a new state!");
             noID.setHeaderText(null);
             noID.showAndWait();
         } else {

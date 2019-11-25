@@ -124,6 +124,9 @@ public class Server {
                     handleGetSearchCriteria(input);
                 } else if (input.startsWith("POST/SUBSCRIBE-")) {
                     handleSubscribe(input);
+                } else if (input.startsWith("POST/UNSUBSCRIBE-")) {
+                    handleUnsubscribe(input);
+
                 } else if (input.startsWith("EMAIL-")) {
                     socketOut.println("DONE");
                 }
@@ -179,6 +182,15 @@ public class Server {
         }
     }
 
+    public void handleUnsubscribe(String input) {
+        String [] params = parseParams(input);
+        if (registeredRenterController.unsubscribe(Integer.parseInt(params[0]))) {
+            socketOut.println("DONE");
+        } else {
+            socketOut.println("ERROR");
+        }
+    }
+    
     public void handleGetSummary() {
         socketOut.println("DONE");
     }
@@ -188,7 +200,7 @@ public class Server {
         ArrayList<SearchCriteria> criterias = registeredRenterController.getSearchCriteria(Integer.parseInt(params[0]));
         if (criterias != null) {
             for (SearchCriteria sc : criterias) {
-                socketOut.println(sc.getId() + "\t\t\t\t" + nullObjectToString(sc.getQuadrant()) + "\t\t\t\t\t" +
+                socketOut.println(sc.getId() + "\t\t\t\t" + nullObjectToString(sc.getQuadrant()) + "\t\t\t\t\t\t" +
                         nullObjectToString(sc.getType()) + "\t\t\t" + nullObjectToString(sc.getNumOfBedrooms()) + "\t\t\t\t" + nullObjectToString(sc.getNumOfBathrooms()) +
                         "\t\t\t\t" + nullObjectToString(sc.isFurnished()));
             }
@@ -312,7 +324,11 @@ public class Server {
     }
 
     private String nullObjectToString(Object o) {
-        return o != null ? o.toString() : "N/A\t\t";
+        return o != null ? o.toString() : "N/A\t";
+    }
+
+    private String nullDateToString(LocalDate d) {
+        return d != null ? d.toString() : "N/A\t\t";
     }
 
     public String[] parseParams(String input) {
