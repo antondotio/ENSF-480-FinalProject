@@ -274,42 +274,30 @@ public class Client {
         }
     }
 
-    public String unsubscribe(String index) {
+    public String unsubscribe(String searchID) {
+        if(searchID.equals("")) {
+            return "ERROR";
         try {
-            String criteria = getSearchCriteria();
-            if(criteria.contains(index + ".\t")) {
-                int startIndex = criteria.indexOf((index) + ".\t");
-                String searchCriteria;
-                int endIndex = 0;
-                if(criteria.contains((index + 1) + ".\t")) {
-                    endIndex = criteria.indexOf((index + 1) + ".\t");
-                }
-            }
-            String listingStart = index.concat(".\t");
-            int listingIndex = criteria.indexOf(listingStart);
-            return "";
+            socketOut.println("POST/UNSUBSCRIBE-" + searchID);
+            return socketIn.readLine();
         } catch(Exception e) {
             System.err.println(e.getMessage());
             return "ERROR";
         }
-
-
     }
 
     public String getNotifications() {
         try {
-            socketOut.println("GET/SEARCHCRITERIA-" + accountID.toString());
+            socketOut.println("GET/NOTIFICATIONS-" + accountID.toString());
             String response = socketIn.readLine();
-            String searchCriterias = "";
-            int counter = 1;
+            String notifications = "";
             while(!response.equals("DONE"))
             {
-                searchCriterias += counter++ + ".\t";
-                searchCriterias += response;
-                searchCriterias += "\n";
+                notifications += response;
+                notifications += "\n";
                 response = socketIn.readLine();
             }
-            return searchCriterias; 
+            return notifications;
         } catch(Exception e) {
             System.err.println(e.getMessage());
             return "ERROR";
