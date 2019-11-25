@@ -35,6 +35,7 @@ public class Server {
     private RegisteredRenterController registeredRenterController;
     private ManagerController managerController;
     private ListingController listingController;
+    private NotificationController notificationController;
 
     private DatabaseSystem db;
     private FinancialInstitutionSystem fis;
@@ -277,9 +278,11 @@ public class Server {
         registeredRenterController = new RegisteredRenterController(db);
         managerController = new ManagerController(db);
         listingController = new ListingController(db);
+        notificationController = new NotificationController(db);
 
         landlordController.setListingController(listingController);
         managerController.setListingController(listingController);
+        listingController.setNotificationController(notificationController);
     }
 
     public void setFinancialInstitutionSystem(FinancialInstitutionSystem fis) {
