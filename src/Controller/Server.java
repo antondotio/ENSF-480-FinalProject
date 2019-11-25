@@ -110,8 +110,8 @@ public class Server {
                     //  e.g. POST/UPDATELISTINGFEES-1-30-30 will set listing 1's fee to $30 and it will last 30 days
                     //  THIS IS FOR THE NEXT PAYMENT CYCLE. DOES NOT AFFECT ACTIVE LISTINGS. WILL AFFECT THEM WHEN THEY EXPIRE.
                     handleUpdateListingFees(input);
-                } else if (input.equals("GET/SUMMARYREPORT")) {
-                    handleGetSummary();
+                } else if (input.startsWith("GET/SUMMARYREPORT-")) {
+                    handleGetSummary(input);
                 } else if (input.startsWith("POST/CHANGESTATE-")) {
                     //  expects accountId-listingId-newState
                     //  e.g. POST/CHANGESTATE-3-1-Suspended will cause user 3 to try and change listing 1 to Suspended
@@ -179,7 +179,20 @@ public class Server {
         }
     }
 
-    public void handleGetSummary() {
+    public void handleUnsubscribe(String input) {
+        String [] params = parseParams(input);
+        if (registeredRenterController.unsubscribe(Integer.parseInt(params[0]))) {
+            socketOut.println("DONE");
+        } else {
+            socketOut.println("ERROR");
+        }
+    }
+    
+    public void handleGetSummary(String input) {
+        String[] params = parseParams(input);
+        LocalDate startDate = LocalDate.parse(params[0]);
+        LocalDate endDate = LocalDate.parse(params[1]);
+//        String[] summary = managerController.getSummary(startDate, endDate);
         socketOut.println("DONE");
     }
 
