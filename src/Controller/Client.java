@@ -277,6 +277,7 @@ public class Client {
     public String unsubscribe(String searchID) {
         if(searchID.equals("")) {
             return "ERROR";
+        }
         try {
             socketOut.println("POST/UNSUBSCRIBE-" + searchID);
             return socketIn.readLine();
