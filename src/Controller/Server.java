@@ -115,6 +115,10 @@ public class Server {
                     //  expects accountId-listingId-newState
                     //  e.g. POST/CHANGESTATE-3-1-Suspended will cause user 3 to try and change listing 1 to Suspended
                     handleChangeListingState(input);
+                } else if (input.equals("GET/NOTIFICATIONS-")) {
+                    //  expects accountId
+                    //  e.g. GET/NOTIFICATIONS-1 will try to get notifications for renter with user id 1
+                    handleGetNotifications(input);
                 } else if (input.startsWith("EMAIL-")) {
                     socketOut.println("DONE");
                 }
@@ -164,15 +168,7 @@ public class Server {
                     Parsing.parseDouble(params[3]), Parsing.parseFurnished(params[4]), Parsing.parseAny(params[5]));
         }
         //  print listings
-        if (listings != null) {
-            for (Listing l : listings) {
-                if (l.getStatus().equals("Active")) {
-                    socketOut.println(l.getListingIDnumber() + "\t\t\t" + l.getProperty().getAddress().toString() + "\t\t\t" +
-                            l.getProperty().getQuadrant() + "\t\t\t" + l.getProperty().getType() + "\t\t\t" + l.getProperty().getNumOfBedrooms() +
-                            "\t\t\t\t" + l.getProperty().getNumOfBathrooms() + "\t\t\t\t" + l.getProperty().isFurnished());
-                }
-            }
-        }
+        printRenterListings(listings);
         socketOut.println("DONE");
     }
 
@@ -208,6 +204,13 @@ public class Server {
                 socketOut.println(a.getAccountID() + "\t" + a.getName().toString() + "\t" + a.getEmail());
             }
         }
+        socketOut.println("DONE");
+    }
+
+    public void handleGetNotifications(String input) {
+        String[] params = parseParams(input);
+        ArrayList<Listing> listings = notificationController.getNotifications(Integer.parseInt(params[0]));
+        printRenterListings(listings);
         socketOut.println("DONE");
     }
 
@@ -250,6 +253,18 @@ public class Server {
             loggedInRenters.put(id, db.getRenterAccount(email, password));
         } else if (type.equals("MANAGER")) {
             loggedInManagers.put(id, db.getManagerAccount(email, password));
+        }
+    }
+
+    public void printRenterListings(ArrayList<Listing> listings) {
+        if (listings != null) {
+            for (Listing l : listings) {
+                if (l.getStatus().equals("Active")) {
+                    socketOut.println(l.getListingIDnumber() + "\t\t\t" + l.getProperty().getAddress().toString() + "\t\t\t" +
+                            l.getProperty().getQuadrant() + "\t\t\t" + l.getProperty().getType() + "\t\t\t" + l.getProperty().getNumOfBedrooms() +
+                            "\t\t\t\t" + l.getProperty().getNumOfBathrooms() + "\t\t\t\t" + l.getProperty().isFurnished());
+                }
+            }
         }
     }
 

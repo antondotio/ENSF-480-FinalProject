@@ -191,6 +191,32 @@ public class DatabaseSystem {
         }
     }
 
+    public ArrayList<Listing> getNotifications(int renterId) {
+        try {
+            //  get listings for renter
+            String statementStr = "SELECT * FROM `Notification` AS `N`, `Listing` AS `L`, `Property` AS `P` " +
+                    "WHERE L.propertyId=P.id AND N.listingId=L.id AND N.userId=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setInt(1, renterId);
+            rs = pStatement.executeQuery();
+
+            ArrayList<Listing> listings = handleListingsResults();
+            if (listings != null && !listings.isEmpty()) {
+                //  then if at least one exists, delete them all from db
+                statementStr = "DELETE FROM `Notification` WHERE `userId`=?";
+                pStatement = connection.prepareStatement(statementStr);
+                pStatement.setInt(1, renterId);
+                pStatement.executeUpdate();
+            }
+            return listings;
+        } catch (SQLException e) {
+            System.err.println("Failed to get notifications for user " + renterId);
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean updateListingFees(int listingId, int newFee, int newFeePeriodInDays) {
         try {
             String statementStr = "UPDATE `Listing` SET `fee`=?, `feePeriod`=? WHERE `id`=?";
