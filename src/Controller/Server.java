@@ -5,6 +5,7 @@ import Systems.DatabaseSystem;
 import Systems.FinancialInstitutionSystem;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.*;
 import java.io.*;
 import java.time.LocalDate;
@@ -110,7 +111,7 @@ public class Server {
                     //  THIS IS FOR THE NEXT PAYMENT CYCLE. DOES NOT AFFECT ACTIVE LISTINGS. WILL AFFECT THEM WHEN THEY EXPIRE.
                     handleUpdateListingFees(input);
                 } else if (input.equals("GET/SUMMARYREPORT")) {
-                    socketOut.println("NULL");
+                    handleGetSummary();
                 } else if (input.startsWith("POST/CHANGESTATE-")) {
                     //  expects accountId-listingId-newState
                     //  e.g. POST/CHANGESTATE-3-1-Suspended will cause user 3 to try and change listing 1 to Suspended
@@ -119,7 +120,9 @@ public class Server {
                     //  expects accountId
                     //  e.g. GET/NOTIFICATIONS-1 will try to get notifications for renter with user id 1
                     handleGetNotifications(input);
-                }  else if (input.startsWith("POST/SUBSCRIBE-")) {
+                }  else if (input.startsWith("GET/SEARCHCRITERIA-")) {
+                    handleGetSearchCriteria(input);
+                } else if (input.startsWith("POST/SUBSCRIBE-")) {
                     handleSubscribe(input);
                 } else if (input.startsWith("EMAIL-")) {
                     socketOut.println("DONE");
@@ -174,6 +177,23 @@ public class Server {
         } else {
             socketOut.println("ERROR");
         }
+    }
+
+    public void handleGetSummary() {
+        socketOut.println("DONE");
+    }
+
+    public void handleGetSearchCriteria(String input) {
+        String[] params = parseParams(input);
+        ArrayList<SearchCriteria> criterias = registeredRenterController.getSearchCriteria(Integer.parseInt(params[0]));
+        if (criterias != null) {
+            for (SearchCriteria sc : criterias) {
+                socketOut.println(sc.getId() + "\t\t\t\t" + nullObjectToString(sc.getQuadrant()) + "\t\t\t\t\t" +
+                        nullObjectToString(sc.getType()) + "\t\t\t" + nullObjectToString(sc.getNumOfBedrooms()) + "\t\t\t\t" + nullObjectToString(sc.getNumOfBathrooms()) +
+                        "\t\t\t\t" + nullObjectToString(sc.isFurnished()));
+            }
+        }
+        socketOut.println("DONE");
     }
 
     public void handleGetLandlordListings(String input) {
@@ -275,15 +295,15 @@ public class Server {
     public void printDetailedListingsResults(ArrayList<Listing> listings) {
         if (listings != null) {
             for (Listing l : listings) {
-                socketOut.println(l.getListingIDnumber() + "\t" + nullDateToString(l.getListingStart()) + "\t" + nullDateToString(l.getListingEnd()) + "\t" + l.getStatus() + "\t" + l.getPaymentFee() + "\t" +
+                socketOut.println(l.getListingIDnumber() + "\t" + nullObjectToString(l.getListingStart()) + "\t" + nullObjectToString(l.getListingEnd()) + "\t" + l.getStatus() + "\t" + l.getPaymentFee() + "\t" +
                         l.isFeePaid() + "\t" + l.getFeePeriod() + "\t" + l.getProperty().getAddress().toString() + "\t" + l.getProperty().getQuadrant() + "\t" + l.getProperty().getType() + "\t" + l.getProperty().getNumOfBedrooms()
                         + "\t" + l.getProperty().getNumOfBathrooms() + "\t" + l.getProperty().isFurnished());
             }
         }
     }
 
-    private String nullDateToString(LocalDate l) {
-        return l != null ? l.toString() : "N/A\t\t";
+    private String nullObjectToString(Object o) {
+        return o != null ? o.toString() : "N/A\t\t";
     }
 
     public String[] parseParams(String input) {

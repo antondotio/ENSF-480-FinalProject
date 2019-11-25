@@ -15,4 +15,8 @@ public class RegisteredRenterController extends RenterController {
         SearchCriteria sc = new SearchCriteria(type, beds, baths, furnished, quadrant, renterId);
         return db.insertSearchCriteria(sc);
     }
+
+    public ArrayList<SearchCriteria> getSearchCriteria(int renterId) {
+        return db.getSearchCriteria(renterId);
+    }
 }

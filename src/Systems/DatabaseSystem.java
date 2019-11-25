@@ -217,6 +217,26 @@ public class DatabaseSystem {
         }
     }
 
+    public ArrayList<SearchCriteria> getSearchCriteria(int renterId) {
+        try {
+            String statementStr = "SELECT * FROM `SearchCriteria` WHERE `userId`=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setInt(1, renterId);
+            rs = pStatement.executeQuery();
+            ArrayList<SearchCriteria> criterias = new ArrayList<>();
+            while (rs.next()) {
+                criterias.add(new SearchCriteria(rs.getInt("id"), rs.getString("type"), rs.getInt("numOfBedrooms"), rs.getDouble("numOfBathrooms"),
+                        rs.getBoolean("isFurnished"), rs.getString("quadrant"), renterId));
+            }
+            return criterias;
+        } catch (SQLException e) {
+            System.err.println("Failed to get search criteria for user " + renterId);
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean updateListingFees(int listingId, int newFee, int newFeePeriodInDays) {
         try {
             String statementStr = "UPDATE `Listing` SET `fee`=?, `feePeriod`=? WHERE `id`=?";

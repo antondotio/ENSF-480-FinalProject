@@ -247,10 +247,8 @@ public class Client {
             socketOut.println("GET/SEARCHCRITERIA-" + accountID.toString());
             String response = socketIn.readLine();
             String searchCriterias = "";
-            int counter = 1;
             while(!response.equals("DONE"))
             {
-                searchCriterias += counter++ + ".\t";
                 searchCriterias += response;
                 searchCriterias += "\n";
                 response = socketIn.readLine();
