@@ -295,11 +295,20 @@ public class Server {
     public void printDetailedListingsResults(ArrayList<Listing> listings) {
         if (listings != null) {
             for (Listing l : listings) {
-                socketOut.println(l.getListingIDnumber() + "\t" + nullObjectToString(l.getListingStart()) + "\t" + nullObjectToString(l.getListingEnd()) + "\t" + l.getStatus() + "\t" + l.getPaymentFee() + "\t" +
-                        l.isFeePaid() + "\t" + l.getFeePeriod() + "\t" + l.getProperty().getAddress().toString() + "\t" + l.getProperty().getQuadrant() + "\t" + l.getProperty().getType() + "\t" + l.getProperty().getNumOfBedrooms()
-                        + "\t" + l.getProperty().getNumOfBathrooms() + "\t" + l.getProperty().isFurnished());
+                socketOut.println(l.getListingIDnumber() + "\t\t\t" + nullObjectToString(l.getListingStart()) + "\t\t" + nullObjectToString(l.getListingEnd()) + "\t\t" +
+                        getStatusPadded(l.getStatus()) + "\t\t" + l.getPaymentFee() + "\t\t\t" + l.isFeePaid() + "\t\t\t" + l.getFeePeriod() + "\t\t\t" + l.getProperty().getAddress().toString() +
+                        "\t\t" + l.getProperty().getQuadrant() + "\t" + l.getProperty().getType() + "\t" + l.getProperty().getNumOfBedrooms() + "\t\t\t" + l.getProperty().getNumOfBathrooms()
+                        + "\t\t\t" + l.getProperty().isFurnished());
             }
         }
+    }
+
+    public String getStatusPadded(String status) {
+        if (!status.equals("Suspended")) {
+            status += "\t";
+            return status;
+        }
+        return status;
     }
 
     private String nullObjectToString(Object o) {
