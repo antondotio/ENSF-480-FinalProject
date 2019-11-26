@@ -23,4 +23,6 @@ public class RenterController {
     public void setLandlordEmailSystem(LandlordEmailSystem landlordEmailSystem) {
         this.landlordEmailSystem = landlordEmailSystem;
     }
+
+    public void sendEmail()
 }
