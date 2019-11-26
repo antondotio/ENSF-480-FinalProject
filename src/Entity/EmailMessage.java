@@ -1,19 +1,21 @@
 package Entity;
 
+import java.time.LocalDate;
+
 public class EmailMessage {
-    Date date;
+    LocalDate date;
     String message;
     String sender;
     String receiver;
 
-    public EmailMessage(Date date, String message, String sender, String receiver) {
+    public EmailMessage(LocalDate date, String message, String sender, String receiver) {
         this.date = date;
         this.message = message;
         this.sender = sender;
         this.receiver = receiver;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
