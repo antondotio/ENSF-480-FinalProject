@@ -193,8 +193,8 @@ public class Server {
 
     public void handleGetSummary(String input) {
         String[] params = parseParams(input);
-        LocalDate startDate = LocalDate.parse(params[0]);
-        LocalDate endDate = LocalDate.parse(params[1]);
+        LocalDate startDate = LocalDate.parse(params[0] + "-" + params[1] + "-" + params[2]);
+        LocalDate endDate = LocalDate.parse(params[3] + "-" + params[4] + "-" + params[5]);
         String[] summary = managerController.getSummary(startDate, endDate);
         for (String line : summary) {
             socketOut.println(line);

@@ -41,6 +41,9 @@ public class ManagerViewController {
     private Button requestSummaryButton;
 
     @FXML
+    private TextArea report;
+
+    @FXML
     private TextField startDate;
 
     @FXML
@@ -123,7 +126,11 @@ public class ManagerViewController {
 
     @FXML
     void requestSummary(ActionEvent event) {
-    // TODO need to do dis :3...
+        String summary = listener.getListener().getSummary(startDate.getText(), endDate.getText());
+        report.setWrapText(false);
+        report.setEditable(true);
+        report.setText(summary);
+        report.setEditable(false);
     }
 
     @FXML
@@ -152,7 +159,7 @@ public class ManagerViewController {
         assert landlordButton != null : "fx:id=\"landlordButton\" was not injected: check your FXML file 'ManagerView.fxml'.";
         assert managerView != null : "fx:id=\"managerView\" was not injected: check your FXML file 'ManagerView.fxml'.";
         assert propertyButton != null : "fx:id=\"propertyButton\" was not injected: check your FXML file 'ManagerView.fxml'.";
-        assert renterButton != null : "fx:id=\"renterButton\" was not injected: check your FXML file 'ManagerView.fxml'.";
+        assert report != null : "fx:id=\"report\" was not injected: check your FXML file 'ManagerView.fxml'."; assert renterButton != null : "fx:id=\"renterButton\" was not injected: check your FXML file 'ManagerView.fxml'.";
         assert requestSummaryButton != null : "fx:id=\"requestSummaryButton\" was not injected: check your FXML file 'ManagerView.fxml'.";
         assert startDate != null : "fx:id=\"startDate\" was not injected: check your FXML file 'ManagerView.fxml'.";
         assert updateFee != null : "fx:id=\"updateFee\" was not injected: check your FXML file 'ManagerView.fxml'.";
