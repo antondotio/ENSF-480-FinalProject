@@ -117,7 +117,7 @@ public class Client {
     }
 
     public String changeListingState(String listingID, String newState) {
-        if(listingID.equals("") || newState.equals("")) {
+        if(listingID.equals("") || newState.equals("") || !newState.equals("Rented") || !newState.equals("Active") || !newState.equals("Cancelled") || !newState.equals("Suspended")) {
             return "ERROR";
         }
         try {
@@ -307,7 +307,7 @@ public class Client {
     }
 
     public String signup(String email, String password, String fname, String lname, String accountType) {
-        if(!email.contains("@") || !accountType.toUpperCase().equals("RENTER") || !accountType.toUpperCase().equals("LANDLORD")) {
+        if(!email.contains("@") || (!accountType.toUpperCase().equals("RENTER") && !accountType.toUpperCase().equals("LANDLORD"))) {
             return "ERROR";
         }
         try {
