@@ -111,7 +111,7 @@ public class RegisteredRenterViewController {
 
     @FXML
     void emailLandlord(ActionEvent event) {
-        if(emailListingID.getText().equals("") || emailForm.getText().equals("")) {
+        if(emailLandlordID.getText().equals("") || emailForm.getText().equals("")) {
             Alert noID = new Alert(Alert.AlertType.ERROR);
             noID.setTitle("Error");
             noID.setContentText("Please add a listing ID and an email!");
