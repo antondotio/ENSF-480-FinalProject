@@ -26,8 +26,8 @@
         <ToggleGroup fx:id="accountType" />
       </toggleGroup>
     </RadioButton>
-    <RadioButton fx:id="renterOption" layoutX="595.0" layoutY="339.0" mnemonicParsing="false" text="Renter" />
-    <TextField fx:id="nameForm" layoutX="593.0" layoutY="256.0" prefWidth="200.0" promptText="Last Name" />
+    <RadioButton fx:id="renterOption" layoutX="595.0" layoutY="339.0" mnemonicParsing="false" text="Renter" toggleGroup="$accountType" />
+    <TextField id="nameForm" fx:id="lastNameForm" layoutX="593.0" layoutY="256.0" prefWidth="200.0" promptText="Last Name" />
     <Text layoutX="593.0" layoutY="210.0" scaleX="1.0" scaleY="0.9999956296762464" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
     <TextField id="nameForm" fx:id="firstNameForm" layoutX="593.0" layoutY="222.0" prefWidth="200.0" promptText="First Name" />
   </children>
