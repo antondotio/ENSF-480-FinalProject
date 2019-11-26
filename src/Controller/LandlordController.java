@@ -16,6 +16,9 @@ public class LandlordController {
         if (newState.equals("Active") && !oldState.equals("Rented")) {
             return false;   //  landlord cannot change state to active unless it's currently rented, only managers can
         }
+        if (!newState.equals("Cancelled") && oldState.equals("Suspended")) {
+            return false;   //  can't change from suspended except to cancelled
+        }
         // TODO: there's a bug, the above fires even if previous state is say, rented
         //  landlords shouldn't be able to go suspended->active, but they should be able to go from rented to active...
         /*
