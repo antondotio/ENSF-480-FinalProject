@@ -117,7 +117,7 @@ public class Client {
     }
 
     public String changeListingState(String listingID, String newState) {
-        if(listingID.equals("") || newState.equals("") || (!newState.equals("Rented") && !newState.equals("Active") && !newState.equals("Cancelled") && !newState.equals("Suspended"))) {
+        if(listingID.equals("") || newState.equals("") || (!newState.equals("Rented") && !newState.equals("Active") && !newState.equals("Cancelled") &&  !newState.equals("Suspended"))) {
             return "ERROR";
         }
         try {
