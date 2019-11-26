@@ -47,6 +47,25 @@ public class DatabaseSystem {
         }
     }
 
+    public boolean signup(String email, String password, Name name, String accountType) {
+        try {
+            String statementStr = "INSERT INTO `Account` (`fname`, `lname`, `email`, `password`, `type`) values(?,?,?,?,?)";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setString(1, name.getFirst());
+            pStatement.setString(2, name.getLast());
+            pStatement.setString(3, email);
+            pStatement.setString(4, password);
+            pStatement.setString(5, accountType);
+            pStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error signing up user " + email);
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
     public ArrayList<Listing> getListings(SearchCriteria sc) {
         try {
             StringBuilder statementStr = new StringBuilder("SELECT * FROM `Listing` AS `L`, `Property` AS `P` WHERE L.propertyId=P.id ");
