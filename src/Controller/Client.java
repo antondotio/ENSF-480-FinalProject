@@ -306,6 +306,19 @@ public class Client {
         }
     }
 
+    public String signup(String email, String password, String fname, String lname, String accountType) {
+        if(!email.contains("@") || !accountType.toUpperCase().equals("RENTER") || !accountType.toUpperCase().equals("LANDLORD")) {
+            return "ERROR";
+        }
+        try {
+            socketOut.println("SIGNUP-" + email + "-" + password + "-" + fname + "-" + lname + "-" + accountType.toUpperCase());
+            return socketIn.readLine();
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+            return "ERROR";
+        }
+    }
+
 //    /**
 //     * Display all tools in the shop.
 //     * @return A string containing all tools in the shop.
