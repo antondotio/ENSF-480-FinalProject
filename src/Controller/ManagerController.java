@@ -17,8 +17,6 @@ public class ManagerController {
     public boolean updateListingState(int listingId, String newState) {
         boolean result = listingController.updateListingState(listingId, newState);
         if (newState.equals("Active") && result) {
-            //  set paid to false, because manager is now activating listing
-            //  TODO: investigate case of manager setting to active without wanting to change paid state
             return listingController.activateListing(listingId);
         }
         return result;

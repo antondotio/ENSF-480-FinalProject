@@ -7,13 +7,16 @@ import Entity.Listing;
 import Entity.Payment;
 import Entity.Constants;
 
+import java.util.ArrayList;
+
 //  handles backend behaviour regarding changing/updating/creating listings
-public class ListingController {
+public class ListingController implements Subject {
     private DatabaseSystem db;
-    private NotificationController n;
+    private ArrayList<Observer> observers;
 
     public ListingController(DatabaseSystem db) {
         this.db = db;
+        observers = new ArrayList<>();
     }
 
     public boolean updateListingState(int listingId, String newState) {
@@ -26,8 +29,8 @@ public class ListingController {
 
     public boolean activateListing(int listingId) {
         Listing activatedListing = db.activateListing(listingId);
-        //  send listing to notification controller
-        n.handleNewListing(activatedListing);
+        //  send listing to notification observer
+        notifyAllObservers(activatedListing);
 
         return activatedListing != null;    //  if non-null, then success
     }
@@ -40,8 +43,18 @@ public class ListingController {
         return db.postListing(listing);
     }
 
-    public void setNotificationController(NotificationController n) {
-        this.n = n;
+    public void register(Observer o) {
+        observers.add(o);
+    }
+
+    public void unregister(Observer o) {
+        observers.remove(o);
+    }
+
+    public void notifyAllObservers(Listing l) {
+        for (Observer o : observers) {
+            o.update(l);
+        }
     }
 
     public Payment pay(int listingId) {

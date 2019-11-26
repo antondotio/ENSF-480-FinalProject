@@ -22,4 +22,8 @@ public class LoginController {
     public String authenticate(String email, String password) {
         return db.authenticate(email, password);
     }
+
+    public boolean signup(String email, String password) {
+        return db
+    }
 }

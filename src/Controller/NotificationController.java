@@ -6,18 +6,19 @@ import Systems.DatabaseSystem;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class NotificationController {
+public class NotificationController implements Observer {
     private DatabaseSystem db;
 
-    public NotificationController(DatabaseSystem db) {
+    public NotificationController(DatabaseSystem db, Subject s) {
         this.db = db;
-    }
-
-    public void handleNewListing(Listing listing) {
-        db.notifyUsers(listing);
+        s.register(this);
     }
 
     public ArrayList<Listing> getNotifications(int renterId) {
        return db.getNotifications(renterId);
+    }
+
+    public void update(Listing listing) {
+        db.notifyUsers(listing);
     }
 }

@@ -86,6 +86,8 @@ public class Server {
                 //  NOTE: I chose to ignore email because since it's simulated we can handle it all on the front end
                 if (input.startsWith("LOGIN-")) {
                     handleLogin(input);
+                } else if (input.startsWith("SIGNUP-")) {
+                    handleSignup(input);
                 } else if(input.startsWith("GET/LISTINGS-")) {
                     //  expects parameter to be renter user id, or null if not registered
                     handleGetListings(input);
@@ -157,6 +159,16 @@ public class Server {
             String[] accInfoSplit = accInfo.split("-");
             addAccount(params[0], params[1], Integer.parseInt(accInfoSplit[0]), accInfoSplit[1]);
             socketOut.println(accInfo);
+        } else {
+            socketOut.println("ERROR");
+        }
+    }
+
+    public void handleSignup(String input) {
+        String[] params = parseParams(input);
+        bool signupStatus = login.signup(params[0], params[1])
+        if (signupStatus) {
+            socketOut.println("DONE");
         } else {
             socketOut.println("ERROR");
         }
@@ -285,7 +297,6 @@ public class Server {
         if (type.equals("LANDLORD")) {
             loggedInLandlords.put(id, db.getLandlordAccount(email, password));
         } else if (type.equals("RENTER")) {
-            //  TODO: need to add notification functionality on login
             loggedInRenters.put(id, db.getRenterAccount(email, password));
         } else if (type.equals("MANAGER")) {
             loggedInManagers.put(id, db.getManagerAccount(email, password));
@@ -351,11 +362,10 @@ public class Server {
         registeredRenterController = new RegisteredRenterController(db);
         managerController = new ManagerController(db);
         listingController = new ListingController(db);
-        notificationController = new NotificationController(db);
+        notificationController = new NotificationController(db, listingController);
 
         landlordController.setListingController(listingController);
         managerController.setListingController(listingController);
-        listingController.setNotificationController(notificationController);
     }
 
     public void setFinancialInstitutionSystem(FinancialInstitutionSystem fis) {
@@ -370,6 +380,7 @@ public class Server {
             socketIn.close();
             socketOut.close();
             serverSocket.close();
+            db.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

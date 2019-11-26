@@ -14,12 +14,21 @@ public class DatabaseSystem {
     ResultSet rs;
 
     public DatabaseSystem() {
-        //  TODO: close the connection/statement at some point lol
         try {
             connection = DriverManager.getConnection("jdbc:mysql://remotemysql.com:3306/bhodcTO1R2", "bhodcTO1R2", "NFeETF8mpF");
             System.out.println("Database has successfully been connected.");
         } catch (SQLException e) {
             System.err.println(e.getMessage());
+        }
+    }
+
+    public void close() {
+        try {
+            statement.close();
+            connection.close();
+            pStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
