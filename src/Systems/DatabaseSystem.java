@@ -160,9 +160,9 @@ public class DatabaseSystem {
 
     public void notifyUsers(Listing listing) {
         try {
-            String statementStr = "SELECT `userId` FROM `SearchCriteria` WHERE (`quadrant`=? OR `quadrant`=NULL) AND " +
-                    "(`isFurnished`=? OR `isFurnished`=NULL) AND (`numOfBathrooms`=? OR `numOfBathrooms`=NULL) AND " +
-                    "(`numOfBedrooms`=? OR `numOfBedrooms`=NULL) AND (`type`=? OR `type`=NULL)";
+            String statementStr = "SELECT `userId` FROM `SearchCriteria` WHERE (`quadrant`=? OR `quadrant` IS NULL) AND " +
+                    "(`isFurnished`=? OR `isFurnished` IS NULL) AND (`numOfBathrooms`=? OR `numOfBathrooms` IS NULL) AND " +
+                    "(`numOfBedrooms`=? OR `numOfBedrooms` IS NULL) AND (`type`=? OR `type` IS NULL)";
             pStatement = connection.prepareStatement(statementStr);
             pStatement.setString(1, listing.getProperty().getQuadrant());
             pStatement.setBoolean(2, listing.getProperty().isFurnished());
