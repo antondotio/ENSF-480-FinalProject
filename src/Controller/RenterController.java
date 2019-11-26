@@ -1,10 +1,12 @@
 package Controller;
 
+import Entity.EmailMessage;
 import Entity.Listing;
 import Entity.SearchCriteria;
 import Systems.DatabaseSystem;
 import Systems.LandlordEmailSystem;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class RenterController {
@@ -24,5 +26,12 @@ public class RenterController {
         this.landlordEmailSystem = landlordEmailSystem;
     }
 
-    public void sendEmail()
+    public boolean sendEmail(String renterEmail, int listingId, String message) {
+        Integer landlordId = db.getLandlordId(listingId);
+        if (landlordId == null) {
+            return false;
+        }
+        landlordEmailSystem.sendEmail(new EmailMessage(LocalDate.now(), message, renterEmail, landlordId));
+        return true;
+    }
 }

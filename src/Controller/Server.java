@@ -133,7 +133,7 @@ public class Server {
                     handleUnsubscribe(input);
 
                 } else if (input.startsWith("EMAIL-")) {
-                    renterController.sendEmail(Integer.parseInt());
+                    sendEmail(input);
                 }
             } catch(Exception e) {
                 System.err.println(e.getMessage());
@@ -251,6 +251,15 @@ public class Server {
             socketOut.println("DONE");
         } else {
             System.out.println("Failed to post listing for user: " + params[0]);
+            socketOut.println("ERROR");
+        }
+    }
+
+    public void sendEmail(String input) {
+        String[] params = parseParams(input);
+        if (renterController.sendEmail(params[0], Integer.parseInt(params[1]), params[1])) {
+            socketOut.println("DONE");
+        } else {
             socketOut.println("ERROR");
         }
     }

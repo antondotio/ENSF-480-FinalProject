@@ -631,6 +631,23 @@ public class DatabaseSystem {
         }
     }
 
+    public Integer getLandlordId(int listingId) {
+        try {
+            String statementStr = "SELECT landlordId FROM `Listing` WHERE `id`=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setInt(1, listingId);
+            rs = pStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("landlordId");
+            } else {
+                throw new SQLException("DB Error: No listing with id exists." + listingId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private boolean handleIfFirst(StringBuilder statementStr, boolean atLeastOneCriteria) {
         if (atLeastOneCriteria) {
             statementStr.append("AND ");
