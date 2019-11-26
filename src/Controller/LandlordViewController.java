@@ -192,7 +192,7 @@ public class LandlordViewController {
         String myListings = listener.getListener().getLandlordListings();
         String table =
                 ("Listing ID\t\t|\tListing Start\t|\tListing End\t|\tState\t|\tFee\t\t|\tFee Period\t|\tPaid\t\t|\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
-                        "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                        "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
                         myListings);
         landlordProperties.setWrapText(false);
         landlordProperties.setEditable(true);

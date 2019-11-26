@@ -242,8 +242,8 @@ public class RegisteredRenterViewController {
 
     public void getListings(String listings){
         String table =
-                ("Listing ID\t\t|\t\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
-                        "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                ("Listing ID\t\t|\t\t\t\tAddress\t\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                        "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
                         listings);
         listingTable.setWrapText(false);
         listingTable.setEditable(true);

@@ -19,12 +19,12 @@
         <Font size="40.0" />
       </font>
     </Text>
-    <Text layoutX="14.0" layoutY="655.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Summary:" />
-    <TextField fx:id="startDate" layoutX="46.0" layoutY="705.0" prefWidth="200.0" />
-    <Text layoutX="32.0" layoutY="691.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date(mm-dd-yyyy):" />
-    <TextField fx:id="endDate" layoutX="47.0" layoutY="786.0" prefWidth="200.0" />
-    <Text layoutX="33.0" layoutY="772.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date(mm-dd-yyyy):" />
-    <Button fx:id="requestSummaryButton" layoutX="297.0" layoutY="731.0" mnemonicParsing="false" onAction="#requestSummary" text="Request Summary" />
+    <Text layoutX="14.0" layoutY="663.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Summary:" />
+    <TextField fx:id="startDate" layoutX="125.0" layoutY="717.0" prefWidth="200.0" />
+    <Text layoutX="111.0" layoutY="703.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date(yyyy-mm-dd):" />
+    <TextField fx:id="endDate" layoutX="413.0" layoutY="717.0" prefWidth="200.0" />
+    <Text layoutX="399.0" layoutY="703.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date(yyyy-mm-dd):" />
+    <Button fx:id="requestSummaryButton" layoutX="672.0" layoutY="690.0" mnemonicParsing="false" onAction="#requestSummary" text="Request Summary" />
     <Text layoutX="14.0" layoutY="514.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Listing:" />
     <Text layoutX="32.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
     <TextField id="updateListingID" fx:id="updateID" layoutX="132.0" layoutY="540.0" prefWidth="114.2109375" />
