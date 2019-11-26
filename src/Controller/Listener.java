@@ -27,6 +27,10 @@ public class Listener {
         return client.getListings(type, beds, baths, furnished, quad);
     }
 
+    public String signup(String username, String password, String fname, String lname, String accountType){
+        return client.signup(username, password, fname, lname, accountType);
+    }
+
     public String loginCommand(String username, String password) {
         return client.login(username, password);
     }
