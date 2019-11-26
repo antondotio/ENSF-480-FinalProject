@@ -112,8 +112,8 @@ public class Server {
                     //  e.g. POST/UPDATELISTINGFEES-1-30-30 will set listing 1's fee to $30 and it will last 30 days
                     //  THIS IS FOR THE NEXT PAYMENT CYCLE. DOES NOT AFFECT ACTIVE LISTINGS. WILL AFFECT THEM WHEN THEY EXPIRE.
                     handleUpdateListingFees(input);
-                } else if (input.equals("GET/SUMMARYREPORT")) {
-                    handleGetSummary();
+                } else if (input.startsWith("GET/SUMMARYREPORT-")) {
+                    handleGetSummary(input);
                 } else if (input.startsWith("POST/CHANGESTATE-")) {
                     //  expects accountId-listingId-newState
                     //  e.g. POST/CHANGESTATE-3-1-Suspended will cause user 3 to try and change listing 1 to Suspended
@@ -202,8 +202,15 @@ public class Server {
             socketOut.println("ERROR");
         }
     }
-    
-    public void handleGetSummary() {
+
+    public void handleGetSummary(String input) {
+        String[] params = parseParams(input);
+        LocalDate startDate = LocalDate.parse(params[0] + "-" + params[1] + "-" + params[2]);
+        LocalDate endDate = LocalDate.parse(params[3] + "-" + params[4] + "-" + params[5]);
+        String[] summary = managerController.getSummary(startDate, endDate);
+        for (String line : summary) {
+            socketOut.println(line);
+        }
         socketOut.println("DONE");
     }
 
@@ -276,10 +283,12 @@ public class Server {
         String[] params = parseParams(input);
         boolean updatedSuccessfully = false;
         Integer userId = Integer.parseInt(params[0]);
+        int listingId = Integer.parseInt(params[1]);
+        String oldState = listingController.checkListingState(listingId);
         if (loggedInLandlords.containsKey(userId)) {
-            updatedSuccessfully = landlordController.updateListingState(Integer.parseInt(params[1]), params[2]);
+            updatedSuccessfully = landlordController.updateListingState(listingId, oldState, params[2]);
         } else if (loggedInManagers.containsKey(userId)) {
-            updatedSuccessfully = managerController.updateListingState(Integer.parseInt(params[1]), params[2]);
+            updatedSuccessfully = managerController.updateListingState(listingId, oldState, params[2]);
         } else {
             System.out.println("User with id " + params[0] + " tried to change listing state of listing " + params[1] + " and failed. Unable to find user in list of logged in users.");
             socketOut.println("ERROR");

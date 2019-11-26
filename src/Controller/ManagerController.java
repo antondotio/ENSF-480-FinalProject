@@ -1,9 +1,11 @@
 package Controller;
 
 import Entity.Account;
+import Entity.RentalAction;
 import Entity.Listing;
 import Systems.DatabaseSystem;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ManagerController {
@@ -14,12 +16,34 @@ public class ManagerController {
         this.db = db;
     }
 
-    public boolean updateListingState(int listingId, String newState) {
-        boolean result = listingController.updateListingState(listingId, newState);
-        if (newState.equals("Active") && result) {
-            return listingController.activateListing(listingId);
+    public boolean updateListingState(int listingId, String oldState, String newState) {
+        return listingController.updateListingState(listingId, oldState, newState);
+    }
+
+    public String[] getSummary(LocalDate startDate, LocalDate endDate) {
+        ArrayList<String> result = new ArrayList<>();
+        int numHousesListedInPeriod = db.countHousesListedBetween(startDate, endDate);
+        result.add("Total number of houses listed between " + printPeriodString(startDate, endDate) + numHousesListedInPeriod);
+
+        ArrayList<RentalAction> housesRentedInPeriod = db.getHousesRentedBetween(startDate, endDate);
+        result.add("Total number of houses rented between " + printPeriodString(startDate, endDate) + housesRentedInPeriod.size());
+        result.add("Houses rented between: " + printPeriodString(startDate, endDate));
+        for (RentalAction r : housesRentedInPeriod) {
+            result.add(r.toString());
         }
-        return result;
+
+        int numActiveListingsInPeriod = db.countActiveListingsBetween(startDate, endDate);
+        result.add("Total number of active listings between " + printPeriodString(startDate, endDate) + numActiveListingsInPeriod);
+
+        String[] resultArray = new String[result.size()];
+        for (int i = 0; i < resultArray.length; i++) {
+            resultArray[i] = result.get(i);
+        }
+        return resultArray;
+    }
+
+    public String printPeriodString(LocalDate startDate, LocalDate endDate) {
+        return startDate.toString() + " and " + endDate.toString() + ": ";
     }
 
     public void setListingController(ListingController listingController) {

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="managerView" prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.ManagerViewController">
+<AnchorPane fx:id="managerView" prefHeight="847.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.ManagerViewController">
   <children>
     <TextArea id="landlordProperties" fx:id="infoTable" editable="false" layoutX="12.0" layoutY="211.0" prefHeight="269.0" prefWidth="1054.0" wrapText="true" />
     <Text layoutX="15.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Information Table:" />
@@ -20,11 +20,11 @@
       </font>
     </Text>
     <Text layoutX="14.0" layoutY="663.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Summary:" />
-    <TextField fx:id="startDate" layoutX="125.0" layoutY="717.0" prefWidth="200.0" />
-    <Text layoutX="111.0" layoutY="703.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date(yyyy-mm-dd):" />
-    <TextField fx:id="endDate" layoutX="413.0" layoutY="717.0" prefWidth="200.0" />
-    <Text layoutX="399.0" layoutY="703.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date(yyyy-mm-dd):" />
-    <Button fx:id="requestSummaryButton" layoutX="672.0" layoutY="690.0" mnemonicParsing="false" onAction="#requestSummary" text="Request Summary" />
+    <TextField fx:id="startDate" layoutX="29.0" layoutY="717.0" prefWidth="200.0" />
+    <Text layoutX="15.0" layoutY="703.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date(yyyy-mm-dd):" />
+    <TextField fx:id="endDate" layoutX="29.0" layoutY="799.0" prefWidth="200.0" />
+    <Text layoutX="15.0" layoutY="785.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date(yyyy-mm-dd):" />
+    <Button fx:id="requestSummaryButton" layoutX="243.0" layoutY="739.0" mnemonicParsing="false" onAction="#requestSummary" text="Request Summary" />
     <Text layoutX="14.0" layoutY="514.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Listing:" />
     <Text layoutX="32.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
     <TextField id="updateListingID" fx:id="updateID" layoutX="132.0" layoutY="540.0" prefWidth="114.2109375" />
@@ -36,5 +36,7 @@
     <TextField fx:id="updatePeriod" layoutX="943.0" layoutY="540.0" prefWidth="115.0" />
     <Button fx:id="updateStateButton" layoutX="373.0" layoutY="595.0" mnemonicParsing="false" onAction="#changeState" text="Update State" />
     <Button fx:id="updateFeePeriodButton" layoutX="729.0" layoutY="595.0" mnemonicParsing="false" onAction="#updateFeePeriod" text="Update Fees and Period" />
+    <TextArea fx:id="report" editable="false" layoutX="514.0" layoutY="675.0" prefHeight="165.0" prefWidth="550.0" wrapText="false" />
+    <Text layoutX="516.0" layoutY="660.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Report:" />
   </children>
 </AnchorPane>

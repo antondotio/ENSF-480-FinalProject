@@ -1,6 +1,7 @@
 package Controller;
 
 import java.net.Socket;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.*;
 import java.io.IOException;
@@ -159,7 +160,9 @@ public class Client {
             return "ERROR";
         }
         try {
-            socketOut.println("POSTSUMMARYREPORT-" + startDate + "-" + endDate);
+            LocalDate startLocalDate = LocalDate.parse(startDate);
+            LocalDate endLocalDate = LocalDate.parse(endDate);
+            socketOut.println("GET/SUMMARYREPORT-" + startDate + "-" + endDate);
             String response = socketIn.readLine();
             String summary = "";
             while(!response.equals("DONE"))

@@ -12,16 +12,19 @@ public class LandlordController {
         this.db = db;
     }
 
-    public boolean updateListingState(int listingId, String newState) {
-        if (newState.equals("Active")) {
-            return false;   //  landlord cannot change state to active, only managers can
+    public boolean updateListingState(int listingId, String oldState, String newState) {
+        if (newState.equals("Active") && !oldState.equals("Rented")) {
+            return false;   //  landlord cannot change state to active unless it's currently rented, only managers can
+        }
+        if (!newState.equals("Cancelled") && oldState.equals("Suspended")) {
+            return false;   //  can't change from suspended except to cancelled
         }
         /*
         * How about we add a new state called registered
         And only the manager can change from registered to active
         But landlord can changed it into anything after it's been activated?
         * */
-        return listingController.updateListingState(listingId, newState);
+        return listingController.updateListingState(listingId, oldState, newState);
     }
 
     public void setListingController(ListingController listingController) {
