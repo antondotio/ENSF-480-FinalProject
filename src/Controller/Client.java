@@ -232,12 +232,12 @@ public class Client {
         }
     }
 
-    public String sendEmail(String listingID, String message) {
-        if(listingID.equals("") || message.equals("")) {
+    public String sendEmail(String email, String listingID, String message) {
+        if(!email.contains("@") || listingID.equals("") || message.equals("")) {
             return "ERROR";
         }
         try {
-            socketOut.println("EMAIL-" + checkNull(accountID) + "-" + listingID + "-" + message);
+            socketOut.println("EMAIL-" + email + "-" + listingID + "-" + message);
             return socketIn.readLine();
         } catch(Exception e) {
             System.err.println(e.getMessage());

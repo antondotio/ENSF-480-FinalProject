@@ -27,10 +27,6 @@ public class Listener {
         return client.getListings(type, beds, baths, furnished, quad);
     }
 
-    public String signup(String username, String password, String fname, String lname, String accountType){
-        return client.signup(username, password, fname, lname, accountType);
-    }
-
     public String loginCommand(String username, String password) {
         return client.login(username, password);
     }
@@ -72,8 +68,8 @@ public class Listener {
         return client.getAllListings();
     }
 
-    public String sendEmail(String listingID, String message) {
-        return client.sendEmail(listingID, message);
+    public String sendEmail(String email, String listingID, String message) {
+        return client.sendEmail(email, listingID, message);
     }
 
     public String getSearchCriteria() {
