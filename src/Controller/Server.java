@@ -166,7 +166,7 @@ public class Server {
 
     public void handleSignup(String input) {
         String[] params = parseParams(input);
-        bool signupStatus = login.signup(params[0], params[1])
+        boolean signupStatus = login.signup(params[0], params[1])
         if (signupStatus) {
             socketOut.println("DONE");
         } else {

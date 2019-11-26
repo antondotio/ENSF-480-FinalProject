@@ -24,6 +24,6 @@ public class LoginController {
     }
 
     public boolean signup(String email, String password) {
-        return db
+        return true;
     }
 }
