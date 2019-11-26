@@ -9,6 +9,8 @@
 3. Run class Main with the following VM options: 
 `--module-path="C:\Program Files\Java\javafx-sdk-11.0.2\lib" --add-modules="javafx.base,javafx.controls,javafx.fxml,javafx.graphics" `
 
+OR just run Client.jar using 
+
 ### Server
 1. Compile all classes in Controller except Client and Listener.
 2. Compile all classes in Entity and Systems

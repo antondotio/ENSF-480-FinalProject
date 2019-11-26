@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: C:\Program Files\Java\javafx-sdk-11.0.2\lib C:\Program Fil
+ es\Java\postgresql-42.2.8.jar
+Main-Class: Controller.Server
+

@@ -26,7 +26,7 @@
         <ToggleGroup fx:id="furnished" />
       </toggleGroup>
     </RadioButton>
-    <RadioButton fx:id="notFurnished" layoutX="555.0" layoutY="288.0" mnemonicParsing="false" text="No" toggleGroup="$furnished" />
+    <RadioButton fx:id="notFurnished" layoutX="555.0" layoutY="288.0" mnemonicParsing="false" selected="true" text="No" toggleGroup="$furnished" />
     <Text layoutX="368.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" />
     <TextField fx:id="address" layoutX="463.0" layoutY="183.0" prefWidth="361.0" />
     <Text layoutX="844.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quadrant:" />
