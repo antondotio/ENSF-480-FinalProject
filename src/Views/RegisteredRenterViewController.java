@@ -118,7 +118,7 @@ public class RegisteredRenterViewController {
             noID.setHeaderText(null);
             noID.showAndWait();
         } else {
-            String response = listener.getListener().sendEmail(emailForm.getText(), emailLandlordButtonID.getText(), emailMessage.getText());
+            String response = listener.getListener().sendEmail(emailForm.getText(), emailLandlordID.getText(), emailMessage.getText());
             if (response.equals("DONE")) {
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setTitle("Success!");
