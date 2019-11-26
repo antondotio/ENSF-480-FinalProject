@@ -229,7 +229,11 @@ public class DatabaseSystem {
             pStatement.setObject(1, startDate);
             pStatement.setObject(2, endDate);
             rs = pStatement.executeQuery();
-            return rs.getInt(1);
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                return 0;
+            }
         } catch(SQLException e) {
             System.err.println("Failed to count houses between " + startDate + " and " + endDate);
             System.err.println(e.getMessage());
@@ -242,7 +246,7 @@ public class DatabaseSystem {
         try {
             String statementStr = "SELECT * FROM `RentalAction` AS `R`, `Listing` AS `L`, `Property` AS `P`, `Account` AS `A` WHERE " +
                     "((R.startDate BETWEEN ? AND ?) OR (R.endDate BETWEEN ? AND ?) OR (R.startDate < ? AND (R.endDate > ? OR R.endDate IS NULL)))" +
-                    " AND L.propertyId = P.propertyId AND R.listingId = L.id AND L.landlordId = A.id";
+                    " AND L.propertyId = P.id AND R.listingId = L.id AND L.landlordId = A.id";
             pStatement = connection.prepareStatement(statementStr);
             setPeriodParams(startDate, endDate);
             rs = pStatement.executeQuery();
@@ -271,7 +275,11 @@ public class DatabaseSystem {
             pStatement = connection.prepareStatement(statementStr);
             setPeriodParams(startDate, endDate);
             rs = pStatement.executeQuery();
-            return rs.getInt(1);
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                return 0;
+            }
         } catch(SQLException e) {
             System.err.println("Failed to count active listings between " + startDate + " and " + endDate);
             System.err.println(e.getMessage());

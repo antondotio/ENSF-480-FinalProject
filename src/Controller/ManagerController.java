@@ -27,6 +27,7 @@ public class ManagerController {
 
         ArrayList<RentalAction> housesRentedInPeriod = db.getHousesRentedBetween(startDate, endDate);
         result.add("Total number of houses rented between " + printPeriodString(startDate, endDate) + housesRentedInPeriod.size());
+        result.add("Houses rented between: " + printPeriodString(startDate, endDate));
         for (RentalAction r : housesRentedInPeriod) {
             result.add(r.toString());
         }
