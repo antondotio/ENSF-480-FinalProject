@@ -104,18 +104,21 @@ public class RegisteredRenterViewController {
     @FXML
     private RadioButton yesFurnished;
 
+    @FXML
+    private TextField emailForm;
+
     private Listener listener;
 
     @FXML
     void emailLandlord(ActionEvent event) {
-        if(emailLandlordID.getText().equals("")) {
+        if(emailListingID.getText().equals("") || emailForm.getText().equals("")) {
             Alert noID = new Alert(Alert.AlertType.ERROR);
             noID.setTitle("Error");
-            noID.setContentText("Please add a listing ID!");
+            noID.setContentText("Please add a listing ID and an email!");
             noID.setHeaderText(null);
             noID.showAndWait();
         } else {
-            String response = listener.getListener().sendEmail(emailLandlordID.getText(), emailMessage.getText());
+            String response = listener.getListener().sendEmail(emailForm.getText(), emailLandlordButtonID.getText(), emailMessage.getText());
             if (response.equals("DONE")) {
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setTitle("Success!");
