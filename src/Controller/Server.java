@@ -63,14 +63,18 @@ public class Server {
 
         initControllers();
 
-        try {
-            serverSocket = new ServerSocket(portNumber);
-            clientSocket = serverSocket.accept();
-            System.out.println("Server in now running...");
-            socketOut = new PrintWriter(clientSocket.getOutputStream(), true);
-            socketIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        } catch(IOException e) {
-            System.out.println("error in constructor");
+        boolean clientConnected = false;
+        while (!clientConnected) {
+        	try {
+                serverSocket = new ServerSocket(portNumber);
+                clientSocket = serverSocket.accept();
+                System.out.println("Server in now running...");
+                socketOut = new PrintWriter(clientSocket.getOutputStream(), true);
+                socketIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                clientConnected = true;
+            } catch(IOException e) {
+                System.out.println("error in constructor");
+            }
         }
     }
 
@@ -138,6 +142,7 @@ public class Server {
             } catch(Exception e) {
                 System.err.println(e.getMessage());
                 e.printStackTrace();
+                break;
             }
         }
     }
