@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="RenterViewGUI" prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.RenterViewController">
+<AnchorPane fx:id="RenterViewGUI" prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Views.RenterViewController">
   <children>
     <Button fx:id="searchButton" layoutX="963.0" layoutY="288.0" mnemonicParsing="false" onAction="#search" text="Search" />
     <Text layoutX="378.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProperTea Rentals">

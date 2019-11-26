@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="managerView" prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.ManagerViewController">
+<AnchorPane fx:id="managerView" prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Views.ManagerViewController">
   <children>
     <TextArea id="landlordProperties" fx:id="infoTable" editable="false" layoutX="12.0" layoutY="211.0" prefHeight="269.0" prefWidth="1054.0" wrapText="true" />
     <Text layoutX="15.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Information Table:" />

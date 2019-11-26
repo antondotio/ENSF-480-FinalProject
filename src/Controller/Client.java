@@ -117,7 +117,7 @@ public class Client {
     }
 
     public String changeListingState(String listingID, String newState) {
-        if(listingID.equals("") || newState.equals("")) {
+        if(listingID.equals("") || newState.equals("") || !newState.equals("Rented") || !newState.equals("Active") || !newState.equals("Cancelled") || !newState.equals("Suspended")) {
             return "ERROR";
         }
         try {
@@ -232,12 +232,12 @@ public class Client {
         }
     }
 
-    public String sendEmail(String listingID, String message) {
-        if(listingID.equals("") || message.equals("")) {
+    public String sendEmail(String email, String listingID, String message) {
+        if(!email.contains("@") || listingID.equals("") || message.equals("")) {
             return "ERROR";
         }
         try {
-            socketOut.println("EMAIL-" + checkNull(accountID) + "-" + listingID + "-" + message);
+            socketOut.println("EMAIL-" + email + "-" + listingID + "-" + message);
             return socketIn.readLine();
         } catch(Exception e) {
             System.err.println(e.getMessage());
@@ -307,7 +307,7 @@ public class Client {
     }
 
     public String signup(String email, String password, String fname, String lname, String accountType) {
-        if(!email.contains("@") || !accountType.toUpperCase().equals("RENTER") || !accountType.toUpperCase().equals("LANDLORD")) {
+        if(!email.contains("@") || (!accountType.toUpperCase().equals("RENTER") && !accountType.toUpperCase().equals("LANDLORD"))) {
             return "ERROR";
         }
         try {

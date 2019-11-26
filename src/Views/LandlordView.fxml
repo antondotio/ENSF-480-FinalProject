@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.LandlordViewController">
+<AnchorPane prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Views.LandlordViewController">
   <children>
     <Text layoutX="378.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProperTea Rentals">
       <font>
