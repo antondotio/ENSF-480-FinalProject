@@ -1,7 +1,9 @@
-package Controller;
+package Views;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import Controller.Listener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -113,13 +115,23 @@ public class RegisteredRenterViewController {
             noID.setHeaderText(null);
             noID.showAndWait();
         } else {
-            Alert email = new Alert(Alert.AlertType.INFORMATION);
-            email.setTitle("Sending Email");
-            email.setContentText("If the Listing ID you inputted is valid,\n an email has been sent to the landlord.");
-            email.setHeaderText(null);
-            email.showAndWait();
-            emailLandlordID.setText("");
-            emailMessage.setText("");
+            String response = listener.getListener().sendEmail(emailLandlordID.getText(), emailMessage.getText());
+            if (response.equals("DONE")) {
+                Alert success = new Alert(Alert.AlertType.INFORMATION);
+                success.setTitle("Success!");
+                success.setContentText("Email has been sent to landlord!");
+                success.setHeaderText(null);
+                success.showAndWait();
+                emailLandlordID.setText("");
+                emailMessage.setText("");
+            } else if (response.equals("ERROR")) {
+                Alert email = new Alert(Alert.AlertType.INFORMATION);
+                email.setTitle("Sending Email");
+                email.setContentText("The email was not sent.\nPlease try again!");
+                email.setHeaderText(null);
+                email.showAndWait();
+
+            }
         }
     }
 

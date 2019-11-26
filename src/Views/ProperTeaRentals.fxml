@@ -7,7 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="LoginForm" fx:id="loginGUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.ProperTeaRentalsController">
+<AnchorPane id="LoginForm" fx:id="loginGUI" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Views.ProperTeaRentalsController">
   <children>
     <TextField fx:id="usernameForm" layoutX="272.0" layoutY="208.0" prefWidth="257.0" promptText="Email" />
     <PasswordField id="username" fx:id="passwordForm" layoutX="272.0" layoutY="276.0" prefWidth="257.0" promptText="Password" text="" />

@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 import javafx.scene.*;
 import javafx.fxml.FXMLLoader;
 import Controller.Client;
-import Systems.DatabaseSystem;
+
 import static Controller.Listener.getListener;
 
 public class Main extends Application {
@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Client client = new Client("localhost", 5050);
         getListener().setClient(client);
-        Parent root = FXMLLoader.load(getClass().getResource("Controller/ProperTeaRentals.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Views/ProperTeaRentals.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();

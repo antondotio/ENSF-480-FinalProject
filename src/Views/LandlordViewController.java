@@ -1,7 +1,9 @@
-package Controller;
+package Views;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import Controller.Listener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -191,7 +193,7 @@ public class LandlordViewController {
     public void getMyListings() {
         String myListings = listener.getListener().getLandlordListings();
         String table =
-                ("Listing ID\t\t|\tListing Start\t|\tListing End\t|\tState\t|\tFee\t\t|\tFee Period\t|\tPaid\t\t|\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
+                ("Listing ID\t\t|\tListing Start\t|\tListing End\t|\tState\t|\tFee\t\t|\tPaid\t\t|\tFee Period\t|\t\t\tAddress\t\t\t\t\t|\tQuadrant\t\t|\tHouse Type\t|\tBedrooms\t|\tBathrooms\t|\tFurnished\t\t|\n" +
                         "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
                         myListings);
         landlordProperties.setWrapText(false);

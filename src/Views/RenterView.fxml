@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="RenterViewGUI" prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.RenterViewController">
+<AnchorPane fx:id="RenterViewGUI" prefHeight="800.0" prefWidth="1075.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Views.RenterViewController">
   <children>
     <Button fx:id="searchButton" layoutX="963.0" layoutY="288.0" mnemonicParsing="false" onAction="#search" text="Search" />
     <Text layoutX="378.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProperTea Rentals">
@@ -34,13 +34,13 @@
     </RadioButton>
     <RadioButton fx:id="notFurnished" layoutX="594.0" layoutY="151.0" mnemonicParsing="false" text="No" toggleGroup="$furnished" />
     <Text layoutX="699.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quadrant:" />
-    <TextArea id="houseInfo" fx:id="emailMessage" editable="true" layoutX="220.0" layoutY="641.0" prefHeight="140.0" prefWidth="654.0" wrapText="true" />
+    <TextArea id="houseInfo" fx:id="emailMessage" editable="true" layoutX="220.0" layoutY="641.0" prefHeight="140.0" prefWidth="654.0" promptText="Enter Message Here" wrapText="true" />
     <Text layoutX="220.0" layoutY="621.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
     <Button id="searchButton" fx:id="emailButton" layoutX="887.0" layoutY="744.0" mnemonicParsing="false" onAction="#emailLandlord" text="Email Landlord" visible="true" />
     <TextArea fx:id="listingTable" editable="false" layoutX="14.0" layoutY="335.0" prefHeight="239.0" prefWidth="1047.0" wrapText="true" />
     <Text layoutX="16.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Property Listing:" />
-    <Text layoutX="357.0" layoutY="621.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
-    <TextField fx:id="emailListingID" layoutX="456.0" layoutY="595.0" prefWidth="104.0" />
+    <Text layoutX="483.0" layoutY="621.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
+    <TextField fx:id="emailListingID" layoutX="582.0" layoutY="595.0" prefWidth="104.0" promptText="ID" />
     <RadioButton fx:id="anyFurnished" layoutX="516.0" layoutY="185.0" mnemonicParsing="false" selected="true" text="Any" toggleGroup="$furnished" />
     <RadioButton fx:id="nw" layoutX="802.0" layoutY="151.0" mnemonicParsing="false" text="NW">
       <toggleGroup>
@@ -60,5 +60,6 @@
     <RadioButton fx:id="townType" layoutX="265.0" layoutY="199.0" mnemonicParsing="false" text="Townhome" toggleGroup="$type" />
     <RadioButton id="detatchedType" fx:id="detachedType" layoutX="51.0" layoutY="240.0" mnemonicParsing="false" text="Detached House" toggleGroup="$type" />
     <RadioButton fx:id="anyType" layoutX="265.0" layoutY="240.0" mnemonicParsing="false" selected="true" text="Any" toggleGroup="$type" />
+    <TextField fx:id="emailForm" layoutX="278.0" layoutY="598.0" prefWidth="200.0" promptText="Email" />
   </children>
 </AnchorPane>
