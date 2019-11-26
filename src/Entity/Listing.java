@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class Listing {
 	int landlordAccountId;
     Property property;
+    //	most recent listing active dates
 	LocalDate listingStart;
 	LocalDate listingEnd;
     double paymentFee;

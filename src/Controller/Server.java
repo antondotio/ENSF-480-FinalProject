@@ -196,6 +196,10 @@ public class Server {
         LocalDate startDate = LocalDate.parse(params[0]);
         LocalDate endDate = LocalDate.parse(params[1]);
         String[] summary = managerController.getSummary(startDate, endDate);
+        for (String line : summary) {
+            socketOut.println(line);
+        }
+        socketOut.println("DONE");
     }
 
     public void handleGetSearchCriteria(String input) {
@@ -267,10 +271,12 @@ public class Server {
         String[] params = parseParams(input);
         boolean updatedSuccessfully = false;
         Integer userId = Integer.parseInt(params[0]);
+        int listingId = Integer.parseInt(params[1]);
+        String oldState = listingController.checkListingState(listingId);
         if (loggedInLandlords.containsKey(userId)) {
-            updatedSuccessfully = landlordController.updateListingState(Integer.parseInt(params[1]), params[2]);
+            updatedSuccessfully = landlordController.updateListingState(listingId, oldState, params[2]);
         } else if (loggedInManagers.containsKey(userId)) {
-            updatedSuccessfully = managerController.updateListingState(Integer.parseInt(params[1]), params[2]);
+            updatedSuccessfully = managerController.updateListingState(listingId, oldState, params[2]);
         } else {
             System.out.println("User with id " + params[0] + " tried to change listing state of listing " + params[1] + " and failed. Unable to find user in list of logged in users.");
             socketOut.println("ERROR");

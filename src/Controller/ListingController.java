@@ -16,8 +16,31 @@ public class ListingController {
         this.db = db;
     }
 
-    public boolean updateListingState(int listingId, String newState) {
-        return db.updateListingState(listingId, newState);
+    public boolean updateListingState(int listingId, String oldState, String newState) {
+        if (oldState == null || newState.equals(oldState)) {
+            return false;   //  can't change to old state
+        }
+
+        boolean result = true;
+        //  end rental if needed
+        if (oldState.equals("Rented")) {
+            result = db.endRental(listingId);
+        }
+
+        result =  db.updateListingState(listingId, newState) && result; // update listing state
+
+        //  handle other things we need to track based on state
+        if (newState.equals("Rented") && result) {
+            return db.startRental(listingId);
+        }
+        if (newState.equals("Active")) {
+            return activateListing(listingId);
+        }
+        return result;
+    }
+
+    public String checkListingState(int listingId) {
+        return db.checkListingState(listingId);
     }
 
     public boolean updateListingFees(int listingId, int newFee, int newFeePeriodInDays) {

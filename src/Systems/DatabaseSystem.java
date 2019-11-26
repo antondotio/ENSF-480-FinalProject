@@ -1,7 +1,6 @@
 package Systems;
 
 import java.sql.*;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -191,6 +190,105 @@ public class DatabaseSystem {
         }
     }
 
+    public boolean startRental(int listingId) {
+        try {
+            String statementStr = "INSERT INTO `RentalAction` (`listingId`, `startDate`) values(?,?)";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setInt(1, listingId);
+            pStatement.setObject(2, LocalDate.now());
+            pStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Failed to create rentalaction for listing " + listingId);
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean endRental(int listingId) {
+        try {
+            String statementStr = "UPDATE `RentalAction` SET `endDate`=? WHERE `listingId`=? AND `endDate` IS NULL";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setObject(1, LocalDate.now());
+            pStatement.setInt(2, listingId);
+            pStatement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            System.err.println("Failed to end rental for listing " + listingId);
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int countHousesListedBetween(LocalDate startDate, LocalDate endDate) {
+        try {
+            String statementStr = "SELECT COUNT(*) FROM `Listing` WHERE `listingAddedDate` BETWEEN ? AND ?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setObject(1, startDate);
+            pStatement.setObject(2, endDate);
+            rs = pStatement.executeQuery();
+            return rs.getInt(1);
+        } catch(SQLException e) {
+            System.err.println("Failed to count houses between " + startDate + " and " + endDate);
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public ArrayList<RentalAction> getHousesRentedBetween(LocalDate startDate, LocalDate endDate) {
+        try {
+            String statementStr = "SELECT * FROM `RentalAction` AS `R`, `Listing` AS `L`, `Property` AS `P`, `Account` AS `A` WHERE " +
+                    "((R.startDate BETWEEN ? AND ?) OR (R.endDate BETWEEN ? AND ?) OR (R.startDate < ? AND (R.endDate > ? OR R.endDate IS NULL)))" +
+                    " AND L.propertyId = P.propertyId AND R.listingId = L.id AND L.landlordId = A.id";
+            pStatement = connection.prepareStatement(statementStr);
+            setPeriodParams(startDate, endDate);
+            rs = pStatement.executeQuery();
+
+            ArrayList<RentalAction> rentals = new ArrayList<>();
+            while (rs.next()) {
+                rentals.add(new RentalAction(rs.getInt("L.id"), new Name(rs.getString("A.fname"),
+                        rs.getString("A.lname")), new Address(rs.getString("P.street"),
+                            rs.getString("P.city"), rs.getString("P.country"), rs.getString("P.postalCode")),
+                        rs.getObject("R.startDate", LocalDate.class), rs.getObject("R.endDate", LocalDate.class)));
+            }
+            return rentals;
+        } catch(SQLException e) {
+            System.err.println("Failed to count houses between " + startDate + " and " + endDate);
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int countActiveListingsBetween(LocalDate startDate, LocalDate endDate) {
+        try {
+            String statementStr = "SELECT COUNT(*) FROM `Listing` WHERE " +
+                    "(`listingStart` BETWEEN ? AND ?) OR (`listingEnd` BETWEEN ? AND ?) OR " +
+                    "(`listingStart` < ? AND (`listingEnd` > ? OR `listingEnd` IS NULL))";
+            pStatement = connection.prepareStatement(statementStr);
+            setPeriodParams(startDate, endDate);
+            rs = pStatement.executeQuery();
+            return rs.getInt(1);
+        } catch(SQLException e) {
+            System.err.println("Failed to count active listings between " + startDate + " and " + endDate);
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    private void setPeriodParams(LocalDate startDate, LocalDate endDate) throws SQLException {
+        pStatement.setObject(1, startDate);
+        pStatement.setObject(2, endDate);
+        pStatement.setObject(3, startDate);
+        pStatement.setObject(4, endDate);
+        pStatement.setObject(5, startDate);
+        pStatement.setObject(6, endDate);
+    }
+
     public ArrayList<Listing> getNotifications(int renterId) {
         try {
             //  get listings for renter
@@ -255,6 +353,27 @@ public class DatabaseSystem {
         }
     }
 
+    public String checkListingState(int listingId) {
+        try {
+            String statementStr = "SELECT `Status` FROM `Listing` WHERE `id`=?";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setInt(1, listingId);
+            rs = pStatement.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("status");
+            } else {
+                throw new SQLException("Failed to find listing with given id.");
+            }
+        } catch(SQLException e) {
+            System.out.println("Database error when trying to get state of listing " + listingId);
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     public boolean updateListingState(int listingId, String newState) {
         try {
             String statementStr = "UPDATE `Listing` SET `status`=? WHERE `id`=?";
@@ -288,11 +407,21 @@ public class DatabaseSystem {
             }
 
             statementStr = "UPDATE `Listing` SET `paid`=?, `listingStart`=?, `listingEnd`=? WHERE `id`=?";
-            pStatement = connection.prepareStatement(statementStr, pStatement.RETURN_GENERATED_KEYS);
+            LocalDate startDate = LocalDate.now();
+            LocalDate endDate = LocalDate.now().plusDays(feePeriod);
+            pStatement = connection.prepareStatement(statementStr);
             pStatement.setBoolean(1, false);
-            pStatement.setObject(2, LocalDate.now());
-            pStatement.setObject(3, LocalDate.now().plusDays(feePeriod));
+            pStatement.setObject(2, startDate);
+            pStatement.setObject(3, endDate);
             pStatement.setInt(4, listingId);
+            pStatement.executeUpdate();
+
+            //  create a new listingactivationaction
+            statementStr = "INSERT INTO `ListingActivationAction` (`listingId`, `startDate`, `endDate`) values(?,?,?)";
+            pStatement = connection.prepareStatement(statementStr);
+            pStatement.setInt(1, listingId);
+            pStatement.setObject(2, startDate);
+            pStatement.setObject(3, endDate);
             pStatement.executeUpdate();
 
             statementStr = "SELECT * FROM `Listing` AS `L`, `Property` AS `P` WHERE L.id=? AND `propertyId`=P.id";
