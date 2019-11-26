@@ -107,7 +107,7 @@ public class RenterViewController {
             noID.setHeaderText(null);
             noID.showAndWait();
         } else {
-            String response = listener.getListener().sendEmail(emailListingID.getText(), emailMessage.getText());
+            String response = listener.getListener().sendEmail(emailForm.getText(), emailListingID.getText(), emailMessage.getText());
             if (response.equals("DONE")) {
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setTitle("Success!");
