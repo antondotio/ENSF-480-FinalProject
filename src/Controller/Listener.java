@@ -18,6 +18,10 @@ public class Listener {
         return listener;
     }
 
+    public String signup(String username, String password, String fname, String lname, String accountType){
+        return client.signup(username, password, fname, lname, accountType);
+    }
+
     public void setClient(Client c)
     {
         client = c;
