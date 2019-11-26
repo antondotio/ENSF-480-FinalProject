@@ -146,7 +146,7 @@ public class Client {
             return "ERROR";
         }
         try {
-            socketOut.println("UPDATELISTINGFEES-" + listingID + "-" + newFee + "-" + newPeriod);
+            socketOut.println("POST/UPDATELISTINGFEES-" + listingID + "-" + newFee + "-" + newPeriod);
             return socketIn.readLine();
         } catch(Exception e) {
             System.err.println(e.getMessage());

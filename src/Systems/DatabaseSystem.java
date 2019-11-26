@@ -225,8 +225,8 @@ public class DatabaseSystem {
             rs = pStatement.executeQuery();
             ArrayList<SearchCriteria> criterias = new ArrayList<>();
             while (rs.next()) {
-                criterias.add(new SearchCriteria(rs.getInt("id"), rs.getString("type"), rs.getInt("numOfBedrooms"), rs.getDouble("numOfBathrooms"),
-                        rs.getBoolean("isFurnished"), rs.getString("quadrant"), renterId));
+                criterias.add(new SearchCriteria(rs.getInt("id"), rs.getString("type"), rs.getObject("numOfBedrooms", Integer.class), rs.getObject("numOfBathrooms", Double.class),
+                        rs.getObject("isFurnished", Boolean.class), rs.getString("quadrant"), renterId));
             }
             return criterias;
         } catch (SQLException e) {

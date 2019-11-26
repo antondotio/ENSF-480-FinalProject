@@ -237,7 +237,7 @@ public class Server {
         ArrayList<Account> accounts = managerController.getUsersOfType(userType);
         if (accounts != null) {
             for (Account a : accounts) {
-                socketOut.println(a.getAccountID() + "\t" + a.getName().toString() + "\t" + a.getEmail());
+                socketOut.println(a.getAccountID() + "\t\t\t" + a.getName().toString() + "\t\t" + a.getEmail());
             }
         }
         socketOut.println("DONE");
@@ -296,7 +296,7 @@ public class Server {
         if (listings != null) {
             for (Listing l : listings) {
                 if (l.getStatus().equals("Active")) {
-                    socketOut.println(l.getListingIDnumber() + "\t\t\t" + l.getProperty().getAddress().toString() + "\t\t\t" +
+                    socketOut.println(l.getListingIDnumber() + "\t\t\t" + padAddress(l.getProperty().getAddress().toString()) + "\t\t\t" +
                             l.getProperty().getQuadrant() + "\t\t\t" + l.getProperty().getType() + "\t\t\t" + l.getProperty().getNumOfBedrooms() +
                             "\t\t\t\t" + l.getProperty().getNumOfBathrooms() + "\t\t\t\t" + l.getProperty().isFurnished());
                 }
@@ -307,11 +307,12 @@ public class Server {
     public void printDetailedListingsResults(ArrayList<Listing> listings) {
         if (listings != null) {
             for (Listing l : listings) {
-                socketOut.println(l.getListingIDnumber() + "\t\t\t" + nullObjectToString(l.getListingStart()) + "\t\t" + nullObjectToString(l.getListingEnd()) + "\t\t" +
-                        getStatusPadded(l.getStatus()) + "\t\t" + l.getPaymentFee() + "\t\t\t" + l.isFeePaid() + "\t\t\t" + l.getFeePeriod() + "\t\t\t" + l.getProperty().getAddress().toString() +
-                        "\t\t" + l.getProperty().getQuadrant() + "\t" + l.getProperty().getType() + "\t" + l.getProperty().getNumOfBedrooms() + "\t\t\t" + l.getProperty().getNumOfBathrooms()
+                socketOut.println(l.getListingIDnumber() + "\t\t\t" + nullDateToString(l.getListingStart()) + "\t\t" + nullDateToString(l.getListingEnd()) + "\t\t" +
+                        getStatusPadded(l.getStatus()) + "\t\t" + l.getPaymentFee() + "\t\t\t" + l.isFeePaid() + "\t\t\t" + l.getFeePeriod() + "\t\t\t" + padAddress(l.getProperty().getAddress().toString()) +
+                        "\t\t" + l.getProperty().getQuadrant() + "\t\t\t\t" + l.getProperty().getType() + "\t\t\t" + l.getProperty().getNumOfBedrooms() + "\t\t\t\t" + l.getProperty().getNumOfBathrooms()
                         + "\t\t\t" + l.getProperty().isFurnished());
             }
+
         }
     }
 
@@ -321,6 +322,14 @@ public class Server {
             return status;
         }
         return status;
+    }
+
+    public String padAddress(String address) {
+        StringBuilder newAddress = new StringBuilder(address);
+        while (newAddress.length() < 50) {
+            newAddress.append(" ");
+        }
+        return newAddress.toString();
     }
 
     private String nullObjectToString(Object o) {
