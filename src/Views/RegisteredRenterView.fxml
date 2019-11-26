@@ -37,10 +37,10 @@
     <TextArea id="houseInfo" fx:id="emailMessage" editable="true" layoutX="220.0" layoutY="629.0" prefHeight="140.0" prefWidth="654.0" wrapText="true" />
     <Text layoutX="261.0" layoutY="609.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
     <Button id="searchButton" fx:id="emailLandlordButton" layoutX="887.0" layoutY="732.0" mnemonicParsing="false" onAction="#emailLandlord" text="Email Landlord" visible="true" />
-    <TextArea fx:id="listingTable" editable="true" layoutX="14.0" layoutY="323.0" prefHeight="239.0" prefWidth="1047.0" wrapText="true" />
+    <TextArea fx:id="listingTable" editable="true" layoutX="14.0" layoutY="330.0" prefHeight="239.0" prefWidth="1047.0" wrapText="true" />
     <Text layoutX="16.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Property Listing:" />
-    <Text layoutX="467.0" layoutY="609.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
-    <TextField id="emailListingID" fx:id="emailLandlordID" layoutX="566.0" layoutY="583.0" prefWidth="104.0" />
+    <Text layoutX="530.0" layoutY="609.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listing ID:" />
+    <TextField id="emailListingID" fx:id="emailLandlordID" layoutX="629.0" layoutY="583.0" prefWidth="104.0" />
     <RadioButton fx:id="anyFurnished" layoutX="516.0" layoutY="173.0" mnemonicParsing="false" selected="true" text="Any" toggleGroup="$furnished" />
     <RadioButton fx:id="nw" layoutX="802.0" layoutY="138.0" mnemonicParsing="false" text="NW">
       <toggleGroup>
@@ -64,5 +64,6 @@
     <Button id="subscribeButton" fx:id="unsubscribeButton" layoutX="31.0" layoutY="731.0" mnemonicParsing="false" onAction="#unsubscribe" text="Unsubscribe" />
     <Text layoutX="12.0" layoutY="669.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subscription ID:" />
     <TextField fx:id="subscriptionID" layoutX="57.0" layoutY="682.0" prefWidth="98.0" />
+    <TextField fx:id="emailForm" layoutX="316.0" layoutY="586.0" prefWidth="200.0" promptText="Email" />
   </children>
 </AnchorPane>
