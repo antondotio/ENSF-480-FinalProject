@@ -6,13 +6,13 @@ public class EmailMessage {
     LocalDate date;
     String message;
     String sender;
-    String receiver;
+    int landlordId;
 
-    public EmailMessage(LocalDate date, String message, String sender, String receiver) {
+    public EmailMessage(LocalDate date, String message, String sender, int landlordId) {
         this.date = date;
         this.message = message;
         this.sender = sender;
-        this.receiver = receiver;
+        this.landlordId = landlordId;
     }
 
     public LocalDate getDate() {
@@ -27,7 +27,7 @@ public class EmailMessage {
         return sender;
     }
 
-    public String getReceiver() {
-        return receiver;
+    public int getReceiver() {
+        return landlordId;
     }
 }

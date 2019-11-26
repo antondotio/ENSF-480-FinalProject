@@ -3,6 +3,7 @@ package Controller;
 import Entity.*;
 import Systems.DatabaseSystem;
 import Systems.FinancialInstitutionSystem;
+import Systems.LandlordEmailSystem;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -40,6 +41,7 @@ public class Server {
 
     private DatabaseSystem db;
     private FinancialInstitutionSystem fis;
+    private LandlordEmailSystem les;
 
     //  map account ids to account objects
     private Hashtable<Integer, LandlordAccount> loggedInLandlords;
@@ -52,6 +54,7 @@ public class Server {
      */
     public Server(int portNumber) {
         db = new DatabaseSystem();
+        les = new LandlordEmailSystem();
 
         login = LoginController.getInstance(db);
         loggedInLandlords = new Hashtable<>();
@@ -130,7 +133,7 @@ public class Server {
                     handleUnsubscribe(input);
 
                 } else if (input.startsWith("EMAIL-")) {
-                    socketOut.println("DONE");
+                    sendEmail(input);
                 }
             } catch(Exception e) {
                 System.err.println(e.getMessage());
@@ -248,6 +251,15 @@ public class Server {
             socketOut.println("DONE");
         } else {
             System.out.println("Failed to post listing for user: " + params[0]);
+            socketOut.println("ERROR");
+        }
+    }
+
+    public void sendEmail(String input) {
+        String[] params = parseParams(input);
+        if (renterController.sendEmail(params[0], Integer.parseInt(params[1]), params[1])) {
+            socketOut.println("DONE");
+        } else {
             socketOut.println("ERROR");
         }
     }
@@ -372,6 +384,8 @@ public class Server {
         managerController = new ManagerController(db);
         listingController = new ListingController(db);
         notificationController = new NotificationController(db, listingController);
+
+        renterController.setLandlordEmailSystem(les);
 
         landlordController.setListingController(listingController);
         managerController.setListingController(listingController);
