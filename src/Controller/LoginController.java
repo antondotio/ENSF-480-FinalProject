@@ -1,6 +1,7 @@
 package Controller;
 
 import Entity.Account;
+import Entity.Name;
 import Systems.DatabaseSystem;
 
 public class LoginController {
@@ -23,7 +24,7 @@ public class LoginController {
         return db.authenticate(email, password);
     }
 
-    public boolean signup(String email, String password) {
-        return true;
+    public boolean signup(String email, String password, Name name, String accountType) {
+        return db.signup(email, password, name, accountType);
     }
 }
